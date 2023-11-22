@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import PrimaryButton from './PrimaryButton.vue';
+import Button from './Button.vue';
+
+defineProps({
+	color: {
+		type: String,
+		default: 'primary'
+	}
+});
 </script>
 
 
 <template>
-	<PrimaryButton icon="globe">
-		<img :src="`/img/flags/us.gif`" alt="us" />
-		<span class="mx-2">English (US)</span>
-		<font-awesome-icon :icon="['fas', 'angle-right']" />
-	</PrimaryButton>
+	<Button :color="color">
+		<span class="flex items-baseline">
+			<img :src="`/img/flags/us.gif`" alt="us" />
+			<span class="mx-2">English (US)</span>
+			<font-awesome-icon :icon="['fas', 'angle-right']" />
+		</span>
+	</Button>
 </template>

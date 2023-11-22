@@ -13,11 +13,21 @@ return [
     |
     */
 
-	'login'		=> 'Login',
-	'logoff'	=> 'Logoff',
+	'login'				=> 'Login',
+	'logoff'			=> 'Logoff',
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+	'email'				=> 'Email',
+	'username'			=> 'Username',
+	'password'			=> 'Password',
+	'remember_me'		=> 'Remember me',
+	'forgot_password'	=> 'Forgot your password?',
+
+	'connect_with'			=> 'Connect with',
+	'not_registered_yet'	=> 'Not registered yet?',
+	'register'				=> 'Register',
+
+    'failed' 			=> 'These credentials do not match our records.',
+    'password_failed' 	=> 'The provided password is incorrect.',
+    'throttle' 			=> 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

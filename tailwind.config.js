@@ -14,6 +14,14 @@ export default {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			colors: {
+				google: '#4285F4',
+				twitch: '#9146FF',
+				youtube: '#FF0000',
+				github: '#000000',
+				twitter: '#000000',
+				itchio: '#FA5C5C',
+			},
 			fontFamily: {
 				sans: ['Figtree', ...defaultTheme.fontFamily.sans],
 			},
