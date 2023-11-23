@@ -26,6 +26,9 @@ const classes = computed(() => {
 		case 'primary':
 			style = style.concat(' text-white bg-orange-500 hover:bg-orange-700 focus:bg-orange-200 active:bg-orange-300');
 			break;
+		case 'secondary':
+			style = style.concat(' text-white bg-purple-700 hover:bg-purple-900 focus:bg-purple-400 active:bg-purple-500');
+			break;
 		case 'info':
 			style = style.concat(' text-white bg-blue-500 hover:bg-blue-700 focus:bg-blue-200 active:bg-blue-300');
 			break;
@@ -39,21 +42,13 @@ const classes = computed(() => {
 
 
 <template>
-	<template v-if="href">
-		<a :href="href" :class="classes">
-			<font-awesome-icon v-if="icon" :icon="[fa, icon]" />
-			<span>
-				<slot />
-			</span>
-		</a>
-	</template>
+	<a v-if="href" :href="href" :class="classes">
+		<font-awesome-icon v-if="icon" :icon="[fa, icon]" />
+		<slot />
+	</a>
 
-	<template v-else>
-		<button :class="classes">
-			<font-awesome-icon v-if="icon" :icon="[fa, icon]" />
-			<span>
-				<slot />
-			</span>
-		</button>
-	</template>
+	<button v-else :class="classes">
+		<font-awesome-icon v-if="icon" :icon="[fa, icon]" />
+		<slot />
+	</button>
 </template>

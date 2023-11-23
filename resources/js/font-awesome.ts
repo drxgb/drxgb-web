@@ -10,6 +10,8 @@ import {
 	faAngleRight,
 	faBars,
 	faTimes,
+	faChevronDown,
+	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle, faGithub, faItchIo, faYoutube, faTwitch, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
@@ -25,6 +27,8 @@ library.add(
 	faAngleRight,
 	faBars,
 	faTimes,
+	faChevronDown,
+	faChevronRight,
 
 	faGoogle,
 	faGithub,
