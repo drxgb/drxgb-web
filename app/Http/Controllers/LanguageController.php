@@ -2,64 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Language;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class LanguageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Modifica o idioma da página
      */
-    public function index()
+    public function change(Request $request, int $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Language $language)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Language $language)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Language $language)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Language $language)
-    {
-        //
+		/** @var Cookie */
+        $cookie = cookie('xgb_language_id', $id, 86400 * 360);
+		return back()->withCookie($cookie);
     }
 }

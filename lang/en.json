@@ -2,5 +2,8 @@
 	"or": "or",
 	"google": "Google",
 	"twitter": "X",
-	"github": "Github"
+	"github": "Github",
+	"choose_language": "Choose a language",
+	"submit": "Submit",
+	"save": "Save"
 }
