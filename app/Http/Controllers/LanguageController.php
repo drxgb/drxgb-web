@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LanguageRequest;
 use App\Models\Language;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
 class LanguageController extends Controller
 {
     /**
      * Modifica o idioma da página
      */
-    public function change(Request $request)
+    public function change(LanguageRequest $request)
     {
+		/** @var array */
+		$input = $request->validated();
 		/** @var Language */
-		$language = Language::find($request->language_id);
-
+		$language = Language::find($input['language_id']);
 		/** @var User */
 		$user = auth()->user();
+
 		if ($user)
 		{
 			$user->language_id = $language->id;

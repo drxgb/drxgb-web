@@ -75,28 +75,28 @@ const submit = () => {
 							<InputError class="mt-2" :message="form.errors.password" />
 						</div>
 					</FormRow>
+
+					<FormRow>
+						<div class="block mt-4">
+							<label class="flex items-center">
+								<Checkbox v-model:checked="form.remember" name="remember" />
+								<span class="ms-2 text-sm text-gray-600 dark:text-gray-400">
+									{{ $t('auth.remember_me') }}
+								</span>
+							</label>
+						</div>
+
+						<div class="flex flex-col sm:flex-row items-center mt-4 gap-4">
+							<Button icon="arrow-right-to-bracket" color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+								{{ $t('auth.login') }}
+							</Button>
+
+							<Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+							{{ $t('auth.forgot_password') }}
+							</Link>
+						</div>
+					</FormRow>
 				</form>
-
-				<FormRow>
-					<div class="block mt-4">
-						<label class="flex items-center">
-							<Checkbox v-model:checked="form.remember" name="remember" />
-							<span class="ms-2 text-sm text-gray-600 dark:text-gray-400">
-								{{ $t('auth.remember_me') }}
-							</span>
-						</label>
-					</div>
-
-					<div class="flex flex-col sm:flex-row items-center mt-4 gap-4">
-						<Button icon="arrow-right-to-bracket" color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-							{{ $t('auth.login') }}
-						</Button>
-
-						<Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-						{{ $t('auth.forgot_password') }}
-						</Link>
-					</div>
-				</FormRow>
 
 				<div class="pl-2 sm:pl-8 py-4">
 					<!-- Conectar com redes sociais -->
