@@ -44,8 +44,16 @@ class HandlePageLanguage extends Middleware
 		if ($user)
 			return $user->language;
 
-		/** @var int */
-		$id = $request->session()->get('language_id') ?? 1;
-		return Language::find($id);
+		/** @var string */
+		$key = 'locale';
+		/** @var string */
+		$locale = config('app.fallback_locale');
+
+		if ($request->session()->has($key))
+			$locale = $request->session()->get($key);
+		else if ($request->hasCookie($key))
+			$locale = $request->cookie($key);
+
+		return Language::where($key, $locale)->first();
 	}
 }

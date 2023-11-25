@@ -18,7 +18,7 @@ function toggleChildren(): void {
 	<div class="w-full border-b-2 py-2 border-b-neutral-600">
 		<div class="flex justify-between px-2" @click="toggleChildren">
 			<slot />
-			<font-awesome-icon v-if="hasChildren()" :icon="['fas', icon]" />
+			<font-awesome-icon v-if="hasChildren()" :icon="icon" />
 		</div>
 		<transition
 			v-if="hasChildren()"

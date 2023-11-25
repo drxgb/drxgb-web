@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type ComputedRef } from 'vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm, type InertiaForm } from '@inertiajs/vue3';
 import Alert from '@/Components/Alert.vue';
 import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -19,18 +19,18 @@ defineProps({
 	status: String,
 });
 
-const form = useForm({
+const form: InertiaForm<any> = useForm({
 	login: '',
 	password: '',
 	remember: false,
 });
-
 const otherErrors: ComputedRef<string[]> = computed(() => Object.keys(form.errors).filter(k => k !== 'email' && k !== 'password'));
 
-function submit() {
+function submit(): void {
 	form.transform(data => ({
 		...data,
 		remember: form.remember ? 'on' : '',
+		// @ts-ignore
 	})).post(route('login'), {
 		onFinish: () => form.reset('password'),
 	});
@@ -108,7 +108,6 @@ function submit() {
 							<Button icon="arrow-right-to-bracket" color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
 								{{ $t('auth.login') }}
 							</Button>
-
 							<Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
 							{{ $t('auth.forgot_password') }}
 							</Link>

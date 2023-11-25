@@ -48,7 +48,7 @@ function closeOnEscape(e: any): void {
 
 <template>
 	<div class="relative">
-		<div @click="open = !open">
+		<div @click="open = !open" class="hover:cursor-pointer">
 			<slot name="trigger" />
 		</div>
 

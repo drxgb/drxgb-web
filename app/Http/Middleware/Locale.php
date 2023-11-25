@@ -19,19 +19,17 @@ class Locale
     {
 		/** @var User */
 		$user = auth()->user();
+		/** @var Session */
+		$session = $request->session();
+		/** @var string */
+		$key = 'locale';
+
 		if ($user)
-		{
 			app()->setLocale($user->language->locale);
-		}
-		else
-		{
-			/** @var Session */
-			$session = $request->session();
-
-			if ($session->has('locale'))
-				app()->setLocale($session->get('locale'));
-		}
-
+		else if ($session->has($key))
+			app()->setLocale($session->get($key));
+		else if ($request->hasCookie($key))
+			app()->setLocale($request->cookie($key));
 
         return $next($request);
     }

@@ -26,8 +26,9 @@ class LanguageController extends Controller
 			$user->save();
 		}
 
-		$request->session()->put('language_id', $language->id);
 		$request->session()->put('locale', $language->locale);
-		return redirect()->back();
+		/** @var string */
+		$cookie = cookie('locale', $language->locale, 60 * 24 * 360);
+		return redirect()->back()->withCookie($cookie);
     }
 }
