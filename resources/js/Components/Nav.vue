@@ -150,7 +150,7 @@ function logout(): void {
 					</span>
 				</Button>
 				<Button v-if="$page.props.canRegister" :href="route('register')" icon="arrow-right-to-bracket" color="secondary" class="hidden sm:inline-flex">
-					{{ $t('auth.register') }}
+					{{ $t('auth.register').toUpperCase() }}
 				</Button>
 			</template>
 			<ThemeSwitcher />

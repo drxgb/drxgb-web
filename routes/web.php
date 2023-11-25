@@ -39,5 +39,5 @@ Route::middleware([
 
 //* Idiomas
 Route::name('languages.')->controller(LanguageController::class)-> group(function () {
-	Route::post('/languages/{id}', 'change')->name('change');
+	Route::post('/languages', 'change')->name('change');
 });

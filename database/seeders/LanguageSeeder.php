@@ -19,7 +19,7 @@ class LanguageSeeder extends Seeder
 		]);
         Language::create([
 			'name'			=> 'Português (BR)',
-			'locale'		=> 'pt-br',
+			'locale'		=> 'pt_br',
 			'country_flag'	=> 'br',
 		]);
     }

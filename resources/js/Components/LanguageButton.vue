@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
-import { usePage, Link, router } from '@inertiajs/vue3';
+import { ref, reactive, computed, type Ref, type ComputedRef } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
+import { loadLanguageAsync } from 'laravel-vue-i18n';
 import { Language } from '@/Classes/Language';
-import { Cookie } from '@/Classes/Util/Cookie';
 import Button from './Button.vue';
 import Modal from './Modal.vue';
-import RadioButton from './RadioButton.vue';
 
 defineProps({
 	color: {
@@ -14,22 +13,26 @@ defineProps({
 	},
 	modelValue: null,
 });
-const page = usePage();
-const language: Language = makeLanguage(page.props.language);
-const languages = page.props.languages;
-const open = ref(false);
-const form = reactive({
-	id: String(language.id),
+const page: any = usePage();
+const language: ComputedRef<Language> = computed(() => makeLanguage(page.props.language));
+const languages: any[] = ref(page.props.languages);
+const open: Ref<boolean> = ref(false);
+const form: any = reactive({
+	language_id: String(language.value.id),
 });
 
-function makeLanguage(props: object): Language {
+const flagImage = (flag: string) => `/img/flags/${flag}.gif`;
+
+function makeLanguage(props: any): Language {
 	return new Language(props.id, props.name, props.locale, props.country_flag);
 }
 
 function changeLanguage(): void {
-	console.log(form.id);
-	//Cookie.set('xgb_language_id', form.id);
-	router.post(route('languages.change', form.id), form);
+	// @ts-ignore
+	router.post(route('languages.change'), form, {
+		preserveState: true,
+		onSuccess: page => loadLanguageAsync(language.value.locale),
+	});
 	open.value = false;
 }
 </script>
@@ -38,7 +41,7 @@ function changeLanguage(): void {
 <template>
 	<Button :color="color" @click="open = !open">
 		<span class="flex items-baseline">
-			<img :src="`/img/flags/${language.countryFlag}.gif`" :alt="language.countryFlag" />
+			<img :src="flagImage(language.countryFlag)" :alt="language.countryFlag" />
 			<span class="mx-2">{{ language.name }}</span>
 			<font-awesome-icon :icon="['fas', 'angle-right']" />
 		</span>
@@ -50,19 +53,20 @@ function changeLanguage(): void {
 		</template>
 
 		<form @submit.prevent="changeLanguage">
-			<div>
-				<RadioButton
-					v-for="lang in languages" :key="lang.id"
-					class="w-full border-b-2 last:border-b-0 px-4 py-2 border-b-gray-300 dark:border-b-slate-600"
-					name="id"
+			<div
+				v-for="lang in languages" :key="String(lang.id)"
+				class="flex items-center gap-6 w-full border-b-2 last:border-b-0 px-4 border-b-gray-300 dark:border-b-slate-600"
+				:class="{ 'bg-orange-400 text-orange-900': lang.id == form.language_id }">
+				<input
+					type="radio"
+					class="text-purple-600"
 					:id="lang.locale"
 					:value="String(lang.id)"
-					v-model="form.id">
-					<div class="flex items-center gap-2">
-						<img :src="`/img/flags/${lang.country_flag}.gif`" :alt="lang.country_flag" />
-						<span>{{ lang.name }}</span>
-					</div>
-				</RadioButton>
+					v-model="form.language_id" />
+				<label :for="lang.locale" class="flex w-full py-2 items-center gap-2">
+					<img :src="flagImage(lang.country_flag)" :alt="lang.country_flag" />
+					<span>{{ lang.name }}</span>
+				</label>
 			</div>
 			<div class="flex justify-center p-2 bg-gray-200 dark:bg-slate-700">
 				<Button color="primary" icon="floppy-disk">

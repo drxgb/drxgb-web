@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Inertia\Inertia;
 use Inertia\Middleware;
 use App\Models\Language;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -39,10 +39,13 @@ class HandlePageLanguage extends Middleware
 	 */
 	protected function getUserLanguage(Request $request): Language
 	{
-		// TODO: Verificar se sessão está autenticada por um usuário
+		/** @var User */
+		$user = auth()->user();
+		if ($user)
+			return $user->language;
 
 		/** @var int */
-		$id = intval($request->cookie('xgb_language_id') ?? 1);
+		$id = $request->session()->get('language_id') ?? 1;
 		return Language::find($id);
 	}
 }
