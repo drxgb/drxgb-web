@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\AuthenticateLoginAttempt;
 use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
@@ -35,6 +36,7 @@ class JetstreamServiceProvider extends ServiceProvider
 			]);
 		});
 
+		Fortify::authenticateUsing([ new AuthenticateLoginAttempt, 'passed' ]);
         Jetstream::deleteUsersUsing(DeleteUser::class);
     }
 

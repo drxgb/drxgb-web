@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -16,11 +17,21 @@ class Locale
      */
     public function handle(Request $request, Closure $next): Response
     {
-		/** @var Session */
-		$session = $request->session();
+		/** @var User */
+		$user = auth()->user();
+		if ($user)
+		{
+			app()->setLocale($user->language->locale);
+		}
+		else
+		{
+			/** @var Session */
+			$session = $request->session();
 
-		if ($session->has('locale'))
-			app()->setLocale($session->get('locale'));
+			if ($session->has('locale'))
+				app()->setLocale($session->get('locale'));
+		}
+
 
         return $next($request);
     }

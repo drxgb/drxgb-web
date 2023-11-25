@@ -1,5 +1,7 @@
-<script setup>
-import {Link, useForm} from '@inertiajs/vue3';
+<script setup lang="ts">
+import { computed, type ComputedRef } from 'vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import Alert from '@/Components/Alert.vue';
 import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
@@ -18,12 +20,14 @@ defineProps({
 });
 
 const form = useForm({
-	email: '',
+	login: '',
 	password: '',
 	remember: false,
 });
 
-const submit = () => {
+const otherErrors: ComputedRef<string[]> = computed(() => Object.keys(form.errors).filter(k => k !== 'email' && k !== 'password'));
+
+function submit() {
 	form.transform(data => ({
 		...data,
 		remember: form.remember ? 'on' : '',
@@ -35,28 +39,42 @@ const submit = () => {
 
 <template>
 	<AppLayout :title="$t('auth.login')">
-		<section class="flex flex-col justify-center items-center h-full">
+		<section class="flex flex-col justify-center items-center h-full py-8">
 			<h1 class="text-2xl uppercase">{{ $t('auth.login') }}</h1>
-			<Card :noPadding="true" class="pr-2 sm:pr-8">
+
+			<!-- Erros -->
+			<Alert v-if="otherErrors.length > 0" type="danger" size="sm" class="mt-8">
+				<ul>
+					<li v-for="e in otherErrors">
+						{{ form.errors[e] }}
+					</li>
+				</ul>
+			</Alert>
+
+			<Card :noPadding="true">
 				<div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
 					{{ status }}
 				</div>
 
-				<form @submit.prevent="submit">
+				<!-- Formulário de login -->
+				<form
+					@submit.prevent="submit"
+					class="pr-8 border-b-2 border-b-gray-200 dark:border-b-slate-600">
 					<FormRow>
 						<template #label>
-							<InputLabel for="email" :value="$t('auth.email')" />
+							<InputLabel
+								for="login"
+								:value="`${$t('auth.email')} / ${$t('auth.username')}`" />
 						</template>
 						<div>
 							<TextInput
-								id="email"
-								v-model="form.email"
-								type="email"
-								class="mt-1 block w-full"
+								id="login"
+								class="w-full my-2"
+								v-model="form.login"
 								required
 								autofocus
 								autocomplete="username" />
-							<InputError class="mt-2" :message="form.errors.email" />
+							<InputError class="mt-2" :message="form.errors.login" />
 						</div>
 					</FormRow>
 
@@ -67,9 +85,9 @@ const submit = () => {
 						<div>
 							<TextInput
 								id="password"
+								class="w-full my-2"
 								v-model="form.password"
 								type="password"
-								class="mt-1 block w-full"
 								required
 								autocomplete="current-password" />
 							<InputError class="mt-2" :message="form.errors.password" />
@@ -86,7 +104,7 @@ const submit = () => {
 							</label>
 						</div>
 
-						<div class="flex flex-col sm:flex-row items-center mt-4 gap-4">
+						<div class="flex flex-col sm:flex-row items-center my-4 gap-4">
 							<Button icon="arrow-right-to-bracket" color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
 								{{ $t('auth.login') }}
 							</Button>
@@ -98,7 +116,7 @@ const submit = () => {
 					</FormRow>
 				</form>
 
-				<div class="pl-2 sm:pl-8 py-4">
+				<div class="px-2 sm:px-8 py-4">
 					<!-- Conectar com redes sociais -->
 					<div v-if="canUseSocialMedia" class="flex flex-col items-center gap-2 mt-4">
 						<HrLabel>{{ $t('or') }}</HrLabel>

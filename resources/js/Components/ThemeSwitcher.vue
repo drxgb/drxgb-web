@@ -13,7 +13,7 @@ const toggleTheme = () => {
 	handler.setTheme(value);
 };
 const themeIcon = computed(() => theme.value === 'light' ? 'sun' : 'moon');
-const themeName = computed(() => trans(theme.value === 'light' ? 'Light Theme' : 'Dark Theme'));
+const themeName = computed(() => trans(`theme.${theme.value}`));
 </script>
 
 

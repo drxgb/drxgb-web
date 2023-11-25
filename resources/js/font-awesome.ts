@@ -13,6 +13,10 @@ import {
 	faChevronDown,
 	faChevronRight,
 	faFloppyDisk,
+	faCircleInfo,
+	faTriangleExclamation,
+	faTimesCircle,
+	faCircleCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle, faGithub, faItchIo, faYoutube, faTwitch, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
@@ -31,6 +35,10 @@ library.add(
 	faChevronDown,
 	faChevronRight,
 	faFloppyDisk,
+	faCircleInfo,
+	faTriangleExclamation,
+	faTimesCircle,
+	faCircleCheck,
 
 	faGoogle,
 	faGithub,

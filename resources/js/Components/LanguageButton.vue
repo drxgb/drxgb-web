@@ -31,9 +31,11 @@ function changeLanguage(): void {
 	// @ts-ignore
 	router.post(route('languages.change'), form, {
 		preserveState: true,
-		onSuccess: page => loadLanguageAsync(language.value.locale),
+		onSuccess: page => {
+			loadLanguageAsync(language.value.locale);
+			open.value = false;
+		},
 	});
-	open.value = false;
 }
 </script>
 
