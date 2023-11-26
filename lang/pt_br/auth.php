@@ -13,21 +13,24 @@ return [
     |
     */
 
-	'login'				=> 'Login',
-	'logout'			=> 'Logout',
+	'login'							=> 'Login',
+	'logout'						=> 'Logout',
 
-	'email'				=> 'Email',
-	'username'			=> 'Usuário',
-	'password'			=> 'Senha',
-	'remember_me'		=> 'Lembrar minha senha',
-	'forgot_password'	=> 'Esqueceu sua senha?',
+	'confirm_password'				=> 'Confirmar Senha',
+	'confirm_password_description'	=> 'Para sua segurança, confirme sua senha para prosseguir.',
 
-	'connect_with'			=> 'Conecte-se com',
-	'not_registered_yet'	=> 'Ainda não se cadastrou?',
-	'register'				=> 'Cadastre-se',
+	'email'							=> 'Email',
+	'username'						=> 'Usuário',
+	'password'						=> 'Senha',
+	'remember_me'					=> 'Lembrar minha senha',
+	'forgot_password'				=> 'Esqueceu sua senha?',
 
-    'failed' 			=> 'Estas credenciais não combinam com nossos registros.',
-    'password_failed' 	=> 'A senha provida está incorreta',
-    'throttle' 			=> 'Houveram muitas tentativas de acesso. Tente novamente em :seconds segundos.',
+	'connect_with'					=> 'Conecte-se com',
+	'not_registered_yet'			=> 'Ainda não se cadastrou?',
+	'register'						=> 'Cadastre-se',
+
+    'failed' 						=> 'Estas credenciais não combinam com nossos registros.',
+    'password_failed' 				=> 'A senha provida está incorreta',
+    'throttle' 						=> 'Houveram muitas tentativas de acesso. Tente novamente em :seconds segundos.',
 
 ];

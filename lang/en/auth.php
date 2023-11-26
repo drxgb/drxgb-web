@@ -13,20 +13,23 @@ return [
     |
     */
 
-	'login'				=> 'Login',
-	'logout'			=> 'Logout',
+	'login'							=> 'Login',
+	'logout'						=> 'Logout',
 
-	'email'				=> 'Email',
-	'username'			=> 'Username',
-	'password'			=> 'Password',
-	'remember_me'		=> 'Remember me',
-	'forgot_password'	=> 'Forgot your password?',
+	'confirm_password'				=> 'Confirm Password',
+	'confirm_password_description'	=> 'For your security, please confirm your password to continue.',
 
-	'connect_with'			=> 'Connect with',
-	'not_registered_yet'	=> 'Not registered yet?',
-	'register'				=> 'Register',
+	'email'							=> 'Email',
+	'username'						=> 'Username',
+	'password'						=> 'Password',
+	'remember_me'					=> 'Remember me',
+	'forgot_password'				=> 'Forgot your password?',
 
-    'failed' 			=> 'These credentials do not match our records.',
-    'password_failed' 	=> 'The provided password is incorrect.',
-    'throttle' 			=> 'Too many login attempts. Please try again in :seconds seconds.',
+	'connect_with'					=> 'Connect with',
+	'not_registered_yet'			=> 'Not registered yet?',
+	'register'						=> 'Register',
+
+    'failed' 						=> 'These credentials do not match our records.',
+    'password_failed' 				=> 'The provided password is incorrect.',
+    'throttle' 						=> 'Too many login attempts. Please try again in :seconds seconds.',
 ];

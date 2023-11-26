@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
-import { loadLanguageAsync } from 'laravel-vue-i18n';
+import {ref} from 'vue';
+import {Link, router, usePage} from '@inertiajs/vue3';
+import {loadLanguageAsync} from 'laravel-vue-i18n';
 import Accordion from './Accordion.vue';
 import ApplicationLogo from './ApplicationLogo.vue';
 import Avatar from './Avatar.vue';
@@ -146,14 +146,14 @@ function logout() {
 				<Dropdown size="md" :content-classes="['w-full']">
 					<template #trigger>
 						<div class="flex gap-1 items-center px-2 text-green-200">
-							<span class="hidden lg:block">{{ $page.props.auth.user.name }}</span>
+							<span class="hidden lg:block">{{ $page.props.auth.user.show_name }}</span>
 							<Avatar :user="$page.props.auth.user" size="xxs" />
 							<font-awesome-icon icon="chevron-down" />
 						</div>
 					</template>
 					<template #content>
 						<span class="pl-8 lg:hidden">
-							{{ $page.props.auth.user.name }}
+							{{ $page.props.auth.user.show_name }}
 						</span>
 						<DropdownGroup>
 							<DropdownLink :href="route('profile.show')">

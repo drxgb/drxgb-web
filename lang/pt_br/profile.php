@@ -15,6 +15,7 @@ return [
 	'avatar'							=> 'Avatar',
 	'change_avatar'						=> 'Mudar Avatar',
 	'remove_avatar'						=> 'Remover Avatar',
+	'display_name'						=> 'Nome de Exibição',
 	'email_unverified'					=> 'Seu enderço de email não está verificado.',
 	'resend_verification'				=> 'Clique aqui para rrenviar a confirmação de email.',
 	'send_verification_success'			=> 'Um novo link com a verificação foi enviadao para o seu endereço de email.',
@@ -44,7 +45,7 @@ return [
 	'browser_sessions_logout_description'	=> 'Se necessário, você pode encerrar as outras sessões de todos os seus dispositivos. Algumas de suas sessões recentes estão listadas abaixo. No entanto, esta lista pode não ser exaustiva. Caso você desconfie que sua conta podeter sido comprometida, você deve também atualizar sua senha.',
 	'this_device'							=> 'Este dispositivo',
 	'log_out_browser_sessions'				=> 'Encerrar as Outras Sessões de Navegador',
-	'last_active'							=> 'Último Ativo',
+	'last_active'							=> 'Último vez conectado',
 	'unknown'								=> 'Desconhecido',
 	'please_enter_password'					=> 'Insira sua senha para confirmar que você deseja encerrar as outras sessões de navegador de todos os seus dispositivos.',
 

@@ -15,6 +15,7 @@ return [
 	'avatar'							=> 'Avatar',
 	'change_avatar'						=> 'Change Avatar',
 	'remove_avatar'						=> 'Remove Avatar',
+	'display_name'						=> 'Display Name',
 	'email_unverified'					=> 'Your email address is unverified.',
 	'resend_verification'				=> 'Click here to re-send the verification email.',
 	'send_verification_success'			=> 'A new verification link has been sent to your email address.',

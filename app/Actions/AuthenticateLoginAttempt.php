@@ -12,11 +12,13 @@ class AuthenticateLoginAttempt
 	public function passed(Request $request)
 	{
 		/** @var User */
-		$user = User::where('email', $request->login)
-			->orWhere('name', $request->login)
+		$user = User::where('email', $request->name)
+			->orWhere('name', $request->name)
 			->first();
 
 		if ($user && Hash::check($request->password, $user->password))
+		{
 			return $user;
+		}
 	}
 }

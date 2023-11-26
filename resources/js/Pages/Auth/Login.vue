@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue';
-import { Link, useForm } from '@inertiajs/vue3';
-import { loadLanguageAsync } from 'laravel-vue-i18n';
+import {computed} from 'vue';
+import {Link, useForm} from '@inertiajs/vue3';
+import {loadLanguageAsync} from 'laravel-vue-i18n';
 import Alert from '@/Components/Alert.vue';
 import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -21,7 +21,7 @@ defineProps({
 });
 
 const form = useForm({
-	login: '',
+	name: '',
 	password: '',
 	remember: false,
 });
@@ -66,18 +66,18 @@ function submit() {
 					<FormRow>
 						<template #label>
 							<InputLabel
-								for="login"
+								for="name"
 								:value="`${$t('auth.email')} / ${$t('auth.username')}`" />
 						</template>
 						<div>
 							<TextInput
-								id="login"
+								id="name"
 								class="w-full my-2"
-								v-model="form.login"
+								v-model="form.name"
 								required
 								autofocus
-								autocomplete="username" />
-							<InputError class="mt-2" :message="form.errors.login" />
+								autocomplete="name" />
+							<InputError class="mt-2" :message="form.errors.name" />
 						</div>
 					</FormRow>
 
