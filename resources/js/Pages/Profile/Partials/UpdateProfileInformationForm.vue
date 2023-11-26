@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
+import Avatar from '@/Components/Avatar.vue';
+import Button from '@/Components/Button.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
@@ -78,11 +78,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            {{ $t('profile.information') }}
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            {{ $t('profile.information_description') }}
         </template>
 
         <template #form>
@@ -97,11 +97,11 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="Photo" />
+                <InputLabel for="photo" :value="$t('profile.avatar')" />
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
-                    <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
+                    <Avatar :user="user" size="xl" />
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -112,25 +112,26 @@ const clearPhotoFileInput = () => {
                     />
                 </div>
 
-                <SecondaryButton class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
-                </SecondaryButton>
+                <Button color="secondary" class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
+                    {{ $t('profile.change_avatar') }}
+                </Button>
 
-                <SecondaryButton
+                <Button
                     v-if="user.profile_photo_path"
+					color="secondary"
                     type="button"
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
-                    Remove Photo
-                </SecondaryButton>
+                    {{ $t('profile.remove_avatar') }}
+                </Button>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
             </div>
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" :value="$t('auth.username')" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -144,7 +145,7 @@ const clearPhotoFileInput = () => {
 
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" :value="$t('auth.email')" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -157,7 +158,7 @@ const clearPhotoFileInput = () => {
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 dark:text-white">
-                        Your email address is unverified.
+                        {{ $t('profile.email_unverified') }}
 
                         <Link
                             :href="route('verification.send')"
@@ -166,12 +167,12 @@ const clearPhotoFileInput = () => {
                             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             @click.prevent="sendEmailVerification"
                         >
-                            Click here to re-send the verification email.
+                            {{ $t('profile.resend_verification') }}
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                        A new verification link has been sent to your email address.
+                        {{ $t('profile.send_verification_success') }}
                     </div>
                 </div>
             </div>
@@ -179,12 +180,13 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                {{ $t('saved') }}.
             </ActionMessage>
 
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
-            </PrimaryButton>
+            <Button color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+				<font-awesome-icon icon="floppy-disk" />
+                {{ $t('save') }}
+            </Button>
         </template>
     </FormSection>
 </template>

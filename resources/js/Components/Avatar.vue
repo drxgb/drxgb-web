@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import { computed, type ComputedRef } from 'vue';
+<script setup>
+import { computed } from 'vue';
 
-const props: any = defineProps({
+const props = defineProps({
 	size: {
 		type: String,
 		default: 'lg',
@@ -10,7 +10,7 @@ const props: any = defineProps({
 });
 
 const defaultClass = 'rounded-full';
-const avatarSize: ComputedRef<string> = computed(() => {
+const avatarSize = computed(() => {
 	switch (props.size) {
 		case 'xxs':
 			return 'w-6';

@@ -8,8 +8,7 @@ defineProps({
 	title: String
 });
 
-const themeHandler = ThemeHandler.getInstance();
-
+const themeHandler: ThemeHandler = ThemeHandler.getInstance();
 themeHandler.load();
 </script>
 
@@ -17,15 +16,15 @@ themeHandler.load();
 <template>
 	<Head :title="title" />
 
-	<div class="h-screen flex flex-col bg-slate-100 dark:bg-slate-900">
+	<div class="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-900">
 		<Nav />
 
 		<!-- Conteúdo -->
-		<div class="w-10/12 h-full relative mx-auto">
+		<div class="w-10/12 h-full mx-auto">
 			<header v-if="$slots.header">
 				<slot name="header" />
 			</header>
-			<main class="h-full">
+			<main class="relative my-8">
 				<slot />
 			</main>
 		</div>

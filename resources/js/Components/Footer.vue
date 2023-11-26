@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import ApplicationLogo from './ApplicationLogo.vue';
 import Button from './Button.vue';
 import LanguageButton from './LanguageButton.vue';
@@ -6,7 +6,7 @@ import LanguageButton from './LanguageButton.vue';
 
 
 <template>
-	<footer class="lg:px-20 sm:px-8 px-4 py-4 bg-green-600 text-slate-100">
+	<footer class="lg:px-20 sm:px-8 px-4 py-4 mt-auto bg-green-600 text-slate-100">
 		<div class="flex justify-between max-sm:justify-end mb-4">
 			<div class="flex gap-4 max-sm:hidden">
 				<ApplicationLogo />

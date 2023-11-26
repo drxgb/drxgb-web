@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { computed, type ComputedRef } from 'vue';
+<script setup>
+import { computed } from 'vue';
 
 const props = defineProps({
 	type: {
@@ -12,7 +12,7 @@ const props = defineProps({
 	},
 });
 
-const icon: ComputedRef<string> = computed(() => {
+const icon = computed(() => {
 	switch (props.type) {
 		case 'info': return 'circle-info';
 		case 'warning': return 'triangle-exclamation';
@@ -22,7 +22,7 @@ const icon: ComputedRef<string> = computed(() => {
 });
 
 const defaultClass = 'flex items-center gap-8 border-2 rounded-md px-8 py-4';
-const colorClass: ComputedRef<string> = computed(() => {
+const colorClass = computed(() => {
 	switch (props.type) {
 		case 'info': return 'text-blue-700 bg-blue-300 border-blue-500';
 		case 'warning': return 'text-amber-600 bg-amber-300 border-amber-500';
@@ -30,7 +30,7 @@ const colorClass: ComputedRef<string> = computed(() => {
 		case 'success': return 'text-green-700 bg-green-300 border-green-500';
 	}
 });
-const sizeClass: ComputedRef<string> = computed(() => {
+const sizeClass = computed(() => {
 	switch (props.size) {
 		case 'xs': return 'w-1/6';
 		case 'sm': return 'w-2/6';

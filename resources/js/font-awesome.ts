@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
 	faArrowRightToBracket,
+	faArrowRightFromBracket,
 	faMoon,
 	faSun,
 	faCartShopping,
@@ -17,12 +18,15 @@ import {
 	faTriangleExclamation,
 	faTimesCircle,
 	faCircleCheck,
+	faUser,
+	faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle, faGithub, faItchIo, faYoutube, faTwitch, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 
 library.add(
 	faArrowRightToBracket,
+	faArrowRightFromBracket,
 	faMoon,
 	faSun,
 	faCartShopping,
@@ -39,6 +43,8 @@ library.add(
 	faTriangleExclamation,
 	faTimesCircle,
 	faCircleCheck,
+	faUser,
+	faGear,
 
 	faGoogle,
 	faGithub,

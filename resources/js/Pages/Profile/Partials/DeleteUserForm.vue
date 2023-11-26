@@ -2,10 +2,9 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
-import DangerButton from '@/Components/DangerButton.vue';
+import Button from '@/Components/Button.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const confirmingUserDeletion = ref(false);
@@ -38,34 +37,37 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection>
+    <ActionSection color="danger">
         <template #title>
-            Delete Account
+            {{ $t('profile.delete_account') }}
         </template>
 
         <template #description>
-            Permanently delete your account.
+            {{ $t('profile.delete_account_description') }}
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+            <div class="max-w-xl text-sm">
+                {{ $t('profile.delete_account_warning') }}
             </div>
 
             <div class="mt-5">
-                <DangerButton @click="confirmUserDeletion">
-                    Delete Account
-                </DangerButton>
+                <Button
+					color="custom"
+					class="bg-white text-red-500 hover:bg-red-700 hover:text-red-50"
+					@click="confirmUserDeletion">
+                    {{ $t('profile.delete_account') }}
+                </Button>
             </div>
 
             <!-- Delete Account Confirmation Modal -->
             <DialogModal :show="confirmingUserDeletion" @close="closeModal">
                 <template #title>
-                    Delete Account
+                    {{ $t('profile.delete_account') }}
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                    {{ $t('profile.delete_account_confirm') }}
 
                     <div class="mt-4">
                         <TextInput
@@ -73,7 +75,7 @@ const closeModal = () => {
                             v-model="form.password"
                             type="password"
                             class="mt-1 block w-3/4"
-                            placeholder="Password"
+                            :placeholder="$t('auth.password')"
                             autocomplete="current-password"
                             @keyup.enter="deleteUser"
                         />
@@ -83,18 +85,19 @@ const closeModal = () => {
                 </template>
 
                 <template #footer>
-                    <SecondaryButton @click="closeModal">
-                        Cancel
-                    </SecondaryButton>
+                    <Button color="secondary" @click="closeModal">
+                        {{ $t('cancel') }}
+                    </Button>
 
-                    <DangerButton
+                    <Button
+						color="danger"
                         class="ms-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        Delete Account
-                    </DangerButton>
+                        {{ $t('profile.delete_account') }}
+                    </Button>
                 </template>
             </DialogModal>
         </template>

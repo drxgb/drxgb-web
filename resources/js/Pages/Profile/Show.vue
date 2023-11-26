@@ -14,13 +14,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Profile
-            </h2>
-        </template>
-
+    <AppLayout :title="$t('page.profile')">
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
@@ -46,11 +40,16 @@ defineProps({
 
                 <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
 
-                <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-                    <SectionBorder />
-
-                    <DeleteUserForm class="mt-10 sm:mt-0" />
-                </template>
+				<template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+					<SectionBorder />
+					<h3 class="text-2xl">
+						<font-awesome-icon icon="triangle-exclamation" class="text-yellow-400" />
+						{{ $t('danger_zone') }}
+					</h3>
+					<div class="rounded-md p-4 mt-2 border-2 text-red-400 bg-red-500 border-red-700">
+						<DeleteUserForm class="mt-10 sm:mt-0" />
+					</div>
+				</template>
             </div>
         </div>
     </AppLayout>

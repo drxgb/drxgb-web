@@ -5,5 +5,15 @@
 	"github": "Github",
 	"choose_language": "Choose a language",
 	"submit": "Submit",
-	"save": "Save"
+	"enable": "Enable",
+	"disable": "Disable",
+	"save": "Save",
+	"saved": "Saved",
+	"cancel": "Cancel",
+	"done": "Done",
+	"confirm": "Confirm",
+	"profile": "Profile",
+	"settings": "Settings",
+	"code": "Code",
+	"danger_zone": "Danger Zone"
 }

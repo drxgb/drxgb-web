@@ -2,8 +2,7 @@
 import { ref, reactive, nextTick } from 'vue';
 import DialogModal from './DialogModal.vue';
 import InputError from './InputError.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import SecondaryButton from './SecondaryButton.vue';
+import Button from './Button.vue';
 import TextInput from './TextInput.vue';
 
 const emit = defineEmits(['confirmed']);
@@ -100,18 +99,19 @@ const closeModal = () => {
             </template>
 
             <template #footer>
-                <SecondaryButton @click="closeModal">
+                <Button color="secondary" @click="closeModal">
                     Cancel
-                </SecondaryButton>
+                </Button>
 
-                <PrimaryButton
+                <Button
+					color="primary"
                     class="ms-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     @click="confirmPassword"
                 >
                     {{ button }}
-                </PrimaryButton>
+                </Button>
             </template>
         </DialogModal>
     </span>

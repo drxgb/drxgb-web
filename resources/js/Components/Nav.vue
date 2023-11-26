@@ -1,23 +1,30 @@
-<script setup lang="ts">
-import { ref, type Ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
+import { loadLanguageAsync } from 'laravel-vue-i18n';
 import Accordion from './Accordion.vue';
 import ApplicationLogo from './ApplicationLogo.vue';
 import Avatar from './Avatar.vue';
 import Button from './Button.vue';
 import Dropdown from './Dropdown.vue';
+import DropdownGroup from './DropdownGroup.vue';
+import DropdownLink from './DropdownLink.vue';
 import LanguageButton from './LanguageButton.vue';
 import NavLink from './NavLink.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 
-const page: any = usePage();
-const user: any = page.props.auth.user;
-const menuOpen: Ref<boolean> = ref(false);
+const page = usePage();
+const menuOpen = ref(false);
 
-function logout(): void {
-	// @ts-ignore
-	router.post(route('logout'));
+
+function logout() {
+	router.post(route('logout'), {}, {
+		preserveState: true,
+		onSuccess: p => {
+			loadLanguageAsync(p.props.language.locale);
+		}
+	});
 };
 </script>
 
@@ -135,14 +142,33 @@ function logout(): void {
 
 		<!-- Controles da página -->
 		<div class="flex items-center gap-2">
-			<template v-if="user">
-				<Dropdown>
+			<template v-if="$page.props.auth.user">
+				<Dropdown size="md" :content-classes="['w-full']">
 					<template #trigger>
 						<div class="flex gap-1 items-center px-2 text-green-200">
-							<span>{{ user.name }}</span>
-							<Avatar :user="user" size="xxs" />
+							<span class="hidden lg:block">{{ $page.props.auth.user.name }}</span>
+							<Avatar :user="$page.props.auth.user" size="xxs" />
 							<font-awesome-icon icon="chevron-down" />
 						</div>
+					</template>
+					<template #content>
+						<span class="pl-8 lg:hidden">
+							{{ $page.props.auth.user.name }}
+						</span>
+						<DropdownGroup>
+							<DropdownLink :href="route('profile.show')">
+								<font-awesome-icon icon="user" />
+								<span class="ml-4">{{ $t('profile') }}</span>
+							</DropdownLink>
+							<DropdownLink :href="route('profile.show')">
+								<font-awesome-icon icon="gear" />
+								<span class="ml-4">{{ $t('settings') }}</span>
+							</DropdownLink>
+							<DropdownLink type="button" @click="logout">
+								<font-awesome-icon icon="arrow-right-from-bracket" />
+								<span class="ml-4">{{ $t('auth.logout') }}</span>
+							</DropdownLink>
+						</DropdownGroup>
 					</template>
 				</Dropdown>
 			</template>

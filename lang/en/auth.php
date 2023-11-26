@@ -14,7 +14,7 @@ return [
     */
 
 	'login'				=> 'Login',
-	'logoff'			=> 'Logoff',
+	'logout'			=> 'Logout',
 
 	'email'				=> 'Email',
 	'username'			=> 'Username',
@@ -29,5 +29,4 @@ return [
     'failed' 			=> 'These credentials do not match our records.',
     'password_failed' 	=> 'The provided password is incorrect.',
     'throttle' 			=> 'Too many login attempts. Please try again in :seconds seconds.',
-
 ];

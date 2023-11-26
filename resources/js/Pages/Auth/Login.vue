@@ -1,6 +1,7 @@
-<script setup lang="ts">
-import { computed, type ComputedRef } from 'vue';
-import { Link, useForm, type InertiaForm } from '@inertiajs/vue3';
+<script setup>
+import { computed } from 'vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import { loadLanguageAsync } from 'laravel-vue-i18n';
 import Alert from '@/Components/Alert.vue';
 import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -19,26 +20,28 @@ defineProps({
 	status: String,
 });
 
-const form: InertiaForm<any> = useForm({
+const form = useForm({
 	login: '',
 	password: '',
 	remember: false,
 });
-const otherErrors: ComputedRef<string[]> = computed(() => Object.keys(form.errors).filter(k => k !== 'email' && k !== 'password'));
+const otherErrors = computed(() => Object.keys(form.errors).filter(k => k !== 'email' && k !== 'password'));
 
-function submit(): void {
+function submit() {
 	form.transform(data => ({
 		...data,
 		remember: form.remember ? 'on' : '',
-		// @ts-ignore
 	})).post(route('login'), {
 		onFinish: () => form.reset('password'),
+		onSuccess: page => {
+			loadLanguageAsync(page.props.language.locale);
+		},
 	});
 };
 </script>
 
 <template>
-	<AppLayout :title="$t('auth.login')">
+	<AppLayout :title="$t('page.login')">
 		<section class="flex flex-col justify-center items-center h-full py-8">
 			<h1 class="text-2xl uppercase">{{ $t('auth.login') }}</h1>
 

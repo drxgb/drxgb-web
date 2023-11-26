@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed, useSlots } from 'vue';
 
 const slot = useSlots();
@@ -6,7 +6,7 @@ const open = ref(false);
 const icon = computed(() => open.value === true ? 'chevron-down' : 'chevron-right');
 const hasChildren = () => !!slot.children;
 
-function toggleChildren(): void {
+function toggleChildren() {
 	if (hasChildren()) {
 		open.value = !open.value;
 	}

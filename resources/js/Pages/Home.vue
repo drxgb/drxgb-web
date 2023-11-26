@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 </script>
 
 <template>
-	<AppLayout title="Home">
+	<AppLayout :title="$t('page.home')">
 		Home
 	</AppLayout>
 </template>

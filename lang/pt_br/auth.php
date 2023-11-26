@@ -14,7 +14,7 @@ return [
     */
 
 	'login'				=> 'Login',
-	'logoff'			=> 'Logoff',
+	'logout'			=> 'Logout',
 
 	'email'				=> 'Email',
 	'username'			=> 'Usuário',
