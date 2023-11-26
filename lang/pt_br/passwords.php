@@ -13,9 +13,12 @@ return [
     |
     */
 
-    'reset' => 'Sua senha foi redefinida.',
-    'sent' => 'Enviamos por email o link de redefinição de sua senha.',
-    'throttled' => 'Por favor aguarde antes de tentar novamente.',
-    'token' => 'Esta chave de redefinição de senha é inválida.',
-    'user' => 'Não conseguimos encontrar um usuário com este endereço de email.',
+    'reset' 		=> 'Sua senha foi redefinida.',
+    'sent' 			=> 'Enviamos por email o link de redefinição de sua senha.',
+    'throttled' 	=> 'Por favor aguarde antes de tentar novamente.',
+    'token' 		=> 'Esta chave de redefinição de senha é inválida.',
+    'user' 			=> 'Não conseguimos encontrar um usuário com este endereço de email.',
+	'not_matched'	=> 'A senha fornecida não combina com a senha atual.',
+	'confirm'		=> 'A senha de confirmação não confere.',
+	'rules'			=> 'A senha deve ter pelo menos :length caracteres e conter pelo menos uma letra maiúscula, um número, e um caractere especial.',
 ];

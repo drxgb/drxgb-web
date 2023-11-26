@@ -15,5 +15,7 @@
 	"profile": "Perfil",
 	"settings": "Configurações",
 	"code": "Código",
-	"danger_zone": "Zona de Risco"
+	"danger_zone": "Zona de Risco",
+	"The provided two factor recovery code was invalid.": "O código de recuperação de dois fatores fornecido foi inválido.",
+	"The provided two factor authentication code was invalid.": "O código de autenticação de dois fatores fornecido foi inválido."
 }

@@ -34,6 +34,7 @@ return [
 	'2fa_not_enabled_description'		=> 'Quando a autenticação de dois fatores está habilitada, será fornecido para você uma chave segura e aleatória durante sua autenticação. Você pode ter acesso a essa chave através do seu aplicativo do Google Authenticator.',
 	'2fa_scan_qrcode_confirm'			=> 'Para concluir a habilitação da autenticação de dois fatores, escaneie o seguinte QR code usando seu aplicativo autenticador do seu celular ou insira a chave de definição e forneça o código OTP gerado.',
 	'2fa_scan_qrcode'					=> 'A autenticação de dois fatores agora está habilitada. Escaneie o seguinte QR code usando seu aplicativo autenticador do seu celular ou insira a chave de definição.',
+	'2fa_invalid_code'					=> 'O código de autenticação de dois fatores fornecido não foi inválido.',
 	'setup_key'							=> 'Chave de Definição',
 	'store_recovery_codes'				=> 'Guarde estes códigos de recuperação em um gerenciador de senhas seguro. Eles podem ser usados para recuperar o acesso para sua conta caso você perca seu dispositivo autenticador de dois fatores.',
 	'regenerate_recovery_codes'			=> 'Gerar Códigos de Recuperação Novamente',

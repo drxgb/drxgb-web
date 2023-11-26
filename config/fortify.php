@@ -5,6 +5,19 @@ use Laravel\Fortify\Features;
 
 return [
 
+	/*
+    |--------------------------------------------------------------------------
+    | Regras
+    |--------------------------------------------------------------------------
+    |
+    | Defina as regras de criação de senha
+    |
+    */
+
+	'rules'	=> [
+		'length' => 8,
+	],
+
     /*
     |--------------------------------------------------------------------------
     | Fortify Guard
@@ -47,7 +60,6 @@ return [
     */
 
     'username' => 'name',
-
     'email' => 'email',
 
     /*
@@ -88,7 +100,6 @@ return [
     */
 
     'prefix' => '',
-
     'domain' => null,
 
     /*
@@ -147,7 +158,7 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([

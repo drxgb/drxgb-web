@@ -108,7 +108,7 @@ return [
     'missing_if' => 'O campo :attribute deve estar faltando quando :other for :value.',
     'missing_unless' => 'O campo :attribute deve estar faltando ao menos que :other seja :value.',
     'missing_with' => 'O campo :attribute deve estar faltando quando :values está presente.',
-    'missing_with_all' => 'The :attribute deve estar faltando quando :values estão presentes.',
+    'missing_with_all' => 'O campo :attribute deve estar faltando quando :values estão presentes.',
     'multiple_of' => 'O campo :attribute deve ser um múltiplo de :value.',
     'not_in' => 'O campo selecionado :attribute é inválido.',
     'not_regex' => 'O formato do campo :attribute é inválido.',

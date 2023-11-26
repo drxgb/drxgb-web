@@ -17,7 +17,7 @@ const form = useForm({
 	password_confirmation: '',
 });
 
-const updatePassword = () => {
+function updatePassword() {
 	form.put(route('user-password.update'), {
 		errorBag: 'updatePassword',
 		preserveScroll: true,

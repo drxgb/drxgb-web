@@ -34,6 +34,7 @@ return [
 	'2fa_not_enabled_description'		=> "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.",
 	'2fa_scan_qrcode_confirm'			=> "To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.",
 	'2fa_scan_qrcode'					=> "Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.",
+	'2fa_invalid_code'					=> 'The provided two factor authentication code was invalid.',
 	'setup_key'							=> 'Setup key',
 	'store_recovery_codes'				=> 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
 	'regenerate_recovery_codes'			=> 'Regenerate Recovery Codes',

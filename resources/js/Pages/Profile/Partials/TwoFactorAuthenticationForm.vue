@@ -35,7 +35,7 @@ watch(twoFactorEnabled, () => {
 	}
 });
 
-const enableTwoFactorAuthentication = () => {
+function enableTwoFactorAuthentication() {
 	enabling.value = true;
 
 	router.post(route('two-factor.enable'), {}, {
@@ -52,25 +52,25 @@ const enableTwoFactorAuthentication = () => {
 	});
 };
 
-const showQrCode = () => {
+function showQrCode() {
 	return axios.get(route('two-factor.qr-code')).then(response => {
 		qrCode.value = response.data.svg;
 	});
 };
 
-const showSetupKey = () => {
+function showSetupKey() {
 	return axios.get(route('two-factor.secret-key')).then(response => {
 		setupKey.value = response.data.secretKey;
 	});
 }
 
-const showRecoveryCodes = () => {
+function showRecoveryCodes() {
 	return axios.get(route('two-factor.recovery-codes')).then(response => {
 		recoveryCodes.value = response.data;
 	});
 };
 
-const confirmTwoFactorAuthentication = () => {
+function confirmTwoFactorAuthentication() {
 	confirmationForm.post(route('two-factor.confirm'), {
 		errorBag: "confirmTwoFactorAuthentication",
 		preserveScroll: true,
@@ -83,13 +83,13 @@ const confirmTwoFactorAuthentication = () => {
 	});
 };
 
-const regenerateRecoveryCodes = () => {
+function regenerateRecoveryCodes() {
 	axios
 		.post(route('two-factor.recovery-codes'))
 		.then(() => showRecoveryCodes());
 };
 
-const disableTwoFactorAuthentication = () => {
+function disableTwoFactorAuthentication() {
 	disabling.value = true;
 
 	router.delete(route('two-factor.disable'), {

@@ -13,6 +13,19 @@ trait PasswordValidationRules
      */
     protected function passwordRules(): array
     {
-        return ['required', 'string', new Password, 'confirmed'];
+		/** @var int */
+		$length = config('fortify.rules.length');
+		/** @var string */
+		$message = __('passwords.rules', compact('length'));
+
+		/** @var Password */
+		$password = (new Password)
+			->length($length)
+			->requireUppercase()
+			->requireNumeric()
+			->requireSpecialCharacter()
+			->withMessage($message);
+
+        return ['required', 'string', $password, 'confirmed'];
     }
 }
