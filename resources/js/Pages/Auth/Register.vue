@@ -1,11 +1,12 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import {Head, Link, useForm} from '@inertiajs/vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
+import FormRow from '@/Components/FormRow.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import Button from '@/Components/Button.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
@@ -16,7 +17,7 @@ const form = useForm({
     terms: false,
 });
 
-const submit = () => {
+function submit() {
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
@@ -24,89 +25,119 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Register" />
+    <Head :title="$t('auth.register_title')" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+	<AppLayout>
+		<section class="flex flex-col justify-center items-center h-full py-8">
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+			<Card :no-padding="true" size="md">
+				<form @submit.prevent="submit" class="pr-4">
+					<FormRow>
+						<template #label>
+							<InputLabel for="name" :value="$t('auth.username')" />
+						</template>
+						<div>
+							<TextInput
+								id="name"
+								v-model="form.name"
+								type="text"
+								class="mt-1 block w-full"
+								required
+								autofocus
+								autocomplete="name"
+							/>
+							<InputError class="mt-2" :message="form.errors.name" />
+						</div>
+					</FormRow>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+					<FormRow>
+						<template #label>
+							<InputLabel for="email" :value="$t('auth.email')" />
+						</template>
+						<div class="mt-4">
+							<TextInput
+								id="email"
+								v-model="form.email"
+								type="email"
+								class="mt-1 block w-full"
+								required
+								autocomplete="username"
+							/>
+							<InputError class="mt-2" :message="form.errors.email" />
+						</div>
+					</FormRow>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+					<FormRow>
+						<template #label>
+							<InputLabel for="password" :value="$t('auth.password')" />
+						</template>
+						<div class="mt-4">
+							<TextInput
+								id="password"
+								v-model="form.password"
+								type="password"
+								class="mt-1 block w-full"
+								required
+								autocomplete="new-password"
+							/>
+							<InputError class="mt-2" :message="form.errors.password" />
+						</div>
+					</FormRow>
 
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
+					<FormRow>
+						<template #label>
+							<InputLabel for="password_confirmation" :value="$t('auth.confirm_password')" />
+						</template>
+						<div class="mt-4">
+							<TextInput
+								id="password_confirmation"
+								v-model="form.password_confirmation"
+								type="password"
+								class="mt-1 block w-full"
+								required
+								autocomplete="new-password"
+							/>
+							<InputError class="mt-2" :message="form.errors.password_confirmation" />
+						</div>
+					</FormRow>
 
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
-                <InputLabel for="terms">
-                    <div class="flex items-center">
-                        <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
+					<FormRow>
+						<div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+							<InputLabel for="terms">
+								<div class="flex items-center">
+									<Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
 
-                        <div class="ms-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Privacy Policy</a>
-                        </div>
-                    </div>
-                    <InputError class="mt-2" :message="form.errors.terms" />
-                </InputLabel>
-            </div>
+									<div class="ms-2">
+										{{ $t('auth.i_agree_to_the') }}
+										<a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+											{{ $t('auth.terms_of_service') }}
+										</a>
+										{{ $t('and') }}
+										<a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+											{{ $t('auth.privacy_policy') }}
+										</a>
+									</div>
+								</div>
+								<InputError class="mt-2" :message="form.errors.terms" />
+							</InputLabel>
+						</div>
+						<div class="flex items-center justify-end my-4">
+							<Link :href="route('login')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+								{{ $t('auth.already_registered') }}
+							</Link>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </AuthenticationCard>
+							<Button
+								color="primary"
+								icon="arrow-right-to-bracket"
+								class="ms-4"
+								:class="{ 'opacity-25': form.processing }"
+								:disabled="form.processing">
+								{{ $t('auth.register') }}
+							</Button>
+						</div>
+					</FormRow>
+				</form>
+			</Card>
+		</section>
+	</AppLayout>
 </template>

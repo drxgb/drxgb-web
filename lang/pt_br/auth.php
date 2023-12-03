@@ -29,6 +29,12 @@ return [
 	'not_registered_yet'			=> 'Ainda não se cadastrou?',
 	'register'						=> 'Cadastre-se',
 
+	'register_title'				=> 'Cadastro',
+	'i_agree_to_the'				=> 'Eu concordo com os',
+	'terms_of_service'				=> 'Termos de Serviço',
+	'privacy_policy'				=> 'Políticas de Privacidade',
+	'already_registered'			=> 'Já possui cadastro?',
+
     'failed' 						=> 'Estas credenciais não combinam com nossos registros.',
     'password_failed' 				=> 'A senha provida está incorreta',
     'throttle' 						=> 'Houveram muitas tentativas de acesso. Tente novamente em :seconds segundos.',
