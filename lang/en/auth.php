@@ -34,6 +34,7 @@ return [
 	'terms_of_service'				=> 'Terms of Service',
 	'privacy_policy'				=> 'Privacy Policy',
 	'already_registered'			=> 'Already registered?',
+	'password_recomendations'		=> "It's highly recommended to use upper and lower cases, numbers and symbols combinations to enhance your account's safety.",
 
     'failed' 						=> 'These credentials do not match our records.',
     'password_failed' 				=> 'The provided password is incorrect.',

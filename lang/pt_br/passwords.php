@@ -21,4 +21,11 @@ return [
 	'not_matched'	=> 'A senha fornecida não combina com a senha atual.',
 	'confirm'		=> 'A senha de confirmação não confere.',
 	'rules'			=> 'A senha deve ter pelo menos :length caracteres e conter pelo menos uma letra maiúscula, um número, e um caractere especial.',
+
+	'no_password'	=> 'Não há senha',
+	'very_weak'		=> 'Muito fraca',
+	'weak'			=> 'Fraca',
+	'medium'		=> 'Média',
+	'strong'		=> 'Forte',
+	'very_strong'	=> 'Muito forte',
 ];

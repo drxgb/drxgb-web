@@ -11,7 +11,11 @@ const props = defineProps({
     value: {
         type: String,
         default: null,
-    },
+	},
+	color: {
+		type: String,
+		default: 'primary',
+	}
 });
 
 const proxyChecked = computed({
@@ -23,6 +27,13 @@ const proxyChecked = computed({
         emit('update:checked', val);
     },
 });
+
+const defaultClass = 'rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 shadow-sm dark:focus:ring-offset-gray-800';
+const colorClass = computed(() => {
+	switch (props.color) {
+		case 'primary': return 'text-orange-600 dark:checked:bg-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600';
+	}
+});
 </script>
 
 
@@ -31,6 +42,6 @@ const proxyChecked = computed({
         v-model="proxyChecked"
         type="checkbox"
         :value="value"
-        class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+        :class="[ defaultClass, colorClass ]"
     >
 </template>

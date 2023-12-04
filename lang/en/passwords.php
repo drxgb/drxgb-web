@@ -21,4 +21,11 @@ return [
 	'not_matched'	=> 'The provided password does not match your current password.',
 	'confirm'		=> 'The confirmation password does not match.',
 	'rules'			=> 'The password must be at least :length characters and contain at least one uppercase character, one number, and one special character.',
+
+	'no_password'	=> 'No password',
+	'very_weak'		=> 'Very weak',
+	'weak'			=> 'Weak',
+	'medium'		=> 'Medium',
+	'strong'		=> 'Strong',
+	'very_strong'	=> 'Very strong',
 ];

@@ -1,13 +1,15 @@
 <script setup>
 import {Head, Link, useForm} from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import Button from '@/Components/Button.vue';
 import Card from '@/Components/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import FormRow from '@/Components/FormRow.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import Button from '@/Components/Button.vue';
+import PasswordExaminator from '@/Components/PasswordExaminator.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Tooltip from '@/Components/Tooltip.vue';
 
 const form = useForm({
     name: '',
@@ -29,9 +31,11 @@ function submit() {
 
 	<AppLayout>
 		<section class="flex flex-col justify-center items-center h-full py-8">
+			<h1 class="text-2xl uppercase">{{ $t('auth.register_title') }}</h1>
 
 			<Card :no-padding="true" size="md">
 				<form @submit.prevent="submit" class="pr-4">
+					<!-- Usuário -->
 					<FormRow>
 						<template #label>
 							<InputLabel for="name" :value="$t('auth.username')" />
@@ -50,6 +54,7 @@ function submit() {
 						</div>
 					</FormRow>
 
+					<!-- Email -->
 					<FormRow>
 						<template #label>
 							<InputLabel for="email" :value="$t('auth.email')" />
@@ -67,23 +72,47 @@ function submit() {
 						</div>
 					</FormRow>
 
+					<!-- Senha -->
 					<FormRow>
 						<template #label>
 							<InputLabel for="password" :value="$t('auth.password')" />
 						</template>
 						<div class="mt-4">
-							<TextInput
-								id="password"
-								v-model="form.password"
-								type="password"
-								class="mt-1 block w-full"
-								required
-								autocomplete="new-password"
-							/>
+							<div class="flex justify-between items-center gap-2">
+								<TextInput
+									id="password"
+									v-model="form.password"
+									type="password"
+									class="mt-1 block w-full"
+									required
+									autocomplete="new-password"
+								/>
+
+								<Tooltip>
+									<template #label>
+										<font-awesome-icon
+											icon="circle-question"
+											class="text-blue-600 dark:text-blue-400"
+										/>
+									</template>
+
+									{{ $t('validation.min.string', {
+										attribute: $t('auth.password'),
+										min: $page.props.passwordMinLength
+									}) }}
+									{{ $t('auth.password_recomendations') }}
+								</Tooltip>
+							</div>
 							<InputError class="mt-2" :message="form.errors.password" />
 						</div>
 					</FormRow>
 
+					<!-- Medidor de força da senha -->
+					<FormRow>
+						<PasswordExaminator class="mt-4" :value="form.password" />
+					</FormRow>
+
+					<!-- Confirmação da senha -->
 					<FormRow>
 						<template #label>
 							<InputLabel for="password_confirmation" :value="$t('auth.confirm_password')" />
@@ -101,6 +130,7 @@ function submit() {
 						</div>
 					</FormRow>
 
+					<!-- Termos de Serviço e Políticas de Privacidade -->
 					<FormRow>
 						<div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
 							<InputLabel for="terms">
@@ -121,7 +151,11 @@ function submit() {
 								<InputError class="mt-2" :message="form.errors.terms" />
 							</InputLabel>
 						</div>
-						<div class="flex items-center justify-end my-4">
+					</FormRow>
+
+					<!-- Envio do formulário -->
+					<FormRow>
+						<div class="flex flex-col md:flex-row items-center justify-end my-4 gap-2">
 							<Link :href="route('login')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
 								{{ $t('auth.already_registered') }}
 							</Link>

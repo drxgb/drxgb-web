@@ -34,6 +34,7 @@ return [
 	'terms_of_service'				=> 'Termos de Serviço',
 	'privacy_policy'				=> 'Políticas de Privacidade',
 	'already_registered'			=> 'Já possui cadastro?',
+	'password_recomendations'		=> 'É altamente recomendado utilizar combinações de letras maiúscula, minúsculas e símbolos para melhorar a segurança da sua conta.',
 
     'failed' 						=> 'Estas credenciais não combinam com nossos registros.',
     'password_failed' 				=> 'A senha provida está incorreta',

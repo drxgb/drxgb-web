@@ -27,12 +27,20 @@ class JetstreamServiceProvider extends ServiceProvider
     {
         $this->configurePermissions();
 
+		// Login
 		Fortify::loginView(function () {
 			return Inertia::render('Auth/Login', [
 				'canResetPassword' 	=> Route::has('password.request'),
 				'canUseSocialMedia'	=> true,
 				'canRegister'		=> Route::has('register'),
 				'status' 			=> session('status'),
+			]);
+		});
+
+		// Cadastro
+		Fortify::registerView(function () {
+			return Inertia::render('Auth/Register', [
+				'passwordMinLength'	=> config('fortify.rules.length'),
 			]);
 		});
 

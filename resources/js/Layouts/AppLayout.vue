@@ -20,7 +20,7 @@ themeHandler.load();
 		<Nav />
 
 		<!-- Conteúdo -->
-		<div class="w-10/12 h-full mx-auto">
+		<div class="h-full md:w-11/12 lg:w-10/12 mx-auto">
 			<header v-if="$slots.header">
 				<slot name="header" />
 			</header>
