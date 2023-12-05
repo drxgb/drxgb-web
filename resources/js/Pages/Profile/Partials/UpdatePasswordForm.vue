@@ -6,7 +6,7 @@ import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Button from '@/Components/Button.vue';
-import TextInput from '@/Components/TextInput.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -50,11 +50,10 @@ function updatePassword() {
 		<template #form>
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="current_password" :value="$t('profile.current_password')" />
-				<TextInput
+				<PasswordInput
 					id="current_password"
 					ref="currentPasswordInput"
 					v-model="form.current_password"
-					type="password"
 					class="mt-1 block w-full"
 					autocomplete="current-password" />
 				<InputError :message="form.errors.current_password" class="mt-2" />
@@ -62,11 +61,10 @@ function updatePassword() {
 
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="password" :value="$t('profile.new_password')" />
-				<TextInput
+				<PasswordInput
 					id="password"
 					ref="passwordInput"
 					v-model="form.password"
-					type="password"
 					class="mt-1 block w-full"
 					autocomplete="new-password" />
 				<InputError :message="form.errors.password" class="mt-2" />
@@ -74,10 +72,9 @@ function updatePassword() {
 
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="password_confirmation" :value="$t('profile.confirm_password')" />
-				<TextInput
+				<PasswordInput
 					id="password_confirmation"
 					v-model="form.password_confirmation"
-					type="password"
 					class="mt-1 block w-full"
 					autocomplete="new-password" />
 				<InputError :message="form.errors.password_confirmation" class="mt-2" />

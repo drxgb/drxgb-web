@@ -6,7 +6,7 @@ import ActionSection from '@/Components/ActionSection.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
 import Button from '@/Components/Button.vue';
-import TextInput from '@/Components/TextInput.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 
 defineProps({
 	sessions: Array,
@@ -110,10 +110,9 @@ const closeModal = () => {
 					{{ $t('profile.please_enter_password') }}
 
 					<div class="mt-4">
-						<TextInput
+						<PasswordInput
 							ref="passwordInput"
 							v-model="form.password"
-							type="password"
 							class="mt-1 block w-3/4"
 							placeholder="Password"
 							autocomplete="current-password"

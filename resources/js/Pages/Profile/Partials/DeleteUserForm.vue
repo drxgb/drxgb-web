@@ -5,7 +5,7 @@ import ActionSection from '@/Components/ActionSection.vue';
 import Button from '@/Components/Button.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
-import TextInput from '@/Components/TextInput.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -70,10 +70,9 @@ const closeModal = () => {
                     {{ $t('profile.delete_account_confirm') }}
 
                     <div class="mt-4">
-                        <TextInput
+                        <PasswordInput
                             ref="passwordInput"
                             v-model="form.password"
-                            type="password"
                             class="mt-1 block w-3/4"
                             :placeholder="$t('auth.password')"
                             autocomplete="current-password"

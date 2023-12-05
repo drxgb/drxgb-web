@@ -3,7 +3,7 @@ import {ref, reactive, nextTick} from 'vue';
 import DialogModal from './DialogModal.vue';
 import InputError from './InputError.vue';
 import Button from './Button.vue';
-import TextInput from './TextInput.vue';
+import PasswordInput from './PasswordInput.vue';
 
 const emit = defineEmits(['confirmed']);
 
@@ -84,14 +84,13 @@ const closeModal = () => {
 				{{ content || $t('auth.confirm_password_description') }}
 
 				<div class="mt-4">
-					<TextInput
+					<PasswordInput
 						ref="passwordInput"
 						v-model="form.password"
-						type="password"
 						class="mt-1 block w-3/4"
 						:placeholder="$t('auth.password')"
 						autocomplete="current-password"
-						@keyup.enter="confirmPassword" />
+						@keyup.enter:model-value="confirmPassword" />
 
 					<InputError :message="form.error" class="mt-2" />
 				</div>

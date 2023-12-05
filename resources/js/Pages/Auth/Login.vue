@@ -12,6 +12,7 @@ import TextInput from '@/Components/TextInput.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import HrLabel from '@/Components/HrLabel.vue';
 import FormRow from '@/Components/FormRow.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 
 defineProps({
 	canResetPassword: Boolean,
@@ -86,11 +87,10 @@ function submit() {
 							<InputLabel for="password" :value="$t('auth.password')" />
 						</template>
 						<div>
-							<TextInput
+							<PasswordInput
 								id="password"
 								class="w-full my-2"
 								v-model="form.password"
-								type="password"
 								required
 								autocomplete="current-password" />
 							<InputError class="mt-2" :message="form.errors.password" />

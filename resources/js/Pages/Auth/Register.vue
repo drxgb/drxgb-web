@@ -118,10 +118,9 @@ function submit() {
 							<InputLabel for="password_confirmation" :value="$t('auth.confirm_password')" />
 						</template>
 						<div class="mt-4">
-							<TextInput
+							<PasswordInput
 								id="password_confirmation"
 								v-model="form.password_confirmation"
-								type="password"
 								class="mt-1 block w-full"
 								required
 								autocomplete="new-password"
