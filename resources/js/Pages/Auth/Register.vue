@@ -8,6 +8,7 @@ import FormRow from '@/Components/FormRow.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PasswordExaminator from '@/Components/PasswordExaminator.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 
@@ -79,10 +80,9 @@ function submit() {
 						</template>
 						<div class="mt-4">
 							<div class="flex justify-between items-center gap-2">
-								<TextInput
+								<PasswordInput
 									id="password"
-									v-model="form.password"
-									type="password"
+									v-model:model-value="form.password"
 									class="mt-1 block w-full"
 									required
 									autocomplete="new-password"
