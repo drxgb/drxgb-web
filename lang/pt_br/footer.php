@@ -10,5 +10,5 @@ return [
 	'games_softwares_utilities'	=> 'Jogos, Sotwares & Utilitários',
 	'support_us'				=> 'Apoie-nos',
 	'made_with'					=> 'Feito com',
-	'by_drxgb'					=> 'Dr.XGB',
+	'by_drxgb'					=> 'por Dr.XGB',
 ];

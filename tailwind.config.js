@@ -23,7 +23,7 @@ export default {
 				itchio: '#FA5C5C',
 			},
 			fontFamily: {
-				sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+				sans: ['Ubuntu', 'Figtree', ...defaultTheme.fontFamily.sans],
 			},
 		},
 	},
