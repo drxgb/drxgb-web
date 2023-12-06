@@ -9,7 +9,7 @@ import { i18nVue } from 'laravel-vue-i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-createServer((page) =>
+createServer((page: any) =>
 	createInertiaApp({
 		page,
 		render: renderToString,
@@ -22,16 +22,13 @@ createServer((page) =>
 			return createSSRApp({ render: () => h(App, props) })
 				.use(plugin)
 				.use(ZiggyVue, {
-					// @ts-ignore
 					...page.props.ziggy,
-					// @ts-ignore
 					location: new URL(page.props.ziggy.location),
 				})
 				.use(i18nVue, {
 					lang: 'pt',
-					resolve: lang => {
-						const langs = import.meta.glob('../../lang/*.json', { eager: true });
-						// @ts-ignore
+					resolve: (lang: any) => {
+						const langs: any = import.meta.glob('../../lang/*.json', { eager: true });
 						return langs[`../../lang/${lang}.json`].default;
 					},
 				});
