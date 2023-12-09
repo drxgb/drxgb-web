@@ -112,4 +112,15 @@ return [
 
     'password_timeout' => 10800,
 
+
+	/*
+    |--------------------------------------------------------------------------
+    | Conexão com Redes sociais
+    |--------------------------------------------------------------------------
+    |
+    | Defina se o sistema deve permitir autenticação utilizando as redes sociais.
+    |
+    */
+
+	'use_social_media'	=> true,
 ];

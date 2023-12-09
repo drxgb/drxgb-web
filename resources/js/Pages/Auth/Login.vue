@@ -15,9 +15,7 @@ import FormRow from '@/Components/FormRow.vue';
 import PasswordInput from '@/Components/PasswordInput.vue';
 
 defineProps({
-	canResetPassword: Boolean,
-	canRegister: Boolean,
-	canUseSocialMedia: Boolean,
+	can: Object,
 	status: String,
 });
 
@@ -112,7 +110,7 @@ function submit() {
 							<Button icon="arrow-right-to-bracket" color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
 								{{ $t('auth.login') }}
 							</Button>
-							<Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+							<Link v-if="can.resetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
 							{{ $t('auth.forgot_password') }}
 							</Link>
 						</div>
@@ -121,7 +119,7 @@ function submit() {
 
 				<div class="px-2 sm:px-8 py-4">
 					<!-- Conectar com redes sociais -->
-					<div v-if="canUseSocialMedia" class="flex flex-col items-center gap-2 mt-4">
+					<div v-if="can.useSocialMedia" class="flex flex-col items-center gap-2 mt-4">
 						<HrLabel>{{ $t('or') }}</HrLabel>
 						<span>{{ $t('auth.connect_with') }}:</span>
 						<div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -138,7 +136,7 @@ function submit() {
 					</div>
 
 					<!-- Registro -->
-					<div v-if="canRegister" class="flex flex-col items-center gap-2 mt-4">
+					<div v-if="can.register" class="flex flex-col items-center gap-2 mt-4">
 						<hr class="dark:border-white w-full mb-2" />
 						<span>{{ $t('auth.not_registered_yet') }}</span>
 						<Button icon="arrow-right-to-bracket" :href="route('register')" color="info">

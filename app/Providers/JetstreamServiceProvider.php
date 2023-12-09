@@ -30,9 +30,11 @@ class JetstreamServiceProvider extends ServiceProvider
 		// Login
 		Fortify::loginView(function () {
 			return Inertia::render('Auth/Login', [
-				'canResetPassword' 	=> Route::has('password.request'),
-				'canUseSocialMedia'	=> true,
-				'canRegister'		=> Route::has('register'),
+				'can'				=> [
+					'resetPassword' 	=> Route::has('password.request'),
+					'useSocialMedia'	=> config('auth.use_social_media', false),
+					'register'			=> Route::has('register'),
+				],
 				'status' 			=> session('status'),
 			]);
 		});
