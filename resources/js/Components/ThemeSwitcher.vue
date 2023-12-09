@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
 import { trans } from 'laravel-vue-i18n';
+import Tooltip from './Tooltip.vue';
 
 defineProps({
 	size: {
@@ -26,11 +27,16 @@ const themeName = computed(() => trans(`theme.${theme.value}`));
 
 <template>
 	<div class="w-[12px] flex justify-center">
-		<font-awesome-icon
-			@click="toggleTheme()"
-			:icon="themeIcon"
-			:size="size"
-			:title="themeName"
-			class="text-green-200 hover:cursor-pointer" />
+		<Tooltip>
+			<template #label>
+				<font-awesome-icon
+					@click="toggleTheme()"
+					:icon="themeIcon"
+					:size="size"
+					class="text-green-200 hover:cursor-pointer" />
+			</template>
+
+			{{ themeName }}
+		</Tooltip>
 	</div>
 </template>

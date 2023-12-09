@@ -2,25 +2,13 @@
 import { computed, ref } from 'vue';
 
 const props = defineProps({
-	position: {
+	fontSize: {
 		type: String,
-		default: 'bottom',
+		default: 'xs',
 	}
 });
-
 const show = ref(false);
-
-const arrowClass = computed(() => {
-	switch (props.position) {
-		case 'bottom': return '-top-4 inset-x-1/2 border-x-[12px] border-x-transparent dark:border-x-transparent border-b-[16px]';
-	}
-});
-const positionClass = computed(() => {
-	switch (props.position) {
-		case 'bottom': return '-left-32 top-8';
-	}
-});
-const defaultClass = 'absolute w-64 text-center bg-slate-300 border-slate-400 dark:bg-slate-800 dark:border-slate-500 border-2 rounded-md px-2 py-1 shadow-md';
+const sizeClass = computed(() => `text-${props.fontSize}`);
 </script>
 
 
@@ -37,8 +25,10 @@ const defaultClass = 'absolute w-64 text-center bg-slate-300 border-slate-400 da
 			leave-active-class="ease-in duration-300"
 			leave-from-class="opacity-100"
 			leave-to-class="opacity-0">
-			<div v-show="show" :class="[ defaultClass, positionClass ]">
-				<span :class="[ arrowClass, 'absolute border-slate-400 dark:border-slate-500' ]" />
+			<div
+				v-show="show"
+				:class="sizeClass"
+				class="absolute text-center -left-1/2 bg-slate-300 border-slate-400 dark:bg-slate-800 dark:border-slate-500 border-2 rounded-md px-2 py-1 shadow-md">
 				<slot />
 			</div>
 		</transition>

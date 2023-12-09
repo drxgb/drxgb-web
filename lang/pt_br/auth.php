@@ -45,4 +45,9 @@ return [
 	'email_password_reset_link'		=> 'Enviar link de redefinição de senha',
 
 	'reset_password'				=> 'Redefinir senha',
+
+	'email_verification'				=> 'Verificação de Email',
+	'email_verification_description'	=> 'Antes de continuar, poderia verificar seu endereço de email clicando no link que te enviamos por lá? Caso não tenha recebido, enviaremos um outro com muito prazer.',
+	'email_verification_sent'			=> 'Um novo link de verificação foi enviado para o email que você forneceu em suas configurações de perfil.',
+	'email_verification_resend'			=> 'Reenviar Verificação de Email',
 ];

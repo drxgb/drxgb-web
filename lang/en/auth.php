@@ -45,4 +45,9 @@ return [
 	'email_password_reset_link'		=> 'Email Password Reset Link',
 
 	'reset_password'				=> 'Reset Password',
+
+	'email_verification'				=> 'Email Verification',
+	'email_verification_description'	=> "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
+	'email_verification_sent'			=> 'A new verification link has been sent to the email address you provided in your profile settings.',
+	'email_verification_resend'			=> 'Resend Verification Email',
 ];

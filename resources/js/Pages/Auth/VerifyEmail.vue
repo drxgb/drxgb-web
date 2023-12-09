@@ -18,19 +18,19 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <AppLayout title="Email Verification">
+    <AppLayout :title="$t('auth.email_verification')">
 		<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-			Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+			{{ $t('auth.email_verification_description') }}
 		</div>
 
 		<div v-if="verificationLinkSent" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-			A new verification link has been sent to the email address you provided in your profile settings.
+			{{ $t('auth.email_verification_sent') }}
 		</div>
 
 		<form @submit.prevent="submit">
 			<div class="mt-4 flex items-center justify-between">
 				<Button color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-					Resend Verification Email
+					{{ $t('auth.email_verification_resend') }}
 				</Button>
 
 				<div>
@@ -38,7 +38,8 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 						:href="route('profile.show')"
 						class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
 					>
-						Edit Profile</Link>
+						{{ $t('profile.edit') }}
+					</Link>
 
 					<Link
 						:href="route('logout')"
@@ -46,7 +47,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 						as="button"
 						class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ms-2"
 					>
-						Log Out
+						{{ $t('auth.logout') }}
 					</Link>
 				</div>
 			</div>

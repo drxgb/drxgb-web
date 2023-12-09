@@ -10,6 +10,8 @@ return [
 	|--------------------------------------------------------
 	*/
 
+	'edit'								=> 'Editar Perfil',
+
 	'information'						=> 'Informações do Perfil',
 	'information_description'			=> 'Atualize as informações da sua conta e seeu endereço de email',
 	'avatar'							=> 'Avatar',

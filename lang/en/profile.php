@@ -10,6 +10,8 @@ return [
 	|--------------------------------------------------------
 	*/
 
+	'edit'								=> 'Edit Profile',
+
 	'information'						=> 'Profile Information',
 	'information_description'			=> "Update your account's profile information and email address.",
 	'avatar'							=> 'Avatar',

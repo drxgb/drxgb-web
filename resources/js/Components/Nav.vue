@@ -2,7 +2,7 @@
 import {ref} from 'vue';
 import {Link, router, usePage} from '@inertiajs/vue3';
 import {loadLanguageAsync} from 'laravel-vue-i18n';
-import Accordion from './Accordion.vue';
+import CollapseGroup from './CollapseGroup.vue';
 import ApplicationLogo from './ApplicationLogo.vue';
 import Avatar from './Avatar.vue';
 import Button from './Button.vue';
@@ -12,11 +12,9 @@ import DropdownLink from './DropdownLink.vue';
 import LanguageButton from './LanguageButton.vue';
 import NavLink from './NavLink.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
+import Tooltip from './Tooltip.vue';
 
-
-const page = usePage();
 const menuOpen = ref(false);
-
 
 function logout() {
 	router.post(route('logout'), {}, {
@@ -52,36 +50,36 @@ function logout() {
 
 						<!-- Lista -->
 						<section class="w-full h-full mt-2 overflow-y-auto border-y-2 border-y-green-800">
-							<Accordion>
+							<CollapseGroup>
 								{{ $t('nav.softwares') }}
 								<template #children>
-									<Accordion>
+									<CollapseGroup>
 										Item 1
-									</Accordion>
+									</CollapseGroup>
 								</template>
-							</Accordion>
-							<Accordion>
+							</CollapseGroup>
+							<CollapseGroup>
 								{{ $t('nav.games') }}
 								<template #children>
-									<Accordion>
+									<CollapseGroup>
 										Item 1
-									</Accordion>
+									</CollapseGroup>
 								</template>
-							</Accordion>
-							<Accordion>
+							</CollapseGroup>
+							<CollapseGroup>
 								{{ $t('nav.online_tools') }}
 								<template #children>
-									<Accordion>
+									<CollapseGroup>
 										Item 1
-									</Accordion>
+									</CollapseGroup>
 								</template>
-							</Accordion>
-							<Accordion>
+							</CollapseGroup>
+							<CollapseGroup>
 								{{ $t('nav.blog') }}
-							</Accordion>
-							<Accordion>
+							</CollapseGroup>
+							<CollapseGroup>
 								{{ $t('nav.store') }}
-							</Accordion>
+							</CollapseGroup>
 						</section>
 
 						<!-- Rodapé -->
@@ -152,9 +150,9 @@ function logout() {
 						</div>
 					</template>
 					<template #content>
-						<span class="pl-8 lg:hidden">
+						<div class="pl-4 py-2 text-sm bg-slate-300 dark:bg-slate-500 lg:hidden">
 							{{ $page.props.auth.user.show_name }}
-						</span>
+						</div>
 						<DropdownGroup>
 							<DropdownLink :href="route('profile.show')">
 								<font-awesome-icon icon="user" />
@@ -183,9 +181,15 @@ function logout() {
 				</Button>
 			</template>
 			<ThemeSwitcher size="lg" />
-			<NavLink href="/">
-				<font-awesome-icon icon="cart-shopping" size="lg" />
-			</NavLink>
+			<Tooltip>
+				<template #label>
+					<NavLink href="/">
+						<font-awesome-icon icon="cart-shopping" size="lg" />
+					</NavLink>
+				</template>
+
+				<span>{{ $t('nav.my_cart') }}</span>
+			</Tooltip>
 		</div>
 	</nav>
 </template>
