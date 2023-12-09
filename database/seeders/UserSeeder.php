@@ -25,7 +25,8 @@ class UserSeeder extends Seeder
             'remember_token' 			=> Str::random(10),
             'profile_photo_path' 		=> null,
             'current_team_id' 			=> null,
-			'language_id'				=> 1,
+			'language_id'				=> 2,
+			'role_id'					=> 1,
 		]);
     }
 }

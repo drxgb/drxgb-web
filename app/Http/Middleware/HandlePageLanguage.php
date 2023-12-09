@@ -35,9 +35,9 @@ class HandlePageLanguage extends Middleware
 	/**
 	 * Recebe o idioma da página
 	 * @param Request $request
-	 * @return Language
+	 * @return Language|null
 	 */
-	protected function getUserLanguage(Request $request): Language
+	protected function getUserLanguage(Request $request): ?Language
 	{
 		/** @var User */
 		$user = auth()->user();

@@ -2,6 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from '@/Components/Button.vue';
+import Card from '@/Components/Card.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -20,35 +21,41 @@ const submit = () => {
 </script>
 
 <template>
-	<AppLayout title="Forgot Password">
-		<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-			Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-		</div>
+	<AppLayout :title="$t('auth.forgot_password')">
+		<section class="flex flex-col justify-center items-center h-full py-8">
+			<h1 class="text-2xl uppercase">{{ $t('auth.forgot_password') }}</h1>
 
-		<div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-			{{ status }}
-		</div>
+			<Alert v-if="status" type="success" size="sm" class="mt-8">
+				{{ status }}
+			</Alert>
 
-		<form @submit.prevent="submit">
-			<div>
-				<InputLabel for="email" value="Email" />
-				<TextInput
-					id="email"
-					v-model="form.email"
-					type="email"
-					class="mt-1 block w-full"
-					required
-					autofocus
-					autocomplete="username"
-				/>
-				<InputError class="mt-2" :message="form.errors.email" />
-			</div>
+			<Card>
+				<p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+					{{ $t('auth.forgot_password_description') }}
+				</p>
 
-			<div class="flex items-center justify-end mt-4">
-				<Button color="primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-					Email Password Reset Link
-				</Button>
-			</div>
-		</form>
+				<form @submit.prevent="submit">
+					<div>
+						<InputLabel for="email" :value="$t('auth.email')" />
+						<TextInput
+							id="email"
+							v-model="form.email"
+							type="email"
+							class="mt-1 block w-full"
+							required
+							autofocus
+							autocomplete="username"
+						/>
+						<InputError class="mt-2" :message="form.errors.email" />
+					</div>
+
+					<div class="flex items-center justify-end mt-4">
+						<Button color="primary" icon="paper-plane" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+							{{ $t('auth.email_password_reset_link') }}
+						</Button>
+					</div>
+				</form>
+			</Card>
+		</section>
 	</AppLayout>
 </template>

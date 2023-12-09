@@ -17,7 +17,7 @@ return [
 	'remove_avatar'						=> 'Remover Avatar',
 	'display_name'						=> 'Nome de Exibição',
 	'email_unverified'					=> 'Seu enderço de email não está verificado.',
-	'resend_verification'				=> 'Clique aqui para rrenviar a confirmação de email.',
+	'resend_verification'				=> 'Clique aqui para reenviar a confirmação de email.',
 	'send_verification_success'			=> 'Um novo link com a verificação foi enviadao para o seu endereço de email.',
 
 	'update_password'					=> 'Atualizar Senha',

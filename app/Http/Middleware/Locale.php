@@ -23,9 +23,11 @@ class Locale
 		$session = $request->session();
 		/** @var string */
 		$key = 'locale';
+		/** @var string */
+		$locale = $user->language->locale ?? config('app.fallback_locale');
 
 		if ($user)
-			app()->setLocale($user->language->locale);
+			app()->setLocale($locale);
 		else if ($session->has($key))
 			app()->setLocale($session->get($key));
 		else if ($request->hasCookie($key))

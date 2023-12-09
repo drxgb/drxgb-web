@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Language;
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
@@ -46,11 +48,14 @@ class RegistrationTest extends TestCase
             return;
         }
 
+		Language::factory()->create();
+		Role::factory()->count(2)->create();
+
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'name' => 'testuser',
             'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'p4s5w0Rd_',
+            'password_confirmation' => 'p4s5w0Rd_',
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
         ]);
 

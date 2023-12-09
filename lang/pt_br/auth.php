@@ -23,7 +23,7 @@ return [
 	'username'						=> 'Usuário',
 	'password'						=> 'Senha',
 	'remember_me'					=> 'Lembrar minha senha',
-	'forgot_password'				=> 'Esqueceu sua senha?',
+	'forgot_your_password'			=> 'Esqueceu sua senha?',
 
 	'connect_with'					=> 'Conecte-se com',
 	'not_registered_yet'			=> 'Ainda não se cadastrou?',
@@ -40,4 +40,9 @@ return [
     'password_failed' 				=> 'A senha provida está incorreta',
     'throttle' 						=> 'Houveram muitas tentativas de acesso. Tente novamente em :seconds segundos.',
 
+	'forgot_password'				=> 'Esqueceu a senha',
+	'forgot_password_description'	=> 'Esqueceu sua senha? Não tem problema. Envie-nos seu endereço de email e vamos te enviar um link de redefinição de senha que lhe permitirá a criar outra.',
+	'email_password_reset_link'		=> 'Enviar link de redefinição de senha',
+
+	'reset_password'				=> 'Redefinir senha',
 ];

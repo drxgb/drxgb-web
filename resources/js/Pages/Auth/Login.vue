@@ -55,10 +55,11 @@ function submit() {
 				</ul>
 			</Alert>
 
+			<Alert v-if="status" type="success" size="sm" class="mt-8">
+				{{ status }}
+			</Alert>
+
 			<Card :noPadding="true">
-				<div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-					{{ status }}
-				</div>
 
 				<!-- Formulário de login -->
 				<form

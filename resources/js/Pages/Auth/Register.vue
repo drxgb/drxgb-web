@@ -28,9 +28,7 @@ function submit() {
 </script>
 
 <template>
-    <Head :title="$t('auth.register_title')" />
-
-	<AppLayout>
+	<AppLayout :title="$t('auth.register_title')">
 		<section class="flex flex-col justify-center items-center h-full py-8">
 			<h1 class="text-2xl uppercase">{{ $t('auth.register_title') }}</h1>
 
@@ -50,6 +48,7 @@ function submit() {
 								required
 								autofocus
 								autocomplete="name"
+								@input="() => form.name = form.name.toLowerCase()"
 							/>
 							<InputError class="mt-2" :message="form.errors.name" />
 						</div>
@@ -68,6 +67,7 @@ function submit() {
 								class="mt-1 block w-full"
 								required
 								autocomplete="username"
+								@input="() => form.email = form.email.toLowerCase()"
 							/>
 							<InputError class="mt-2" :message="form.errors.email" />
 						</div>

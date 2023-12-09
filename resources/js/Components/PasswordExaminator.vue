@@ -24,34 +24,30 @@ const message: any = computed<string>(() => {
 
 	return 'very_strong';
 });
-
-function getBarColor(strength: number, background: boolean = false): string {
-	let color;
-	let intensity;
-
-	if (strength <= 33) {
-		color = 'red';
-		intensity = background ? 400 : 700;
-	} else if (strength <= 66) {
-		color = 'yellow';
-		intensity = background ? 100 : 400;
-	} else {
-		color = 'green';
-		intensity = background ? 300 : 500;
-	}
-
-	return `bg-${color}-${intensity}`;
-}
 </script>
 
 
 <template>
 	<div class="flex flex-col gap-2 items-center">
 		<div
-			class="w-full h-2 flex gap-0.5 overflow-hidden rounded-md"
-			:class="getBarColor(strength, true)">
+			v-if="strength <= 33"
+			class="w-full h-2 flex gap-0.5 overflow-hidden rounded-md bg-red-400">
 			<div
-				:class="[ 'h-2', getBarColor(strength) ]"
+				class="h-2 bg-red-700"
+				:style="`width: ${strength}%`" />
+		</div>
+		<div
+			v-else-if="strength <= 66"
+			class="w-full h-2 flex gap-0.5 overflow-hidden rounded-md bg-yellow-100">
+			<div
+				class="h-2 bg-yellow-400"
+				:style="`width: ${strength}%`" />
+		</div>
+		<div
+			v-else
+			class="w-full h-2 flex gap-0.5 overflow-hidden rounded-md bg-green-300">
+			<div
+				class="h-2 bg-green-500"
 				:style="`width: ${strength}%`" />
 		</div>
 		<span>
