@@ -52,8 +52,8 @@ const color = computed(() => show.value === true ? 'success' : 'secondary');
 			:required="required"
 			@input="$emit('update:modelValue', $event.target.value)"
 		/>
-		<Button type="button" class="rounded-l-none" :color="color" @click.prevent="show = !show">
-			<span class="text-xl">
+		<Button type="button" class="rounded-l-none py-0" :color="color" @click.prevent="show = !show">
+			<span class="text-2xl">
 				{{  show ? '🙉' : '🙈' }}
 			</span>
 		</Button>
