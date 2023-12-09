@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -33,10 +34,24 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
 			'appName' => config('app.name'),
+			'can'	=> [
+				...$this->getUserPermissions($request),
+			],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
         ];
     }
+
+
+	protected function getUserPermissions(Request $request): array
+	{
+		/** @var User */
+		$user = $request->user();
+
+		return [
+			'view_dashboard'	=> $user ? $user->isAdmin() : false,
+		];
+	}
 }

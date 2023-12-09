@@ -84,4 +84,14 @@ class User extends Authenticatable implements MustVerifyEmail
 	{
 		return $this->belongsTo(Language::class);
 	}
+
+
+	/**
+	 * Verifica se o ousuário é um administrador
+	 * @return bool
+	 */
+	public function isAdmin(): bool
+	{
+		return $this->role_id === 1;
+	}
 }
