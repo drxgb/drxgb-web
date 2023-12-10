@@ -4,10 +4,10 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
 import NavItem from '@/Components/Admin/NavItem.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 
 defineProps<{
 	title: string,
-	breadcrumbs: object[],
 }>();
 
 const reducedSideBar = ref<boolean>(false);
@@ -52,12 +52,8 @@ themeHandler.load();
 			<section class="w-full grow flex flex-col">
 				<!-- Cabeçalho da página -->
 				<header class="px-8 py-4 shadow-md dark:bg-slate-700">
-					<h1 class="text-2xl mb-4 text-orange-400">{{ title }}</h1>
-					<menu v-if="breadcrumbs">
-						<li v-for="item of breadcrumbs">
-							PÃO
-						</li>
-					</menu>
+					<h1 class="text-2xl mb-2 text-orange-400">{{ title }}</h1>
+					<Breadcrumbs :items="$page.props.breadcrumbs" />
 				</header>
 
 				<!-- Corpo -->
