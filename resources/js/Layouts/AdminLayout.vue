@@ -5,6 +5,8 @@ import { ThemeHandler } from '@/Classes/ThemeHandler';
 import NavItem from '@/Components/Admin/NavItem.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import FooterCopyright from '@/Components/FooterCopyright.vue';
+import LanguageButton from '@/Components/LanguageButton.vue';
 
 defineProps<{
 	title: string,
@@ -62,10 +64,9 @@ themeHandler.load();
 				</article>
 
 				<!-- Rodapé -->
-				<footer class="mt-auto px-8 py-4 w-full text-right shadow-sm bg-blue-500">
-					&copy;
-					{{ new Date().getFullYear() }} -
-					{{ $t('footer.made_by_drxgb') }}
+				<footer class="flex justify-between mt-auto px-8 py-4 w-full shadow-sm bg-blue-500">
+					<LanguageButton />
+					<FooterCopyright />
 				</footer>
 			</section>
 		</main>

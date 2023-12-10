@@ -1,6 +1,7 @@
 <script setup>
 import ApplicationLogo from './ApplicationLogo.vue';
 import Button from './Button.vue';
+import FooterCopyright from './FooterCopyright.vue';
 import LanguageButton from './LanguageButton.vue';
 </script>
 
@@ -29,13 +30,7 @@ import LanguageButton from './LanguageButton.vue';
 				<LanguageButton />
 			</div>
 
-			<span>
-				&copy;
-				{{ new Date().getFullYear() }} -
-				{{ $t('footer.made_with') }}
-				<font-awesome-icon :icon="['fas', 'heart']" class="text-red-500" />
-				{{ $t('footer.by_drxgb') }}
-			</span>
+			<FooterCopyright />
 
 			<div class="flex gap-2 max-sm:justify-end">
 				<a href="https://github.com/drxgb" target="_blank">
