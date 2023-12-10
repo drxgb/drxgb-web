@@ -13,4 +13,6 @@ return [
 	'blog'			=> 'Blog',
 	'store'			=> 'Store',
 	'my_cart'		=> 'My cart',
+
+	'admin_dashboard'	=> 'Admin Dashboard',
 ];

@@ -19,8 +19,8 @@ const menuOpen = ref(false);
 function logout() {
 	router.post(route('logout'), {}, {
 		preserveState: true,
-		onSuccess: p => {
-			loadLanguageAsync(p.props.language.locale);
+		onSuccess: page => {
+			loadLanguageAsync(page.props.language.locale);
 		}
 	});
 };
@@ -154,6 +154,10 @@ function logout() {
 							{{ $page.props.auth.user.show_name }}
 						</div>
 						<DropdownGroup>
+							<DropdownLink v-if="$page.props.can.view_dashboard" :href="route('admin.index')">
+								<font-awesome-icon icon="gauge" />
+								<span class="ml-4">{{ $t('nav.admin_dashboard') }}</span>
+							</DropdownLink>
 							<DropdownLink :href="route('profile.show')">
 								<font-awesome-icon icon="user" />
 								<span class="ml-4">{{ $t('profile') }}</span>

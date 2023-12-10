@@ -13,4 +13,6 @@ return [
 	'blog'			=> 'Blog',
 	'store'			=> 'Loja',
 	'my_cart'		=> 'Meu carrinho',
+
+	'admin_dashboard'	=> 'Painel Administrativo',
 ];

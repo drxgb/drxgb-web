@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,10 @@ Route::middleware([
 //* Idiomas
 Route::name('languages.')->controller(LanguageController::class)-> group(function () {
 	Route::post('/languages', 'change')->name('change');
+});
+
+
+//* Painel Administrativo
+Route::middleware([ 'admin', 'verified' ])->name('admin.')->prefix('admin')->group(function () {
+	Route::get('/', DashboardController::class)->name('index');
 });
