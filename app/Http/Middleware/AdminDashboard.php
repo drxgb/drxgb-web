@@ -28,7 +28,9 @@ class AdminDashboard
 		if (!$user || !$user->isAdmin())
 			abort(403);
 
+		Inertia::share('emailInboxUrl', config('app.inbox_url'));
 		Inertia::share('navLinks', $this->shareNavLinks($request));
+
         return $next($request);
     }
 

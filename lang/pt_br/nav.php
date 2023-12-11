@@ -7,12 +7,13 @@ return [
 	|--------------------------------------------------------
 	*/
 
-	'softwares'		=> 'Softwares',
-	'games'			=> 'Jogos',
-	'online_tools'	=> 'Ferramentas Online',
-	'blog'			=> 'Blog',
-	'store'			=> 'Loja',
-	'my_cart'		=> 'Meu carrinho',
+	'softwares'			=> 'Softwares',
+	'games'				=> 'Jogos',
+	'online_tools'		=> 'Ferramentas Online',
+	'blog'				=> 'Blog',
+	'store'				=> 'Loja',
+	'my_cart'			=> 'Meu carrinho',
 
 	'admin_dashboard'	=> 'Painel Administrativo',
+	'email_inbox'		=> 'Caixa de Entrada',
 ];

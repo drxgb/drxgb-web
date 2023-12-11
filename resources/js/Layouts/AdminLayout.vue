@@ -7,6 +7,8 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import FooterCopyright from '@/Components/FooterCopyright.vue';
 import LanguageButton from '@/Components/LanguageButton.vue';
+import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
+import Tooltip from '@/Components/Tooltip.vue';
 
 defineProps<{
 	title: string,
@@ -24,19 +26,35 @@ themeHandler.load();
 	<Head :title="title" />
 	<div class="bg-slate-100 dark:bg-slate-900">
 		<!-- Cabeçalho -->
-		<header class="flex fixed w-full h-24 z-10 p-8 shadow-xl overflow-hidden bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600">
-			<div>
+		<header class="flex fixed w-full h-24 z-10 shadow-xl bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600">
+			<div class="relative w-[72px] ml-8 overflow-hidden">
 				<Link href="/">
 					<ApplicationLogo class="absolute top-1" />
 				</Link>
 			</div>
 
-			<div class="ml-24 text-blue-100">
-				<font-awesome-icon
-					icon="bars"
-					size="2xl"
-					:class="navHoverClass"
-					@click="reducedSideBar = !reducedSideBar" />
+			<div class="flex p-8 justify-between w-full text-blue-100">
+				<div>
+					<font-awesome-icon
+						icon="bars"
+						size="2xl"
+						:class="navHoverClass"
+						@click="reducedSideBar = !reducedSideBar" />
+				</div>
+				<div class="flex gap-4">
+					<Tooltip>
+						<template #label>
+							<a :href="(<string>$page.props.emailInboxUrl)" target="_blank">
+								<font-awesome-icon
+									icon="envelope"
+									size="2xl"
+									:class="navHoverClass" />
+							</a>
+						</template>
+						{{ $t('nav.email_inbox') }}
+					</Tooltip>
+					<ThemeSwitcher size="2xl" />
+				</div>
 			</div>
 		</header>
 
@@ -53,9 +71,9 @@ themeHandler.load();
 			</nav>
 			<section class="w-full grow flex flex-col">
 				<!-- Cabeçalho da página -->
-				<header class="px-8 py-4 shadow-md dark:bg-slate-700">
+				<header class="px-8 py-4 shadow-md bg-gray-200 dark:bg-slate-700">
 					<h1 class="text-2xl mb-2 text-orange-400">{{ title }}</h1>
-					<Breadcrumbs :items="$page.props.breadcrumbs" />
+					<Breadcrumbs :items="(<string[]>$page.props.breadcrumbs)" />
 				</header>
 
 				<!-- Corpo -->
@@ -66,7 +84,7 @@ themeHandler.load();
 				<!-- Rodapé -->
 				<footer class="flex justify-between mt-auto px-8 py-4 w-full shadow-sm bg-blue-500">
 					<LanguageButton />
-					<FooterCopyright />
+					<FooterCopyright class="text-blue-100" />
 				</footer>
 			</section>
 		</main>
