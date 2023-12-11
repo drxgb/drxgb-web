@@ -20,5 +20,11 @@
 	"twitter": "X",
 
 	"The provided two factor recovery code was invalid.": "O código de recuperação de dois fatores fornecido foi inválido.",
-	"The provided two factor authentication code was invalid.": "O código de autenticação de dois fatores fornecido foi inválido."
+	"The provided two factor authentication code was invalid.": "O código de autenticação de dois fatores fornecido foi inválido.",
+
+	"Games, tools and plugins": "Jogos, ferramentas e plugins",
+	"Boost your workflow to beyond!": "Turbine sua área de trabalho para o além!",
+	"I'm a Game Developer": "Sou Desenvolvedor de Jogos",
+	"I'm a Software Developer": "Sou Desenvolvedor de Softwares",
+	"I'm a Forum Manager": "Sou um Administrador de Fórum"
 }

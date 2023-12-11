@@ -1,11 +1,26 @@
 <script setup lang="ts">
+import { reactive } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
 import Nav from '@/Components/Nav.vue';
 import Footer from '@/Components/Footer.vue';
 
-defineProps({
-	title: String
+interface Props {
+	title: string,
+	full?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+	title: '',
+	full: false,
+});
+
+const widthClass = reactive<string>({
+	'md:w-11/12 lg:w-10/12': !props.full,
+	'w-full': props.full,
+});
+const marginTop = reactive<string>({
+	'my-8': !props.full,
 });
 
 const themeHandler: ThemeHandler = ThemeHandler.getInstance();
@@ -20,11 +35,11 @@ themeHandler.load();
 		<Nav />
 
 		<!-- Conteúdo -->
-		<div class="h-full md:w-11/12 lg:w-10/12 mx-auto">
+		<div :class="['h-full mx-auto', widthClass]">
 			<header v-if="$slots.header">
 				<slot name="header" />
 			</header>
-			<main class="relative my-8">
+			<main :class="['relative', marginTop]">
 				<slot />
 			</main>
 		</div>

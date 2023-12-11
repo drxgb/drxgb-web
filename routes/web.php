@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\LanguageController;
+use App\Http\Controllers\Public\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +17,7 @@ use Inertia\Inertia;
 */
 
 //* Página principal
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 
 //* Área de usuário autenticado

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import {computed, ref} from 'vue';
 
 const props = defineProps({
 	fontSize: {
@@ -28,7 +28,7 @@ const sizeClass = computed(() => `text-${props.fontSize}`);
 			<div
 				v-show="show"
 				:class="sizeClass"
-				class="absolute text-center -left-1/2 text-slate-900 dark:text-slate-100 bg-slate-300 border-slate-400 dark:bg-slate-800 dark:border-slate-500 border-2 rounded-md px-2 py-1 shadow-md">
+				class="absolute text-center z-50 -left-1/2 text-slate-900 dark:text-slate-100 bg-slate-300 border-slate-400 dark:bg-slate-800 dark:border-slate-500 border-2 rounded-md px-2 py-1 shadow-md">
 				<slot />
 			</div>
 		</transition>

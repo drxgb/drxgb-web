@@ -14,6 +14,9 @@ export default {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			backgroundImage: {
+				'hero-pattern': "url('/img/bg/1.png')",
+			},
 			colors: {
 				google: '#4285F4',
 				twitch: '#9146FF',
