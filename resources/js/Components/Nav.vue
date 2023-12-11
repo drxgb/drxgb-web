@@ -11,6 +11,7 @@ import DropdownGroup from './DropdownGroup.vue';
 import DropdownLink from './DropdownLink.vue';
 import LanguageButton from './LanguageButton.vue';
 import NavLink from './NavLink.vue';
+import Slide from '@/Transitions/Slide.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import Tooltip from './Tooltip.vue';
 
@@ -33,13 +34,7 @@ function logout() {
 			<!-- Navegação lateral (Dispositivos móveis) -->
 			<font-awesome-icon icon="bars" class="max-lg:inline-block hidden text-green-200" @click="menuOpen = true" />
 			<teleport to="body">
-				<transition
-					enter-active-class="transition ease-out duration-200"
-					enter-from-class="transform -translate-x-full"
-					enter-to-class="transform translate-x-0"
-					leave-active-class="transition ease-in duration-200"
-					leave-from-class="transform translate-x-0"
-					leave-to-class="transform -translate-x-full">
+				<Slide from="left">
 					<nav
 						class="absolute left-0 top-0 w-screen sm:w-1/2 h-screen z-50 flex flex-col justify-between lg:hidden bg-green-600 text-green-200 border-r-4 border-r-green-800"
 						v-if="menuOpen">
@@ -87,7 +82,7 @@ function logout() {
 							<LanguageButton />
 						</section>
 					</nav>
-				</transition>
+				</Slide>
 			</teleport>
 
 			<!-- Logo -->
