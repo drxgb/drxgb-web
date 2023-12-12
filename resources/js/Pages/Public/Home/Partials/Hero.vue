@@ -4,7 +4,7 @@ import Button from '@/Components/Button.vue';
 
 
 <template>
-	<section class="px-4 lg:px-48 pt-24 flex items-center text-slate-100 relative bg-hero-pattern bg-center">
+	<section class="px-4 lg:px-48 pt-12 flex items-center text-slate-100 relative bg-hero-pattern bg-center">
 		<div class="pr-0 pb-24 lg:pb-0 lg:pr-24 z-10">
 			<h6 class="text-sm">
 				{{ $t('Games, tools and plugins') }}
@@ -15,7 +15,7 @@ import Button from '@/Components/Button.vue';
 			<p class="text-justify my-4">
 				{{ $t('home.head_description') }}
 			</p>
-			<div class="flex gap-4 flex-col sm:flex-row">
+			<div class="flex gap-4 flex-col mt-8 sm:flex-row">
 				<Button color="primary">
 					{{ $t("I'm a Game Developer") }}
 				</Button>
@@ -31,6 +31,6 @@ import Button from '@/Components/Button.vue';
 		<img
 			src="/img/drxgb.png"
 			:alt="$page.props.appName"
-			class="bottom-0 z-10 hidden lg:block" />
+			class="z-10 hidden lg:block" />
 	</section>
 </template>

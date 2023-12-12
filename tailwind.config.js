@@ -14,6 +14,9 @@ export default {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			animation: {
+				'heart': 'heart 1s ease-in-out infinite',
+			},
 			backgroundImage: {
 				'hero-pattern': "url('/img/bg/1.png')",
 			},
@@ -27,6 +30,12 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Ubuntu', ...defaultTheme.fontFamily.sans],
+			},
+			keyframes: {
+				heart: {
+					'0%,100%': {scale: '100%'},
+					'50%': {scale: '110%'},
+				},
 			},
 		},
 	},
