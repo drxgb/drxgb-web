@@ -17,7 +17,7 @@ import LanguageButton from './LanguageButton.vue';
 				</div>
 			</div>
 			<div>
-				<Button icon="heart" color="primary">
+				<Button icon="heart" color="primary" size="sm">
 					{{ $t('footer.support_us') }}
 				</Button>
 			</div>

@@ -16,13 +16,13 @@ import Button from '@/Components/Button.vue';
 				{{ $t('home.head_description') }}
 			</p>
 			<div class="flex gap-4 flex-col mt-8 sm:flex-row">
-				<Button color="primary">
+				<Button color="primary" size="lg">
 					{{ $t("I'm a Game Developer") }}
 				</Button>
-				<Button color="secondary">
+				<Button color="secondary" size="lg">
 					{{ $t("I'm a Software Developer") }}
 				</Button>
-				<Button color="success">
+				<Button color="success" size="lg">
 					{{ $t("I'm a Forum Manager") }}
 				</Button>
 			</div>

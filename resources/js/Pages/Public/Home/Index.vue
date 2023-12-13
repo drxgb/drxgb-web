@@ -4,6 +4,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from '@/Components/Button.vue';
 import Hero from './Partials/Hero.vue';
 import Partners from './Partials/Partners.vue';
+import Reinforcement from './Partials/Reinforcement.vue';
 import Subheading from './Partials/Subheading.vue';
 </script>
 
@@ -12,6 +13,7 @@ import Subheading from './Partials/Subheading.vue';
 		<Hero />
 		<Partners />
 
+		<!-- RPG Maker plugins -->
 		<Subheading :title="$t('Plugins for RPG Maker')">
 			<template #cover>
 				<img src="/img/cover/rmmv.jpg" class="rounded-md" />
@@ -35,6 +37,7 @@ import Subheading from './Partials/Subheading.vue';
 
 		<hr class="w-5/6 mx-auto" />
 
+		<!-- Softwares & Utilities -->
 		<Subheading :title="$t('Softwares & Utilities')" class="flex-row-reverse">
 			<template #cover>
 				<img src="/img/cover/utilities.jpg" class="rounded-md" />
@@ -43,12 +46,51 @@ import Subheading from './Partials/Subheading.vue';
 				{{ $t('home.utilities_description') }}
 			</template>
 			<template #action>
-				<Button href="/" color="primary" icon="binoculars" class="w-full">
+				<Button href="/" color="primary" icon="binoculars" size="lg" class="w-full">
 					{{ $t('Check it out') }}
 				</Button>
 			</template>
 		</Subheading>
 
 		<hr class="w-5/6 mx-auto" />
+
+		<!-- XenForo add-ons -->
+		<Subheading :title="$t('XenForo Add-ons')">
+			<template #cover>
+				<img src="/img/cover/xf.jpg" class="rounded-md" />
+			</template>
+			<template #description>
+				{{ $t('home.xenforo_description') }}
+			</template>
+			<template #action>
+				<Button href="/" color="primary" icon="cart-shopping" size="lg" class="w-full">
+					{{ $t('Buy XenForo add-ons') }}
+				</Button>
+			</template>
+		</Subheading>
+
+		<hr class="w-5/6 mx-auto" />
+
+		<!-- YouTube channel -->
+		<Subheading :title="$t('Visit my YouTube channel')" class="flex-row-reverse">
+			<template #cover>
+				<iframe
+					class="w-full aspect-video"
+					src="https://www.youtube-nocookie.com/embed/1HzXbl6iFJQ?si=kfIb1jrCQvg9WMKA"
+					:title="$page.props.appName"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen></iframe>
+			</template>
+			<template #description>
+				{{ $t('home.youtube_description') }}
+			</template>
+			<template #action>
+				<Button href="/" color="primary" fa="fab" icon="youtube" size="lg" class="w-full">
+					{{ $t('Subscribe') }}
+				</Button>
+			</template>
+		</Subheading>
+
+		<Reinforcement />
 	</AppLayout>
 </template>
