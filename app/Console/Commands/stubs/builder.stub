@@ -1,0 +1,18 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespace }}\Builder;
+
+
+class {{ class }} extends Builder
+{
+	/**
+	 * Limpa o resultado da construção
+	 * @return void
+	 */
+	public function clear() : void
+	{
+		//
+	}
+}

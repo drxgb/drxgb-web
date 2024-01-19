@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FileExtensionController;
 use App\Http\Controllers\Public\LanguageController;
 use App\Http\Controllers\Public\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,5 @@ Route::name('languages.')->controller(LanguageController::class)-> group(functio
 //* Painel Administrativo
 Route::middleware([ 'admin', 'verified' ])->name('admin.')->prefix('admin')->group(function () {
 	Route::get('/', DashboardController::class)->name('index');
+	Route::resource('file-extensions', FileExtensionController::class);
 });

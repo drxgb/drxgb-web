@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
 			LanguageSeeder::class,
 			RoleSeeder::class,
 			UserSeeder::class,
+			PlatformSeeder::class,
+			FileExtensionSeeder::class,
 		]);
     }
 }

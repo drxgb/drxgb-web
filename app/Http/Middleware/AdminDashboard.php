@@ -50,40 +50,22 @@ class AdminDashboard
 				'href'	=> route('admin.index'),
 			],
 
-			// Item 1
+			// Arquivos
 			[
-				'icon'	=> 'user',
-				'title'	=> 'Item 1',
+				'icon'	=> 'file',
+				'key'	=> 'nav.files',
 				'items'	=> [
-					// Item 1.1
 					[
-						'title'	=> 'Item 1.1',
-						'href'	=> '#',
+						'key'	=> 'nav.file_extensions',
+						'href'	=> route('admin.file-extensions.index'),
 					],
-					// Item 1.2
 					[
-						'title'	=> 'Item 1.2',
-						'href'	=> '#',
-						'items'	=> [
-							// Item 1.2.1
-							[
-								'title'	=> 'Item 1.2.1',
-								'href'	=> '#',
-							],
-							// Item 1.2.2
-							[
-								'title'	=> 'Item 1.2.2',
-								'href'	=> '#',
-							],
-						],
-					],
-					// Item 1.3
-					[
-						'title'	=> 'Item 1.3',
-						'href'	=> '#',
+						'key'	=> 'nav.platforms',
+						'href'	=> '',
 					],
 				],
 			],
+
 			// Example Item
 			/* [
 				'icon'	=> 'user',						// Ícone do Font Awesome
