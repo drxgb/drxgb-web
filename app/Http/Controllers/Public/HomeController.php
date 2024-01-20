@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        return Inertia::render($this->view('Home/Index'), [
+        return $this->view('Home/Index', [
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),
 		]);

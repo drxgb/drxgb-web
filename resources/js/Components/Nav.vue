@@ -155,11 +155,11 @@ function logout() {
 							</DropdownLink>
 							<DropdownLink :href="route('profile.show')">
 								<font-awesome-icon icon="user" />
-								<span class="ml-4">{{ $t('profile') }}</span>
+								<span class="ml-4">{{ $t('Profile') }}</span>
 							</DropdownLink>
 							<DropdownLink :href="route('profile.show')">
 								<font-awesome-icon icon="gear" />
-								<span class="ml-4">{{ $t('settings') }}</span>
+								<span class="ml-4">{{ $t('Settings') }}</span>
 							</DropdownLink>
 							<DropdownLink type="button" @click="logout">
 								<font-awesome-icon icon="arrow-right-from-bracket" />

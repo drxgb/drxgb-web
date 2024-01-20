@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
 import NavItem from '@/Components/Admin/NavItem.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';

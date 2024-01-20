@@ -26,19 +26,17 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-	// TODO: Adicionar controladores da área autenticada
+])->group(function ()
+{
+	//* Painel Administrativo
+	Route::middleware('admin')->name('admin.')->prefix('admin')->group(function () {
+		Route::get('/', DashboardController::class)->name('index');
+		Route::resource('file-extensions', FileExtensionController::class)->except('show');
+	});
 });
 
 
 //* Idiomas
 Route::name('languages.')->controller(LanguageController::class)-> group(function () {
 	Route::post('/languages', 'change')->name('change');
-});
-
-
-//* Painel Administrativo
-Route::middleware([ 'admin', 'verified' ])->name('admin.')->prefix('admin')->group(function () {
-	Route::get('/', DashboardController::class)->name('index');
-	Route::resource('file-extensions', FileExtensionController::class);
 });

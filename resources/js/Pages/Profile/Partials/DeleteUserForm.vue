@@ -85,7 +85,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <Button color="secondary" @click="closeModal">
-                        {{ $t('cancel') }}
+                        {{ $t('Cancel') }}
                     </Button>
 
                     <Button

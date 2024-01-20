@@ -44,7 +44,7 @@ defineProps({
 					<SectionBorder />
 					<h3 class="text-2xl">
 						<font-awesome-icon icon="triangle-exclamation" class="text-yellow-400" />
-						{{ $t('danger_zone') }}
+						{{ $t('Danger Zone') }}
 					</h3>
 					<div class="rounded-md p-4 mt-2 border-2 text-red-400 bg-red-500 border-red-700">
 						<DeleteUserForm class="mt-10 sm:mt-0" />

@@ -1,6 +1,9 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+	faAngleLeft,
 	faAngleRight,
+	faAnglesLeft,
+	faAnglesRight,
 	faArrowRightFromBracket,
 	faArrowRightToBracket,
 	faBars,
@@ -13,6 +16,7 @@ import {
 	faCircleCheck,
 	faCircleInfo,
 	faCircleQuestion,
+	faEdit,
 	faEnvelope,
 	faEye,
 	faEyeSlash,
@@ -25,10 +29,12 @@ import {
 	faMagnifyingGlass,
 	faMoon,
 	faPaperPlane,
+	faPlus,
 	faRotate,
 	faSun,
 	faTimes,
 	faTimesCircle,
+	faTrash,
 	faTriangleExclamation,
 	faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -44,7 +50,10 @@ import {
 
 library.add(
 	// Solid
+	faAngleLeft,
 	faAngleRight,
+	faAnglesLeft,
+	faAnglesRight,
 	faArrowRightFromBracket,
 	faArrowRightToBracket,
 	faBars,
@@ -57,6 +66,7 @@ library.add(
 	faCircleCheck,
 	faCircleInfo,
 	faCircleQuestion,
+	faEdit,
 	faEnvelope,
 	faEye,
 	faEyeSlash,
@@ -69,10 +79,12 @@ library.add(
 	faMagnifyingGlass,
 	faMoon,
 	faPaperPlane,
+	faPlus,
 	faRotate,
 	faSun,
 	faTimes,
 	faTimesCircle,
+	faTrash,
 	faTriangleExclamation,
 	faUser,
 

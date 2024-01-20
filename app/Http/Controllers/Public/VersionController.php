@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Public;
 
-use App\Models\ProductFile;
+use App\Models\Version;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ProductFileController extends Controller
+class VersionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class ProductFileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ProductFile $productFile)
+    public function show(Version $version)
     {
         //
     }
@@ -42,7 +43,7 @@ class ProductFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductFile $productFile)
+    public function edit(Version $version)
     {
         //
     }
@@ -50,7 +51,7 @@ class ProductFileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductFile $productFile)
+    public function update(Request $request, Version $version)
     {
         //
     }
@@ -58,7 +59,7 @@ class ProductFileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductFile $productFile)
+    public function destroy(Version $version)
     {
         //
     }

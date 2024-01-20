@@ -9,8 +9,8 @@ class DashboardController extends AdminController
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        return $this->view($request, 'Dashboard');
+        return $this->view('Dashboard');
     }
 }

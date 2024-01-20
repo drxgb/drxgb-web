@@ -98,7 +98,7 @@ const closeModal = () => {
 
 			<template #footer>
 				<Button color="secondary" @click="closeModal">
-					{{ $t('cancel') }}
+					{{ $t('Cancel') }}
 				</Button>
 
 				<Button
@@ -107,7 +107,7 @@ const closeModal = () => {
 					:class="{ 'opacity-25': form.processing }"
 					:disabled="form.processing"
 					@click="confirmPassword">
-					{{ button || $t('confirm') }}
+					{{ button || $t('Confirm') }}
 				</Button>
 			</template>
 		</DialogModal>

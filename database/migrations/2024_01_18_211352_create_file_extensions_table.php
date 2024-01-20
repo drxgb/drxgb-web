@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('file_extensions', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('extension', 8);
+			$table->string('extension', 8)->unique();
 			$table->string('icon_path')->nullable();
             $table->timestamps();
         });

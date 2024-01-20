@@ -3,23 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Builders\BreadcrumbBuilder;
+use Closure;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-	protected $breadcrumbBuilder;
+	/**
+	 * Caminho das migalhas de pão da página.
+	 * @var array
+	 */
+	protected $breadcrumbs;
 
 
 	public function __construct()
 	{
-		$this->breadcrumbBuilder = new BreadcrumbBuilder;
+		$this->breadcrumbs = [];
+
+		// Gerar as migalhas de pão
+		$this->middleware(function (Request $request, Closure $next) : HttpFoundationResponse
+		{
+			$builder = new BreadcrumbBuilder;
+			$builder->makeFromPath($request->getPathInfo());
+			$this->breadcrumbs = $builder->getResult();
+
+			return $next($request);
+		});
 	}
 
 
@@ -36,20 +52,14 @@ class Controller extends BaseController
 
 	/**
 	 * Monta a página de resposta.
-	 * @param Request $request
 	 * @param string $page
 	 * @param array $params
 	 * @return Response
 	 */
-	protected function view(Request $request, string $page, array $params = []) : Response
+	protected function view(string $page, array $params = []) : Response
 	{
-		$this->breadcrumbBuilder->makeFromPath($request->getPathInfo());
-		$breadcrumbs = $this->breadcrumbBuilder->getResult();
-
-		return Inertia::render(
-			$this->getPageFile($page),
-			compact('breadcrumbs') + $params
-		);
+		$params['breadcrumbs'] = $this->breadcrumbs;
+		return Inertia::render($this->getPageFile($page), $params);
 	}
 
 

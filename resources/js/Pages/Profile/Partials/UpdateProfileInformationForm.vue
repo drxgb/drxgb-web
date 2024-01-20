@@ -188,11 +188,11 @@ function clearPhotoFileInput() {
 
 		<template #actions>
 			<ActionMessage :on="form.recentlySuccessful" class="me-3">
-				{{ $t('saved') }}.
+				{{ $t('Saved') }}.
 			</ActionMessage>
 
 			<Button color="primary" icon="floppy-disk" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-				{{ $t('save') }}
+				{{ $t('Save') }}
 			</Button>
 		</template>
 	</FormSection>

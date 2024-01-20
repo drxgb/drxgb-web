@@ -46,7 +46,7 @@ class AdminDashboard
 			// Dashboard
 			[
 				'icon'	=> 'gauge',
-				'key'	=> 'dashboard',
+				'key'	=> 'Dashboard',
 				'href'	=> route('admin.index'),
 			],
 

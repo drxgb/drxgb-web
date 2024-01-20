@@ -120,17 +120,17 @@ function submit() {
 				<div class="px-2 sm:px-8 py-4">
 					<!-- Conectar com redes sociais -->
 					<div v-if="can.useSocialMedia" class="flex flex-col items-center gap-2 mt-4">
-						<HrLabel>{{ $t('or') }}</HrLabel>
+						<HrLabel>{{ $t('Or') }}</HrLabel>
 						<span>{{ $t('auth.connect_with') }}:</span>
 						<div class="flex flex-col sm:flex-row justify-center gap-4">
 							<Button icon="google" color="custom" fa="fab" class="bg-google hover:bg-white text-white hover:text-google w-24">
-								{{ $t('google') }}
+								{{ $t('Google') }}
 							</Button>
 							<Button icon="x-twitter" color="custom" fa="fab" class="bg-twitter hover:bg-white text-white hover:text-twitter w-24">
-								{{ $t('twitter') }}
+								{{ $t('X') }}
 							</Button>
 							<Button icon="github" color="custom" fa="fab" class="bg-white hover:bg-github text-github hover:text-white w-24">
-								{{ $t('github') }}
+								{{ $t('Github') }}
 							</Button>
 						</div>
 					</div>

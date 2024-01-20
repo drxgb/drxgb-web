@@ -96,7 +96,7 @@ const closeModal = () => {
 				</Button>
 
 				<ActionMessage :on="form.recentlySuccessful" class="ms-3">
-					{{ $t('done') }}.
+					{{ $t('Done') }}.
 				</ActionMessage>
 			</div>
 
@@ -124,7 +124,7 @@ const closeModal = () => {
 
 				<template #footer>
 					<Button color="secondary" @click="closeModal">
-						{{ $t('cancel') }}
+						{{ $t('Cancel') }}
 					</Button>
 
 					<Button

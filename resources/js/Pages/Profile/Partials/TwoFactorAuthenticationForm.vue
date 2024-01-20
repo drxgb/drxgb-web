@@ -152,7 +152,7 @@ function disableTwoFactorAuthentication() {
 					</div>
 
 					<div v-if="confirming" class="mt-4">
-						<InputLabel for="code" :value="$t('code')" />
+						<InputLabel for="code" :value="$t('Code')" />
 
 						<TextInput
 							id="code"
@@ -193,7 +193,7 @@ function disableTwoFactorAuthentication() {
 							type="button"
 							:class="{ 'opacity-25': enabling }"
 							:disabled="enabling">
-							{{ $t('enable') }}
+							{{ $t('Enable') }}
 						</Button>
 					</ConfirmsPassword>
 				</div>
@@ -208,7 +208,7 @@ function disableTwoFactorAuthentication() {
 							class="me-3"
 							:class="{ 'opacity-25': enabling }"
 							:disabled="enabling">
-							{{ $t('confirm') }}
+							{{ $t('Confirm') }}
 						</Button>
 					</ConfirmsPassword>
 
@@ -239,7 +239,7 @@ function disableTwoFactorAuthentication() {
 							icon="times"
 							:class="{ 'opacity-25': disabling }"
 							:disabled="disabling">
-							{{ $t('cancel') }}
+							{{ $t('Cancel') }}
 						</Button>
 					</ConfirmsPassword>
 

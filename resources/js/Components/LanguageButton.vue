@@ -51,7 +51,7 @@ function changeLanguage(): void {
 
 	<Modal :show="open" maxWidth="md" @close="open = false">
 		<template #header>
-			<h1>{{ $t('choose_language') }}</h1>
+			<h1>{{ $t('Choose a language') }}</h1>
 		</template>
 
 		<form @submit.prevent="changeLanguage">
@@ -72,7 +72,7 @@ function changeLanguage(): void {
 			</div>
 			<div class="flex justify-center p-2 bg-gray-200 dark:bg-slate-700">
 				<Button color="primary" icon="floppy-disk">
-					{{ $t('save') }}
+					{{ $t('Save') }}
 				</Button>
 			</div>
 		</form>

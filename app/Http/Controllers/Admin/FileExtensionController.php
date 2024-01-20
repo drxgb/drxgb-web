@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\FileExtension;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreFileExtensionRequest;
+use App\Http\Requests\UpdateFileExtensionRequest;
+use App\Services\FileExtensionService;
 
-class FileExtensionController extends Controller
+class FileExtensionController extends AdminController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        return $this->view($request, 'Index');
+		$extensions = FileExtension::paginate(20);
+        return $this->view('Index', compact('extensions'));
     }
 
     /**
@@ -21,23 +23,18 @@ class FileExtensionController extends Controller
      */
     public function create()
     {
-        //
+        return $this->view('Form');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFileExtensionRequest $request)
     {
-        //
-    }
+		$service = new FileExtensionService;
+		$service->store($request);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(FileExtension $fileExtension)
-    {
-        //
+        return to_route('admin.file-extensions.index');
     }
 
     /**
@@ -45,15 +42,18 @@ class FileExtensionController extends Controller
      */
     public function edit(FileExtension $fileExtension)
     {
-        //
+        return $this->view('Form', compact('fileExtension'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FileExtension $fileExtension)
+    public function update(UpdateFileExtensionRequest $request, FileExtension $fileExtension)
     {
-        //
+		$service = new FileExtensionService;
+		$service->update($request, $fileExtension);
+
+		return to_route('admin.file-extensions.index');
     }
 
     /**
@@ -70,6 +70,6 @@ class FileExtensionController extends Controller
 	 */
 	protected function rootFolder(): string
 	{
-		return 'Admin/Files/FileExtensions';
+		return parent::rootFolder() . '/Files/FileExtensions';
 	}
 }

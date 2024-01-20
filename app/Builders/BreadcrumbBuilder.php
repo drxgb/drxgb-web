@@ -50,12 +50,19 @@ class BreadcrumbBuilder extends Builder
 	{
 		return [
 			'admin'	=> [
-				'label'	=> __('dashboard'),
+				'label'	=> __('Dashboard'),
 				'url'	=> route('admin.index'),
 			],
 			'file-extensions'	=> [
 				'label'	=> __('nav.file_extensions'),
 				'url'	=> route('admin.file-extensions.index'),
+			],
+
+			'create' => [
+				'label'	=> __('Create'),
+			],
+			'edit' => [
+				'label'	=> __('Edit'),
 			],
 		];
 	}

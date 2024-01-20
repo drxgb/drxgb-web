@@ -3,7 +3,6 @@ import './font-awesome';
 import '../css/app.css';
 
 import { createApp, h } from 'vue';
-import type { DefineComponent } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
@@ -16,12 +15,12 @@ createInertiaApp({
 	title: (title) => `${title} - ${appName}`,
 	resolve: (name) => resolvePageComponent(
 		`./Pages/${name}.vue`,
-		import.meta.glob<DefineComponent>('./Pages/**/*.vue')
+		import.meta.glob<any>('./Pages/**/*.vue')
 	),
 	// @ts-ignore
 	setup({ el, App, props, plugin }) {
 		return createApp({ render: () => h(App, props) })
-			.use(plugin)
+			.use(plugin as any)
 			.use(ZiggyVue, (window as any).Ziggy)
 			.use(i18nVue, {
 				resolve: async lang => {

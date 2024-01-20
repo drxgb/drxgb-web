@@ -15,11 +15,11 @@ const props = withDefaults(defineProps<Props>(), {
 	full: false,
 });
 
-const widthClass = reactive<string>({
+const widthClass = reactive({
 	'md:w-11/12 lg:w-10/12': !props.full,
 	'w-full': props.full,
 });
-const marginTop = reactive<string>({
+const marginTop = reactive({
 	'my-8': !props.full,
 });
 

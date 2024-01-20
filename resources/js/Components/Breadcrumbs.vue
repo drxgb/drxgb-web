@@ -17,7 +17,7 @@ const colorClass = reactive({
 </script>
 
 <template>
-	<menu class="flex">
+	<menu class="flex flex-wrap">
 		<li v-for="(item, index) in items">
 			<Link v-if="item.url" :href="item.url" class="text-sm duration-100" :class="colorClass">
 				{{ item.label }}
