@@ -5,12 +5,26 @@ namespace App\Http\Controllers\Admin;
 use App\Models\FileExtension;
 use App\Http\Requests\StoreFileExtensionRequest;
 use App\Http\Requests\UpdateFileExtensionRequest;
-use App\Services\FileExtensionService;
+use App\Repositories\FileExtensionRepository;
 
 class FileExtensionController extends AdminController
 {
+	/**
+	 * Repositório das extensões de arquivo.
+	 * @property FileExtensionRepository $repository
+	 */
+	private $repository;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->repository = new FileExtensionRepository;
+	}
+
+
     /**
-     * Display a listing of the resource.
+     * Mostra a lista dos recursos.
      */
     public function index()
     {
@@ -19,7 +33,7 @@ class FileExtensionController extends AdminController
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostra o formulário de criação do novo recurso.
      */
     public function create()
     {
@@ -27,18 +41,16 @@ class FileExtensionController extends AdminController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Armazena uma nova instância do recurso.
      */
     public function store(StoreFileExtensionRequest $request)
     {
-		$service = new FileExtensionService;
-		$service->store($request);
-
+		$this->repository->store($request);
         return to_route('admin.file-extensions.index');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostra o formulário de edição do recurso específico.
      */
     public function edit(FileExtension $fileExtension)
     {
@@ -46,22 +58,21 @@ class FileExtensionController extends AdminController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza o recurso específico no armazenamento.
      */
     public function update(UpdateFileExtensionRequest $request, FileExtension $fileExtension)
     {
-		$service = new FileExtensionService;
-		$service->update($request, $fileExtension);
-
+		$this->repository->update($request, $fileExtension);
 		return to_route('admin.file-extensions.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove o recurso específico no armazenamento.
      */
     public function destroy(FileExtension $fileExtension)
     {
-        //
+		$this->repository->delete($fileExtension);
+		return redirect()->back();
     }
 
 

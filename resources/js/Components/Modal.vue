@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, onUnmounted, watch} from 'vue';
+import { computed, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
 	show: {
@@ -14,6 +14,10 @@ const props = defineProps({
 		type: Boolean,
 		default: true,
 	},
+	type: {
+		type: String,
+		default: '',
+	}
 });
 
 const emit = defineEmits(['close']);
@@ -54,6 +58,25 @@ const maxWidthClass = computed(() => {
 		'2xl': 'sm:max-w-2xl',
 	}[props.maxWidth];
 });
+const headerIcon = computed(() => {
+	return {
+		info: 'circle-info',
+		warning: 'triangle-exclamation',
+		danger: 'circle-xmark',
+	}[props.type];
+});
+const headerIconClass = computed(() => {
+	return {
+		info: 'text-sky-600 dark:text-sky-400',
+		warning: 'text-amber-400 dark:text-amber-300',
+		danger: 'text-red-600 dark:text-red-400',
+	}[props.type];
+});
+
+
+function isValidType() {
+	return [ 'info', 'warning', 'danger' ].includes(props.type);
+}
 </script>
 
 <template>
@@ -82,12 +105,20 @@ const maxWidthClass = computed(() => {
 					<div v-show="show" class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto" :class="maxWidthClass">
 						<div
 							v-if="$slots.header"
-							class="text-2xl flex justify-between p-2 bg-gray-200 dark:bg-slate-700">
-							<slot name="header" />
+							class="flex justify-between align-middle p-2 bg-gray-200 dark:bg-slate-700"
+						>
 							<font-awesome-icon
-								:icon="['fas', 'times']"
-								class="hover:cursor-pointer active:text-purple-300"
+								v-if="isValidType()"
+								:icon="[ 'fas', headerIcon ]"
+								:class="[ headerIconClass ]"
+								size="2xl" />
+							<h1 class="text-2xl">
+								<slot name="header" />
+							</h1>
+							<font-awesome-icon
 								v-if="$props.closeable"
+								:icon="[ 'fas', 'times' ]"
+								class="hover:cursor-pointer active:text-purple-300"
 								@click="close" />
 						</div>
 

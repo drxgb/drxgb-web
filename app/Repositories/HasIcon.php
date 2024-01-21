@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Contracts\Iconable;
 use Illuminate\Http\Request;
 
 
 /**
- * Funções para serviçoes que cujo seu modelo possui um ícone.
+ * Funções para repositórios que cujo seu modelo possui um ícone.
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -17,34 +17,24 @@ trait HasIcon
 	 * Atualiza o ícone se for necessário.
 	 * @param Request $request
 	 * @param Iconable $iconable
-	 * @return bool
+	 * @return void
 	 */
-	private function uploadIconIfNeeded(Request $request, Iconable $iconable) : bool
+	private function uploadIconIfNeeded(Request $request, Iconable $iconable) : void
 	{
 		if ($request->hasFile('icon'))
-		{
 			$iconable->saveIcon($request->file('icon'));
-			return true;
-		}
-
-		return false;
 	}
 
 
 	/**
 	 * Deleta o ícone se necessário.
-	 * @param \Illuminate\Http\Request $request
-	 * @param \App\Contracts\Iconable $iconable
-	 * @return bool
+	 * @param Request $request
+	 * @param Iconable $iconable
+	 * @return void
 	 */
-	protected function deleteIconIfNeeded(Request $request, Iconable $iconable) : bool
+	protected function deleteIconIfNeeded(Request $request, Iconable $iconable) : void
 	{
 		if ($request->deleteIcon)
-		{
 			$iconable->deleteIcon();
-			return true;
-		}
-
-		return false;
 	}
 }

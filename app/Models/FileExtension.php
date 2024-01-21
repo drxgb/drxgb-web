@@ -51,7 +51,6 @@ class FileExtension extends Model
 		$filename = $this->extension . '.' . $imgExtension;
 		$upload->storePubliclyAs($this->getRootFolder(), $filename, 'public');
 		$this->icon_path = $filename;
-		$this->save();
 	}
 
 
@@ -75,7 +74,6 @@ class FileExtension extends Model
 		{
 			Storage::disk('public')->delete($this->getRootFolder() . '/' . $this->icon_path);
 			$this->icon_path = null;
-			$this->save();
 		}
 	}
 

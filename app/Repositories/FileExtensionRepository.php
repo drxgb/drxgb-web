@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Models\FileExtension;
 use Illuminate\Http\Request;
 
-class FileExtensionService
+
+/**
+ * Responsável por criar, atualizar e apagar extensões de arquivo.
+ * @author Dr.XGB <https://github.com/drxgb>
+ * @version 1.0.0
+ */
+class FileExtensionRepository
 {
 	use HasIcon;
 
@@ -23,6 +29,9 @@ class FileExtensionService
 		]);
 
 		$this->uploadIconIfNeeded($request, $fileExtension);
+		if ($fileExtension->isDirty())
+			$fileExtension->save();
+
 		return $fileExtension;
 	}
 
@@ -39,21 +48,20 @@ class FileExtensionService
 			'name'		=> $request->name,
 			'extension'	=> $request->extension,
 		]);
-		if (!$this->uploadIconIfNeeded($request, $fileExtension))
-			$this->deleteIconIfNeeded($request, $fileExtension);
-
-		if ($fileExtension->isDirty())
-			$fileExtension->save();
+		$this->deleteIconIfNeeded($request, $fileExtension);
+		$this->uploadIconIfNeeded($request, $fileExtension);
+		$fileExtension->save();
 	}
 
 
 	/**
 	 * Apaga a extensão de arquivo.
-	 * @param \App\Models\FileExtension $fileExtension
+	 * @param FileExtension $fileExtension
 	 * @return void
 	 */
 	public function delete(FileExtension $fileExtension) : void
 	{
-
+		$fileExtension->delete();
+		$fileExtension->deleteIcon();
 	}
 }
