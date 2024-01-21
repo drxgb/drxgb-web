@@ -18,7 +18,7 @@ class Controller extends BaseController
 
 	/**
 	 * Caminho das migalhas de pão da página.
-	 * @var array
+	 * @property array $breadcrumbs
 	 */
 	protected $breadcrumbs;
 

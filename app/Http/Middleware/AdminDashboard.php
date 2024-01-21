@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\Admin\NavigationLinks;
 use Closure;
-use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -23,57 +24,15 @@ class AdminDashboard
      */
     public function handle(Request $request, Closure $next): Response
     {
-		/** @var User */
 		$user = $request->user();
 		if (!$user || !$user->isAdmin())
 			abort(403);
 
-		Inertia::share('emailInboxUrl', config('app.inbox_url'));
-		Inertia::share('navLinks', $this->shareNavLinks($request));
+		$navLinks = App::make(NavigationLinks::class);
+
+		Inertia::share('emailInboxUrl', config('admin.inbox_url'));
+		Inertia::share('navLinks', $navLinks->get());
 
         return $next($request);
     }
-
-
-	/**
-	 * Insere os links de navegação do painel administrativo.
-	 * @param \Illuminate\Http\Request $request
-	 * @return array
-	 */
-	protected function shareNavLinks(Request $request): array
-	{
-		return [
-			// Dashboard
-			[
-				'icon'	=> 'gauge',
-				'key'	=> 'Dashboard',
-				'href'	=> route('admin.index'),
-			],
-
-			// Arquivos
-			[
-				'icon'	=> 'file',
-				'key'	=> 'nav.files',
-				'items'	=> [
-					[
-						'key'	=> 'nav.file_extensions',
-						'href'	=> route('admin.file-extensions.index'),
-					],
-					[
-						'key'	=> 'nav.platforms',
-						'href'	=> '',
-					],
-				],
-			],
-
-			// Example Item
-			/* [
-				'icon'	=> 'user',						// Ícone do Font Awesome
-				'key'	=> '',							// Chave do texto para tradução
-				'title'	=> 'Item',						// Nome do item (não use esta chave se possuir a 'key', senão será sobrescrita)
-				'href'	=> route('admin.index'),		// Link do item
-				'items'	=> [],							// Um conjunto de itens desta seção. A estrutura do array é a mesma desta.
-			], */
-		];
-	}
 }

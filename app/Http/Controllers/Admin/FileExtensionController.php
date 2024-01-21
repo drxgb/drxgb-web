@@ -7,19 +7,19 @@ use App\Http\Requests\StoreFileExtensionRequest;
 use App\Http\Requests\UpdateFileExtensionRequest;
 use App\Repositories\FileExtensionRepository;
 
+
+/**
+ * Ações para manipulação das instâncias da extensão de arquivo.
+ * @author Dr.XGB <https://github.com/drxgb>
+ * @version 1.0.0
+ */
 class FileExtensionController extends AdminController
 {
-	/**
-	 * Repositório das extensões de arquivo.
-	 * @property FileExtensionRepository $repository
-	 */
-	private $repository;
-
-
-	public function __construct()
+	public function __construct(
+		private FileExtensionRepository $repository
+	)
 	{
 		parent::__construct();
-		$this->repository = new FileExtensionRepository;
 	}
 
 

@@ -1,7 +1,7 @@
 <script setup>
-import {ref, computed, reactive} from 'vue';
-import {Link, usePage} from '@inertiajs/vue3';
-import {trans} from 'laravel-vue-i18n';
+import { ref, computed, reactive } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { trans } from 'laravel-vue-i18n';
 import NavSubItem from './NavSubItem.vue';
 
 const props = defineProps({
@@ -19,42 +19,30 @@ const itemClass = reactive({
 	'bg-orange-600 text-orange-100 hover:text-orange-100 shadow-md':
 		page.props.ziggy.location === props.nav.href || opened
 });
-
-function navTitle(nav) {
-	if (props.noLabel === true) {
-		return nav.key
-			? trans(nav.key)
-			: nav.title;
-	}
-
-	return null;
-}
 </script>
 
 <template>
 	<Link
 		v-if="!nav.items"
 		:href="nav.href"
-		:title="navTitle(nav)"
+		:title="nav.title"
 		class="block px-4 py-2 relative hover:text-blue-200 duration-100 rounded-md"
 		:class="itemClass">
 		<font-awesome-icon :icon="nav.icon" size="lg" />
 		<template v-if="!noLabel">
-			<span v-if="nav.key" class="ml-2 text-lg">{{ $t(nav.key) }}</span>
-			<span v-else-if="nav.title" class="ml-2 text-lg">{{ nav.title }}</span>
+			<span class="ml-2 text-lg">{{ nav.title }}</span>
 		</template>
 	</Link>
 
 	<span v-else class="relative">
 		<div
 			class="flex items-center px-4 py-2 hover:text-blue-200 hover:cursor-pointer duration-100 rounded-md"
-			:title="navTitle(nav)"
+			:title="nav.title"
 			:class="itemClass"
 			@click="opened = !opened">
 			<font-awesome-icon :icon="nav.icon" size="lg" />
 			<template v-if="!noLabel">
-				<span v-if="nav.key" class="ml-2 text-lg">{{ $t(nav.key) }}</span>
-				<span v-else-if="nav.title" class="ml-2 text-lg">{{ nav.title }}</span>
+				<span class="ml-2 text-lg">{{ nav.title }}</span>
 			</template>
 
 			<font-awesome-icon
@@ -77,9 +65,8 @@ function navTitle(nav) {
 					'ml-8': !noLabel,
 					'absolute top-0 left-12 w-60 bg-blue-500': noLabel,
 				}">
-				<div v-if="noLabel" class="text-xl px-2 py-1 shadow-md bg-orange-600">
-					<h3 v-if="nav.key">{{ $t(nav.key) }}</h3>
-					<h3 v-else-if="nav.title">{{ nav.title }}</h3>
+				<div v-if="noLabel" class="px-2 py-1 shadow-md bg-orange-600">
+					<h3 class="text-3xl">{{ nav.title }}</h3>
 				</div>
 				<menu v-if="nav.items">
 					<li v-for="item of nav.items" class="py-1" :class="{ 'pl-4': noLabel }">

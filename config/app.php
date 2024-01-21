@@ -17,7 +17,6 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-	'inbox_url'	=> env('EMAIL_INBOX_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +56,6 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -124,7 +122,6 @@ return [
     */
 
     'key' => env('APP_KEY'),
-
     'cipher' => 'AES-256-CBC',
 
     /*
@@ -169,6 +166,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+		App\Providers\AdminServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
     ])->toArray(),

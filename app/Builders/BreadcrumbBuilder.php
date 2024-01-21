@@ -48,22 +48,19 @@ class BreadcrumbBuilder extends Builder
 	 */
 	private function getData() : array
 	{
-		return [
-			'admin'	=> [
-				'label'	=> __('Dashboard'),
-				'url'	=> route('admin.index'),
-			],
-			'file-extensions'	=> [
-				'label'	=> __('nav.file_extensions'),
-				'url'	=> route('admin.file-extensions.index'),
-			],
+		return array_map(
+			function (array $item) : array
+			{
+				$item['label'] = __($item['label']);
+				if (isset($item['url']))
+				{
+					if (!isset($item['literal']) || !$item['literal'])
+						$item['url'] = route($item['url']);
+				}
 
-			'create' => [
-				'label'	=> __('Create'),
-			],
-			'edit' => [
-				'label'	=> __('Edit'),
-			],
-		];
+				return $item;
+			},
+			config('breadcrumbs')
+		);
 	}
 }

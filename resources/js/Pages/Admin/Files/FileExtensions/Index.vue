@@ -20,7 +20,7 @@ function iconCell(extension: DataColumn): string {
 </script>
 
 <template>
-	<AdminLayout :title="$t('nav.file_extensions')">
+	<AdminLayout :title="$t('File extensions')">
 		<DataListLayout
 			title="File extension"
 			context="admin.file-extensions"

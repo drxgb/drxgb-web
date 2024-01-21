@@ -7,7 +7,6 @@ return [
 	|--------------------------------------------------------
 	*/
 
-	// Public
 	'softwares'				=> 'Softwares',
 	'games'					=> 'Games',
 	'online_tools'			=> 'Online Tools',
@@ -17,9 +16,4 @@ return [
 
 	'admin_dashboard'		=> 'Admin Dashboard',
 	'email_inbox'			=> 'Email Inbox',
-
-	// Admin
-	'files'					=> 'Files',
-	'file_extensions'		=> 'File Extensions',
-	'platforms'				=> 'Platforms',
 ];
