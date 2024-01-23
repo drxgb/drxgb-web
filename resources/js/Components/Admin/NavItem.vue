@@ -66,7 +66,7 @@ const itemClass = reactive({
 					'absolute top-0 left-12 w-60 bg-blue-500': noLabel,
 				}">
 				<div v-if="noLabel" class="px-2 py-1 shadow-md bg-orange-600">
-					<h3 class="text-3xl">{{ nav.title }}</h3>
+					<h3 class="text-xl">{{ nav.title }}</h3>
 				</div>
 				<menu v-if="nav.items">
 					<li v-for="item of nav.items" class="py-1" :class="{ 'pl-4': noLabel }">

@@ -15,4 +15,11 @@ interface Storeable
 	 * @return string
 	 */
 	function getRootFolder() : string;
+
+
+	/**
+	 * Recebe o nome do arquivo que representa o conteúdo.
+	 * @return string
+	 */
+	function getFileName() : string;
 }

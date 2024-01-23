@@ -34,7 +34,18 @@ trait HasIcon
 	 */
 	protected function deleteIconIfNeeded(Request $request, Iconable $iconable) : void
 	{
-		if ($request->deleteIcon)
+		if (!$request->hasFile('icon') && $this->hasIcon($iconable))
 			$iconable->deleteIcon();
+	}
+
+
+	/**
+	 * Verifica se a instância possui um ícone.
+	 * @param Iconable $iconable
+	 * @return bool
+	 */
+	protected function hasIcon(Iconable $iconable) : bool
+	{
+		return $iconable->iconPath() !== $iconable->defaultIcon();
 	}
 }

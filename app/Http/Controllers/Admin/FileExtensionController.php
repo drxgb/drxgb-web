@@ -28,7 +28,7 @@ class FileExtensionController extends AdminController
      */
     public function index()
     {
-		$extensions = FileExtension::paginate(20);
+		$extensions = FileExtension::paginate(config('page.items_per_page'));
         return $this->view('Index', compact('extensions'));
     }
 

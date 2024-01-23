@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\FileExtension;
 use App\Models\Platform;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,8 @@ class PlatformController extends AdminController
      */
     public function index()
     {
-        $platforms = Platform::paginate(20);
+        $platforms = Platform::paginate(config('page.items_per_page'));
+		return $this->view('Index', compact('platforms'));
     }
 
     /**
@@ -26,7 +28,8 @@ class PlatformController extends AdminController
      */
     public function create()
     {
-        //
+		$extensions = FileExtension::all();
+        return $this->view('Form', compact('extensions'));
     }
 
     /**
@@ -34,7 +37,7 @@ class PlatformController extends AdminController
      */
     public function store(Request $request)
     {
-        //
+        return 'É GOL!';
     }
 
     /**
@@ -42,7 +45,8 @@ class PlatformController extends AdminController
      */
     public function edit(Platform $platform)
     {
-        //
+		$extensions = FileExtension::all();
+        return $this->view('Form', compact('platform', 'extensions'));
     }
 
     /**
@@ -60,4 +64,13 @@ class PlatformController extends AdminController
     {
         //
     }
+
+
+	/**
+	 * @return string
+	 */
+	protected function rootFolder(): string
+	{
+		return parent::rootFolder() . '/Files/Platforms';
+	}
 }

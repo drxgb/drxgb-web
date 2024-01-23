@@ -24,7 +24,7 @@ class StoreFileExtensionRequest extends FormRequest
         return [
             'name'		=> 'required|max:255',
 			'extension'	=> 'required|max:5|unique:file_extensions',
-			'icon'		=> 'image|dimensions:width=16,height=16',
+			'icon'		=> 'nullable|image|dimensions:width=16,height=16',
         ];
     }
 }

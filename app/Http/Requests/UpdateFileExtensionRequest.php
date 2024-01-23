@@ -29,7 +29,7 @@ class UpdateFileExtensionRequest extends FormRequest
 				'max:5',
 				Rule::unique('file_extensions')->ignore($this->id),
 			],
-			'icon'		=> 'image|dimensions:width=16,height=16',
+			'icon'		=> 'nullable|image|dimensions:width=16,height=16',
         ];
     }
 }

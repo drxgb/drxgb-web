@@ -37,6 +37,7 @@ import {
 	faTrash,
 	faTriangleExclamation,
 	faUser,
+	faUpload,
 } from '@fortawesome/free-solid-svg-icons';
 import {
 	faGoogle,
@@ -87,6 +88,7 @@ library.add(
 	faTrash,
 	faTriangleExclamation,
 	faUser,
+	faUpload,
 
 	// Brands
 	faGoogle,

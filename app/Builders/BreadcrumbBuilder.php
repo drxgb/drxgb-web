@@ -60,7 +60,7 @@ class BreadcrumbBuilder extends Builder
 
 				return $item;
 			},
-			config('breadcrumbs')
+			config('page.breadcrumbs')
 		);
 	}
 }
