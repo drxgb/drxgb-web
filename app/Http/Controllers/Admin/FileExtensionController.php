@@ -16,7 +16,7 @@ use App\Repositories\FileExtensionRepository;
 class FileExtensionController extends AdminController
 {
 	public function __construct(
-		private FileExtensionRepository $repository
+		private FileExtensionRepository $fileExtensions
 	)
 	{
 		parent::__construct();
@@ -45,7 +45,7 @@ class FileExtensionController extends AdminController
      */
     public function store(StoreFileExtensionRequest $request)
     {
-		$this->repository->store($request);
+		$this->fileExtensions->store($request);
         return to_route('admin.file-extensions.index');
     }
 
@@ -62,7 +62,7 @@ class FileExtensionController extends AdminController
      */
     public function update(UpdateFileExtensionRequest $request, FileExtension $fileExtension)
     {
-		$this->repository->update($request, $fileExtension);
+		$this->fileExtensions->update($request, $fileExtension);
 		return to_route('admin.file-extensions.index');
     }
 
@@ -71,7 +71,7 @@ class FileExtensionController extends AdminController
      */
     public function destroy(FileExtension $fileExtension)
     {
-		$this->repository->delete($fileExtension);
+		$this->fileExtensions->delete($fileExtension);
 		return redirect()->back();
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Iconable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,18 +22,29 @@ class Platform extends Model
 
 	protected $appends = [
 		'icon',
-		'file_extensions',
+		'supported_file_extensions',
 	];
+
+
+	/**
+	 * Recebe o relacionamento entre as plataformas e as extensões.
+	 * @return BelongsToMany
+	 */
+	public function fileExtensions(): BelongsToMany
+	{
+		return $this->belongsToMany(FileExtension::class);
+	}
 
 
 	/**
 	 * Recebe as extensões suportadas por esta plataforma.
 	 * @return Attribute
 	 */
-	public function fileExtensions(): Attribute
+	public function supportedFileExtensions() : Attribute
 	{
-		return Attribute::get(fn () : BelongsToMany =>
-			$this->belongsToMany(FileExtension::class));
+		return Attribute::get(fn () : Collection =>
+			$this->fileExtensions()->get()
+		);
 	}
 
 

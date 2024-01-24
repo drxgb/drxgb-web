@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\FileExtension;
 use App\Models\Platform;
-use Illuminate\Http\Request;
+use App\Repositories\PlatformRepository;
+use App\Http\Requests\StorePlatformRequest;
+use App\Http\Requests\UpdatePlatformRequest;
 
 
 /**
@@ -14,6 +15,14 @@ use Illuminate\Http\Request;
  */
 class PlatformController extends AdminController
 {
+	public function __construct(
+		private PlatformRepository $platforms
+	)
+	{
+		parent::__construct();
+	}
+
+
     /**
      * Mostra a lista dos recursos.
      */
@@ -28,16 +37,17 @@ class PlatformController extends AdminController
      */
     public function create()
     {
-		$extensions = FileExtension::all();
+		$extensions = $this->platforms->extensions('extension');
         return $this->view('Form', compact('extensions'));
     }
 
     /**
      * Armazena uma nova instância do recurso.
      */
-    public function store(Request $request)
+    public function store(StorePlatformRequest $request)
     {
-        return 'É GOL!';
+		$this->platforms->store($request);
+        return to_route('admin.platforms.index');
     }
 
     /**
@@ -45,16 +55,17 @@ class PlatformController extends AdminController
      */
     public function edit(Platform $platform)
     {
-		$extensions = FileExtension::all();
+		$extensions = $this->platforms->extensions('extension');
         return $this->view('Form', compact('platform', 'extensions'));
     }
 
     /**
      * Atualiza o recurso específico no armazenamento.
      */
-    public function update(Request $request, Platform $platform)
+    public function update(UpdatePlatformRequest $request, Platform $platform)
     {
-        //
+        $this->platforms->update($request, $platform);
+		return to_route('admin.platforms.index');
     }
 
     /**
@@ -62,7 +73,8 @@ class PlatformController extends AdminController
      */
     public function destroy(Platform $platform)
     {
-        //
+        $this->platforms->delete($platform);
+		return redirect()->back();
     }
 
 

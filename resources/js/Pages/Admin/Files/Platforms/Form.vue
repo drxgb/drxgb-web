@@ -18,7 +18,8 @@ const form = useForm({
 	id: null,
 	name: props.platform?.name,
 	short_name: props.platform?.short_name,
-	extensions: props.platform?.fileExtensions || [],
+	file_extensions:
+		props.platform?.supported_file_extensions.map(ext => ext.id) || [],
 	icon: null,
 });
 
@@ -87,6 +88,7 @@ function submit(isUpdate) {
 							ref="uploadInput"
 							accept="image/png, image/bmp, image/gif"
 							upload-label="Choose icon"
+							:initial-files="platform?.icon_path ? platform.icon : null"
 							@update="updateIcon"
 						/>
 						<InputError :message="form.errors?.icon" class="mt-2" />
@@ -94,14 +96,21 @@ function submit(isUpdate) {
 
 					<div class="w-full">
 						<InputLabel for="file-extensions" :value="$t('File extensions')" />
-						<SelectInput id="file-extensions" class="w-full h-64" multiple>
+						<SelectInput
+							id="file-extensions"
+							class="w-full"
+							size="15"
+							multiple
+							:value="form.file_extensions"
+							@change-option="options => form.file_extensions = options"
+						>
 							<option
 								v-for="extension in extensions"
 								:value="extension.id"
 								:style="`background-image: url(${extension.icon})`"
 								class="bg-no-repeat pl-8"
 							>
-								{{ extension.name }}
+								.{{ extension.extension }} - {{ extension.name }}
 							</option>
 						</SelectInput>
 					</div>

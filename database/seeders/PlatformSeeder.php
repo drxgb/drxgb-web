@@ -15,11 +15,13 @@ class PlatformSeeder extends Seeder
         Platform::create([
 			'name'			=> 'Windows 32 bit',
 			'short_name'	=> 'x86',
+			'icon_path'		=> 'x86.png',
 		]);
 
         Platform::create([
 			'name'			=> 'Windows 64 bit',
 			'short_name'	=> 'x64',
+			'icon_path'		=> 'x64.png',
 		]);
     }
 }

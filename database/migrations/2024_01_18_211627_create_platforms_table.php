@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('platforms', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('short_name')->unique();
+			$table->string('short_name', 24)->unique();
 			$table->string('icon_path')->nullable();
             $table->timestamps();
         });

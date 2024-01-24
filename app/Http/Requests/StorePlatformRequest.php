@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFileExtensionRequest extends AdminRequest
+class StorePlatformRequest extends AdminRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,10 @@ class StoreFileExtensionRequest extends AdminRequest
     public function rules(): array
     {
         return [
-            'name'		=> 'required|max:255',
-			'extension'	=> 'required|max:5|unique:file_extensions',
-			'icon'		=> 'nullable|image|dimensions:width=16,height=16',
+            'name'				=> 'required|max:255',
+			'short_name'		=> 'required|max:24|unique:platforms',
+			'icon'				=> 'nullable|image|dimensions:width=32,height=32',
+			'file_extensions'	=> 'array',
         ];
     }
 }

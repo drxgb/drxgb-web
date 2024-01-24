@@ -81,7 +81,7 @@ function submit(isUpdate) {
 							ref="uploadInput"
 							accept="image/png, image/bmp, image/gif"
 							upload-label="Choose icon"
-							:initial-files="fileExtension.icon_path ? fileExtension.icon : null"
+							:initial-files="fileExtension?.icon_path ? fileExtension.icon : null"
 							@update="updateIcon"
 						/>
 					<InputError :message="form.errors?.icon" class="mt-2" />
