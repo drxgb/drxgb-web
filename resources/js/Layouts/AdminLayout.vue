@@ -14,7 +14,7 @@ defineProps<{
 	title: string,
 }>();
 
-const hideSideBar = ref<boolean>(true);
+const toggleSideBar = ref<boolean>(!(window.innerWidth > 768));
 const iconSize = computed<string>(() => document.body.clientWidth < 1024 ? 'xl' : '2xl');
 const navHoverClass: string = 'hover:text-blue-200 hover:cursor-pointer';
 const themeHandler: ThemeHandler = ThemeHandler.getInstance();
@@ -40,7 +40,7 @@ themeHandler.load();
 						icon="bars"
 						:size="iconSize"
 						:class="navHoverClass"
-						@click="hideSideBar = !hideSideBar" />
+						@click="toggleSideBar = !toggleSideBar" />
 				</div>
 				<div class="flex gap-4">
 					<Tooltip>
@@ -64,12 +64,12 @@ themeHandler.load();
 			<nav
 				class="px-2 w-60 shrink-0 bg-gradient-to-b from-75% from-blue-500 to-blue-400 text-blue-100"
 				:class="{
-					'w-auto hidden sm:block': hideSideBar,
-					'fixed lg:static min-h-full': !hideSideBar,
+					'w-auto hidden sm:block': toggleSideBar,
+					'fixed lg:static min-h-full': !toggleSideBar,
 				}">
 				<menu class="mt-4">
 					<li v-for="nav of $page.props.navLinks" class="mb-2">
-						<NavItem :nav="nav" :no-label="hideSideBar" />
+						<NavItem :nav="nav" :no-label="toggleSideBar" />
 					</li>
 				</menu>
 			</nav>

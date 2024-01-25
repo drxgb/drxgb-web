@@ -45,6 +45,17 @@ return [
 					],
 				],
 			],
+			// Loja
+			[
+				'icon' 	=> 'cart-shopping',
+				'title'	=> 'Store',
+				'items'	=> [
+					[
+						'title'	=> 'Categories',
+						'href'	=> 'admin.categories.index',
+					],
+				],
+			],
 			// Modelo
 			/* [
 				'icon'	=> 'user',						// Ícone do Font Awesome

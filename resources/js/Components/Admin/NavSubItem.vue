@@ -1,21 +1,50 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { computed, onMounted, reactive, ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 
-defineProps({
+const props = defineProps({
 	item: Object,
 });
+const emit = defineEmits([ 'active' ]);
+const page = usePage();
 
-const opened = ref(false);
+const opened = ref(isActive());
 const dropdownIcon = computed(() => opened.value === true ? 'chevron-down' : 'chevron-left');
+const activeClass = reactive({
+	'bg-orange-600 text-orange-100 hover:text-orange-100 shadow-md':
+		isActive() || opened,
+});
+
+
+onMounted(() => {
+	if (isActive()) {
+		emit('active');
+	}
+});
+
+function isActive() {
+	return page.props.ziggy.location === props.item.href;
+}
+
+
+function onActive() {
+	opened.value = true;
+	emit('active');
+}
 </script>
 
 <template>
-	<Link v-if="!item.items" :href="item.href" class="hover:text-blue-200 duration-100">
-		<span class="text-lg">{{ item.title }}</span>
-	</Link>
+	<li class="mt-1 px-2 rounded-sm" :class="activeClass">
+		<Link
+			v-if="!item.items"
+			:href="item.href"
+			class="hover:text-blue-200 duration-100"
+			:class="activeClass"
+		>
+			<span class="text-lg">{{ item.title }}</span>
+		</Link>
 
-	<span v-else>
+		<span v-else>
 			<div
 				class="flex items-center pr-4 py-2 hover:text-blue-200 hover:cursor-pointer duration-100 rounded-md"
 				@click="opened = !opened">
@@ -35,10 +64,13 @@ const dropdownIcon = computed(() => opened.value === true ? 'chevron-down' : 'ch
 					leave-from-class="transform opacity-100 scale-y-100"
 					leave-to-class="transform opacity-25 scale-y-0">
 				<menu v-if="item.items" v-show="opened" class="origin-top ml-4">
-					<li v-for="i of item.items" class="py-1">
-						<NavSubItem :item="i" />
-					</li>
+					<NavSubItem
+						v-for="i of item.items"
+						:item="i"
+						@active="onActive"
+					/>
 				</menu>
 			</transition>
 		</span>
+	</li>
 </template>

@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed, reactive } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
-import { trans } from 'laravel-vue-i18n';
 import NavSubItem from './NavSubItem.vue';
 
 const props = defineProps({
@@ -69,9 +68,12 @@ const itemClass = reactive({
 					<h3 class="text-xl">{{ nav.title }}</h3>
 				</div>
 				<menu v-if="nav.items">
-					<li v-for="item of nav.items" class="py-1" :class="{ 'pl-4': noLabel }">
-						<NavSubItem :item="item" />
-					</li>
+					<NavSubItem
+						v-for="item of nav.items"
+						:class="{ 'pl-4': noLabel }"
+						:item="item"
+						@active="opened = true"
+					/>
 				</menu>
 			</div>
 		</transition>

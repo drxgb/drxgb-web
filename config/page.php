@@ -34,9 +34,9 @@ return [
 	'breadcrumbs' => [
 
 		//* Páginas do painel administrativo.
-		'admin'	=> [
-			'label'	=> 'Dashboard',
-			'url'	=> 'admin.index',
+		'categories' => [
+			'label'	=> 'Categories',
+			'url'	=> 'admin.categories.index',
 		],
 		'file-extensions'	=> [
 			'label'	=> 'File extensions',
@@ -45,6 +45,13 @@ return [
 		'platforms'	=> [
 			'label'	=> 'Platforms',
 			'url'	=> 'admin.platforms.index',
+		],
+
+
+		//* Abas do painel administrativo
+		'admin'	=> [
+			'label'	=> 'Dashboard',
+			'url'	=> 'admin.index',
 		],
 
 
