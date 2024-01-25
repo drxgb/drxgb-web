@@ -30,6 +30,7 @@ class NavigationLinks
 	 */
 	private static function hydrateItem(array $item) : array
 	{
+		// Hidratar subgrupo
 		if (isset($item['items']))
 		{
 			$item['items'] = array_map(
@@ -38,13 +39,19 @@ class NavigationLinks
 			);
 		}
 
+		// Traduzir título
 		if (isset($item['title']))
 			$item['title'] = __($item['title']);
 
+		// Transformar rota em URL
 		if (isset($item['href']))
 		{
 			if (!isset($item['literal']) || !$item['literal'])
 				$item['href'] = route($item['href']);
+
+			$pattern = '#^' . $item['href'] . '.*#';
+			if (preg_match($pattern, request()->fullUrl()))
+				$item['active'] = true;
 		}
 
 		return $item;

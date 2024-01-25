@@ -8,7 +8,7 @@ const props = defineProps({
 const emit = defineEmits([ 'active' ]);
 const page = usePage();
 
-const opened = ref(isActive());
+const opened = ref(false);
 const dropdownIcon = computed(() => opened.value === true ? 'chevron-down' : 'chevron-left');
 const activeClass = reactive({
 	'bg-orange-600 text-orange-100 hover:text-orange-100 shadow-md':
@@ -18,12 +18,13 @@ const activeClass = reactive({
 
 onMounted(() => {
 	if (isActive()) {
-		emit('active');
+		onActive();
 	}
 });
 
+
 function isActive() {
-	return page.props.ziggy.location === props.item.href;
+	return props.item.active;
 }
 
 
