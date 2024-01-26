@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class CategoryController extends AdminController
      */
     public function index()
     {
-        $categories = Category::paginate(config('page.items_per_page', 20));
+        $categories = $this->categories->listWithHierarchy();
 		return $this->view('Index', compact('categories'));
     }
 
@@ -30,23 +31,17 @@ class CategoryController extends AdminController
      */
     public function create()
     {
-        //
+		$categories = $this->categories->listWithHierarchy();
+        return $this->view('Form', compact('categories'));
     }
 
     /**
      * Armazena uma nova instância do recurso.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
-    }
-
-    /**
-     * Mostra o recurso específico.
-     */
-    public function show(Category $category)
-    {
-        //
+        $this->categories->store($request);
+		return to_route('admin.categories.index');
     }
 
     /**
@@ -54,7 +49,8 @@ class CategoryController extends AdminController
      */
     public function edit(Category $category)
     {
-        //
+        $categories = $this->categories->listWithHierarchy($category);
+		return $this->view('Form', compact('category', 'categories'));
     }
 
     /**
@@ -62,7 +58,8 @@ class CategoryController extends AdminController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->categories->update($request, $category);
+		return to_route('admin.categories.index');
     }
 
     /**
@@ -70,7 +67,8 @@ class CategoryController extends AdminController
      */
     public function destroy(Category $category)
     {
-        //
+        $this->categories->destroy($category);
+		return redirect()->back();
     }
 
 

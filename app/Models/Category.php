@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -15,23 +18,37 @@ class Category extends Model
 		'name',
 	];
 
+	protected $appends = [
+		'children',
+	];
+
 
 	/**
 	 * Recebe a categoria pai.
-	 * @return HasOne
+	 * @return BelongsTo
 	 */
-	public function parent() : HasOne
+	public function parent() : BelongsTo
 	{
-		return $this->hasOne(Category::class, 'parent_id');
+		return $this->belongsTo(Category::class, 'parent_id');
 	}
 
 
 	/**
 	 * Recebe as subcategorias.
-	 * @return BelongsTo
+	 * @return HasMany
 	 */
-	public function subcategories() : BelongsTo
+	public function subcategories() : HasMany
 	{
-		return $this->belongsTo(Category::class, 'parent_id');
+		return $this->hasMany(Category::class, 'parent_id');
+	}
+
+
+	/**
+	 * Recebe as subcategorias em forma de atributo.
+	 * @return Attribute
+	 */
+	public function children() : Attribute
+	{
+		return Attribute::get(fn () : Collection => $this->subcategories()->get());
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -12,6 +12,11 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $plugins = Category::create([ 'name' => 'Plugins' ]);
+        $mv = Category::create([ 'name' => 'RPG Maker MV' ]);
+        $mz = Category::create([ 'name' => 'RPG Maker MZ' ]);
+
+		$plugins->subcategories()->save($mv);
+		$plugins->subcategories()->save($mz);
     }
 }

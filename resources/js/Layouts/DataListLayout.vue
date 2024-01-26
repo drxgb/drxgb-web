@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/vue3';
 import Button from '@/Components/Button.vue';
 import Paginator from '@/Components/Paginator.vue';
 import DataColumn from '@/Classes/Layout/DataColumn';
+import DisplayTotal from '@/Components/DisplayTotal.vue';
 import Modal from '@/Components/Modal.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 
@@ -132,14 +133,7 @@ function deleteItem(item) {
 		<tfoot>
 			<tr>
 				<td :colspan="columns.length + 1" :class="[ 'px-4 py-2 text-xs', headClasses ]">
-					{{ $t('Showing') }}
-					<template v-if="content.data.length >= content.total">
-						{{ $t('Everything').toLowerCase() }}
-					</template>
-					<template v-else>
-						{{ content.data.length }} {{ $t('of') }} {{ content.total }}
-						{{ $t('Items').toLowerCase() }}
-					</template>
+					<DisplayTotal :content="content" />
 				</td>
 			</tr>
 		</tfoot>

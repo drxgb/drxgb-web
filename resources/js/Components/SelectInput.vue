@@ -21,8 +21,8 @@ onMounted(() => {
 				option.selected = true;
 			}
 		});
-	} else {
-		input.value = props.value;
+	} else if(props.value) {
+		input.value.value = props.value;
 	}
 });
 
