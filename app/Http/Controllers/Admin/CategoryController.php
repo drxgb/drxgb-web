@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
 
 class CategoryController extends AdminController
 {
@@ -56,7 +55,7 @@ class CategoryController extends AdminController
     /**
      * Atualiza o recurso específico no armazenamento.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
         $this->categories->update($request, $category);
 		return to_route('admin.categories.index');

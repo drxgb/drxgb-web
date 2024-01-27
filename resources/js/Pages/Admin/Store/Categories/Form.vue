@@ -42,13 +42,13 @@ function submit(isUpdate) {
 					v-model="form.name"
 					autofocus
 				/>
+				<InputError :message="form.errors?.name" class="mt-2" />
 
 				<InputLabel class="mt-4" for="parent-id" :value="$t('Parent category')" required />
 				<SelectInput
 					id="parent-id"
 					class="w-full"
-					:value="form.parent_id"
-					@change-option="value => form.parent_id = value"
+					v-model="form.parent_id"
 				>
 					<option value="">({{ $t('None') }})</option>
 					<option v-for="parent in categories" :value="parent.id">

@@ -6,7 +6,7 @@ import Card from '@/Components/Card.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
-import SelectInput from '@/Components/SelectInput.vue';
+import MultipleSelectInput from '@/Components/MultipleSelectInput.vue';
 import UploadInput from '@/Components/UploadInput.vue';
 
 const props = defineProps({
@@ -96,11 +96,10 @@ function submit(isUpdate) {
 
 					<div class="w-full">
 						<InputLabel for="file-extensions" :value="$t('File extensions')" />
-						<SelectInput
+						<MultipleSelectInput
 							id="file-extensions"
 							class="w-full"
 							size="15"
-							multiple
 							:value="form.file_extensions"
 							@change-option="options => form.file_extensions = options"
 						>
@@ -112,7 +111,7 @@ function submit(isUpdate) {
 							>
 								.{{ extension.extension }} - {{ extension.name }}
 							</option>
-						</SelectInput>
+						</MultipleSelectInput>
 					</div>
 				</div>
 			</Card>
