@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util;
+namespace App\Utils;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;

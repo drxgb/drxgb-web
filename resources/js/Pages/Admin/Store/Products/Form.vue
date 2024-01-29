@@ -18,12 +18,15 @@ import ToggleInput from '@/Components/ToggleInput.vue';
 import UploadInput from '@/Components/UploadInput.vue';
 import VersionForm from '@/Pages/Admin/Partials/VersionForm.vue';
 
-import Forms from '@/Classes/Util/Forms';
+import type ProductFile from '@/Classes/Models/ProductFile';
+import type Version from '@/Classes/Models/Version';
+
+import Forms from '@/Classes/Utils/Forms';
 
 const props = defineProps<{
 	product?: any,
 	categories: any[],
-	platforms: any[],
+	platforms?: any[],
 }>();
 const form = useForm({
 	title: props.product?.title,
@@ -38,10 +41,10 @@ const form = useForm({
 	versions: props.product?.versions || [],
 	images: props.product?.images || [],
 });
-const showModal = ref<boolean>(false);
-const updateVersion = ref<boolean>(false);
-const version = ref<any>(null);
-const versionForm = ref<any>(null);
+const showModal: any = ref<boolean>(false);
+const updateVersion: any = ref<boolean>(false);
+const version: any = ref<Version>(null);
+const versionForm: any = ref<any>(null);
 
 
 function updateImages(images: any[]): void {
@@ -64,8 +67,14 @@ function addVersion(): void {
 }
 
 
-function editVersion(version: any): void {
-	version.value = version;
+function storeVersion(_version) {
+	form.versions.push(_version);
+	showModal.value = false;
+}
+
+
+function editVersion(_version: any): void {
+	version.value = _version;
 	updateVersion.value = true;
 	showModal.value = true;
 	if (versionForm.value)
@@ -74,14 +83,11 @@ function editVersion(version: any): void {
 
 
 function closeModal(): void {
-	if (form.isDirty) {
-		if (!window.confirm(trans('All unsaved changes will be lost. Procceed?')))
-			return;
+	if (confirm(trans('All unsaved changes will be lost. Proceed?'))) {
+		showModal.value = false;
+		if (versionForm.value)
+			versionForm.value.cancel();
 	}
-
-	showModal.value = false;
-	if (versionForm.value)
-		versionForm.value.cancel();
 }
 
 
@@ -101,12 +107,12 @@ function submit(isUpdate: boolean): void {
 			<div class="px-8 py-4">
 				<!-- Título -->
 				<InputLabel for="title" :value="$t('Title')" required />
-					<TextInput
-						id="title"
-						class="w-full"
-						v-model="form.title"
-						autofocus
-					/>
+				<TextInput
+					id="title"
+					class="w-full"
+					v-model="form.title"
+					autofocus
+				/>
 				<InputError :message="form.errors?.title" />
 
 				<div class="flex flex-col sm:flex-row gap-4 w-full my-4">
@@ -157,7 +163,7 @@ function submit(isUpdate: boolean): void {
 					id="price"
 					color="secondary"
 					v-model="form.price"
-					min="0"
+					:min="0"
 				/>
 				<small v-show="form.price === 0" class="text-green-400 dark:text-green-500">
 					{{ $t('Free') }}
@@ -165,17 +171,17 @@ function submit(isUpdate: boolean): void {
 				<InputError :message="form.errors?.price" />
 
 				<!-- Versões -->
-				<HrLabel class="mt-4" />
-				<InputLabel class="mt-4 mb-2" :value="$t('Version')" required />
-				<div>
+				<HrLabel class="my-4" />
+				<InputLabel :value="$t('Version')" required />
+				<div class="my-2">
 					<Button icon="plus" color="primary" @click="addVersion">
 						{{ $t('Add new version') }}
 					</Button>
 				</div>
 
 				<!-- Imagens -->
-				<HrLabel class="mt-4" />
-				<InputLabel for="images" class="mt-4 mb-2" :value="$t('Images')" />
+				<HrLabel class="my-4" />
+				<InputLabel for="images" class="my-2" :value="$t('Images')" />
 				<UploadInput
 					id="images"
 					accept="image/*"
@@ -219,6 +225,7 @@ function submit(isUpdate: boolean): void {
 			:version="version"
 			:is-update="updateVersion"
 			:platforms="platforms"
+			@submit-version="storeVersion"
 		/>
 	</Modal>
 </template>

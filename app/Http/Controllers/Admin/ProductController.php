@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductController extends AdminController
 {
@@ -34,7 +35,7 @@ class ProductController extends AdminController
     public function create()
     {
 		$categories = $this->categories->listWithHierarchy();
-		$platforms = Platform::all();
+		$platforms = fn () => Platform::all();
         return $this->view('Form', compact('categories', 'platforms'));
     }
 

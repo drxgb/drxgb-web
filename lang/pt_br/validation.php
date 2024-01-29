@@ -171,6 +171,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+		'version_files.*.file'	=> [
+			'mimes'		=> 'O arquivo enviado deve ser dos tipos: :values.',
+		],
     ],
 
     /*

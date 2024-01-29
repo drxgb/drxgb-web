@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataListLayout from '@/Layouts/DataListLayout.vue';
-import DataColumn from '@/Classes/Layout/DataColumn';
+import DataColumn from '@/Classes/Layouts/DataColumn';
 
 const props = defineProps<{
 	platforms: any,

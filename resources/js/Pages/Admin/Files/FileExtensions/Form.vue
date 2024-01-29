@@ -31,6 +31,7 @@ function submit(isUpdate) {
 	if (isUpdate) {
 		router.post(route('admin.file-extensions.update', props.fileExtension.id), {
 			_method: 'put',
+			forceFormData: true,
 			id: form.id,
 			name: form.name,
 			extension: form.extension,
@@ -83,7 +84,7 @@ function submit(isUpdate) {
 							id="icon"
 							ref="uploadInput"
 							accept="image/png, image/bmp, image/gif"
-							upload-label="Choose icon"
+							label="Choose icon"
 							:initial-files="fileExtension?.icon_path ? fileExtension.icon : null"
 							@update="updateIcon"
 						/>

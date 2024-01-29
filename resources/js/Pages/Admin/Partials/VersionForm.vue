@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import Button from '@/Components/Button.vue';
 import DateInput from '@/Components/DateInput.vue';
-import HrLabel from '@/Components/HrLabel.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import ProductFileForm from '@/Pages/Admin/Partials/ProductFileForm.vue';
@@ -11,8 +10,9 @@ import TextArea from '@/Components/TextArea.vue';
 import TextInput from '@/Components/TextInput.vue';
 import UploadInput from '@/Components/UploadInput.vue';
 
-import Forms from '@/Classes/Util/Forms';
-import Versions from '@/Classes/Util/Versions';
+import Forms from '@/Classes/Utils/Forms';
+import type ProductFile from '@/Classes/Models/ProductFile';
+import Versions from '@/Classes/Utils/Versions';
 
 interface Props {
 	version: any,
@@ -20,15 +20,13 @@ interface Props {
 	platforms?: any[],
 };
 
-interface ProductFile {
-	name?: string,
-	platform_ids: number[]|string[],
-	path?: string,
-	file?: any,
+interface FileErrorBag {
+	platform?: string,
+	file?: string,
 };
 
 const props = withDefaults(defineProps<Props>(), {
-	platforms: [],
+	platforms: () => [],
 });
 
 const emit : any = defineEmits([ 'submit-version' ]);
@@ -37,8 +35,9 @@ const form : any = useForm({
 	fixes: props.version?.fixes,
 	release_note: props.version?.release_notes,
 	release_date: props.version?.release_date,
-	files: props.version?.files || [],
+	version_files: props.version?.files || [],
 });
+const inputVersion = ref<any>({});
 
 defineExpose({
 	clearErrors: () => form.clearErrors(),
@@ -57,31 +56,50 @@ function makeProductFile(): ProductFile {
 }
 
 
-function updateFiles(files: any[], deletedIndex: number): void {
-	if (deletedIndex && form.files[deletedIndex]) {
-		form.files.splice(deletedIndex, 1);
+function updateFiles(files: any[], deletedIndex?: number): void {
+	if (deletedIndex !== undefined && form.version_files[deletedIndex]) {
+		form.version_files.splice(deletedIndex, 1);
 	}
 	files.forEach((file: any, index: number): void => {
-		if (!form.files[index]) {
-			form.files[index] = makeProductFile();
+		if (!form.version_files[index]) {
+			form.version_files[index] = makeProductFile();
 		}
-		form.files[index].file = file;
+		form.version_files[index].file = file;
 	});
 }
 
 
+function updateFilePlatforms(file: ProductFile, fields: any): void {
+	file.platform_ids = fields.platforms.map((platform: any) => platform.id);
+}
+
+
+function fileErrors(index: number): FileErrorBag {
+	return <FileErrorBag>{
+		platform: form.errors[`version_files.${index}.platform_ids`],
+		file: form.errors[`version_files.${index}.file`],
+	};
+}
+
+
 function submit(): void {
-	if (false) {
-		emit('submit-version');
-	}
+	// @ts-ignore
+	form.post(route('admin.versions.store'), {
+		preserveScroll: true,
+		onSuccess: () => {
+			assign();
+			emit('submit-version', inputVersion.value);
+		},
+	});
 }
 
 
 function assign(): void {
-	version.number = form.number;
-	version.fixes = form.fixes;
-	version.release_notes = form.release_notes;
-	version.release_date = form.release_date;
+	inputVersion.value.number = form.number;
+	inputVersion.value.fixes = form.fixes;
+	inputVersion.value.release_notes = form.release_notes;
+	inputVersion.value.release_date = form.release_date;
+	inputVersion.value.files = form.version_files;
 }
 </script>
 
@@ -113,7 +131,7 @@ function assign(): void {
 						id="release-date"
 						v-model="form.release_date"
 					/>
-					<InputError :message="form.release_date" />
+					<InputError :message="form.errors?.release_date" />
 				</div>
 			</div>
 
@@ -141,19 +159,22 @@ function assign(): void {
 			<div class="my-2">
 				<InputLabel class="mb-2" :value="$t('Files')" required />
 				<UploadInput
-					:initial-files="form.files"
+					:initial-files="form.version_files"
 					label="Add files"
 					multiple
 					@update="updateFiles"
 				/>
 
 				<ProductFileForm
-					v-for="(file, index) in form.files"
+					v-for="(file, index) in form.version_files"
 					class="py-2 border-b border-b-slate-600 dark:border-b-slate-400"
 					:platforms="platforms"
 					:file="file"
-					:form="form.files[index]"
+					:form="form.version_files[index]"
+					:errors="fileErrors(index)"
+					@update="f => updateFilePlatforms(form.version_files[index], f)"
 				/>
+				<InputError :message="form.errors?.version_files" />
 			</div>
 		</div>
 

@@ -17,21 +17,25 @@ class FileExtensionSeeder extends Seeder
         FileExtension::create([
 			'name'		=> 'Windows Executable File',
 			'extension'	=> 'exe',
+			'mime_type'	=> 'application/octet-stream',
 			'icon_path'	=> 'exe.png',
 		]);
 		FileExtension::create([
 			'name'		=> 'ZIP Compressed File',
 			'extension'	=> 'zip',
+			'mime_type'	=> 'application/zip',
 			'icon_path'	=> 'zip.png',
 		]);
 		FileExtension::create([
 			'name'		=> '7z Compressed File',
 			'extension'	=> '7z',
+			'mime_type'	=> 'application/x-7z-compressed',
 			'icon_path'	=> '7z.png',
 		]);
 		FileExtension::create([
 			'name'		=> 'JavaScript File',
 			'extension'	=> 'js',
+			'mime_type'	=> 'text/javascript',
 			'icon_path'	=> 'js.png',
 		]);
 

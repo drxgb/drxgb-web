@@ -171,6 +171,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+		'version_files.*.file'	=> [
+			'mimes'		=> 'The uploaded file must be a file of type: :values.',
+		],
     ],
 
     /*
@@ -184,6 +187,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+		'version_files'					=> 'Files',
+		'version_files.*.file' 			=> 'Files',
+		'version_files.*.platform_ids' 	=> 'Platforms',
+		'number' 						=> 'Number',
+		'release_date'					=> 'Release date',
+	],
 
 ];

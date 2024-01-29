@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileExtensionController;
 use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\VersionController;
 use App\Http\Controllers\Public\LanguageController;
 use App\Http\Controllers\Public\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::middleware([
 		Route::resource('platforms', PlatformController::class)->except('show');
 		Route::resource('categories', CategoryController::class)->except('show');
 		Route::resource('products', AdminProductController::class)->except('show');
+		Route::resource('versions', VersionController::class)->only([ 'store' ]);
 	});
 });
 

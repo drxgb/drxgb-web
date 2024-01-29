@@ -4,13 +4,14 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import MultipleSelectInput from '@/Components/MultipleSelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
-import UploadInput from '@/Components/UploadInput.vue';
 
 const props = defineProps({
 	platforms: Array,
 	file: Object,
 	form: Object,
+	errors: Object,
 });
+const emit = defineEmits([ 'update' ]);
 
 const selectedPlatforms = ref([]);
 
@@ -18,6 +19,9 @@ const selectedPlatforms = ref([]);
 function updatePlatformFields(options) {
 	options = options.map(option => Number(option));
 	selectedPlatforms.value = props.platforms.filter(platform => options.includes(platform.id));
+	emit('update', {
+		platforms: selectedPlatforms.value,
+	});
 }
 
 
@@ -42,6 +46,7 @@ function getFileName() {
 				v-model="form.name"
 				:placeholder="getFileName()"
 			/>
+			<InputError :message="errors?.file" />
 		</div>
 
 		<!-- Plataformas -->
@@ -61,6 +66,7 @@ function getFileName() {
 					{{ platform.short_name }} - {{ platform.name }}
 				</option>
 			</MultipleSelectInput>
+			<InputError :message="errors?.platform" />
 		</div>
 	</section>
 </template>

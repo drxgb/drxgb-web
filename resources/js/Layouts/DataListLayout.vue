@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import Button from '@/Components/Button.vue';
 import Paginator from '@/Components/Paginator.vue';
-import DataColumn from '@/Classes/Layout/DataColumn';
+import DataColumn from '@/Classes/Layouts/DataColumn';
 import DisplayTotal from '@/Components/DisplayTotal.vue';
 import Modal from '@/Components/Modal.vue';
 import Tooltip from '@/Components/Tooltip.vue';
