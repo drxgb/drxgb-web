@@ -20,7 +20,7 @@ const props = defineProps({
 	}
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits([ 'close' ]);
 
 watch(() => props.show, () => {
 	if (props.show) {

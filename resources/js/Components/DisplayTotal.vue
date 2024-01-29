@@ -17,7 +17,7 @@ defineProps({
 			</template>
 		</span>
 		<span v-else>
-			{{ $t('No data') }}
+			{{ $t('No items to show') }}
 		</span>
 	</div>
 </template>

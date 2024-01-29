@@ -2,10 +2,10 @@
 import { useForm, router } from '@inertiajs/vue3';
 import AdminFormLayout from '@/Layouts/AdminFormLayout.vue';
 import Card from '@/Components/Card.vue';
+import CategorySelectInput from '@/Components/Admin/CategorySelectInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
-import SelectInput from '@/Components/SelectInput.vue';
 
 const props = defineProps({
 	category: Object,
@@ -45,18 +45,12 @@ function submit(isUpdate) {
 				<InputError :message="form.errors?.name" class="mt-2" />
 
 				<InputLabel class="mt-4" for="parent-id" :value="$t('Parent category')" required />
-				<SelectInput
+				<CategorySelectInput
 					id="parent-id"
 					class="w-full"
 					v-model="form.parent_id"
-				>
-					<option value="">({{ $t('None') }})</option>
-					<option v-for="parent in categories" :value="parent.id">
-						{{ '&nbsp;'.repeat(4 * parent.depth) }}
-						{{ parent.depth > 0 ? '--' : '' }}
-						{{ parent.name }}
-					</option>
-				</SelectInput>
+					:categories="categories"
+				/>
 			</div>
 		</Card>
 	</AdminFormLayout>

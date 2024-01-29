@@ -51,6 +51,10 @@ return [
 				'title'	=> 'Store',
 				'items'	=> [
 					[
+						'title'	=> 'Products',
+						'href'	=> 'admin.products.index',
+					],
+					[
 						'title'	=> 'Categories',
 						'href'	=> 'admin.categories.index',
 					],

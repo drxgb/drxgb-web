@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->decimal('price');
 			$table->boolean('active');
 			$table->foreignId('category_id')->constrained()->nullable();
+			$table->foreignId('cover_id')->nullable();
             $table->timestamps();
         });
     }

@@ -5,7 +5,10 @@ import ImagePreview from '@/Components/ImagePreview.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 
 const props = defineProps({
-	id: String,
+	id: {
+		type: String,
+		default: '',
+	},
 	initialFiles: {
 		default: null,
 	},
@@ -17,15 +20,20 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
-	uploadLabel: {
+	select: {
+		type: Boolean,
+		default: false,
+	},
+	label: {
 		type: String,
 		default: 'Upload',
 	},
-	uploadIcon: {
+	icon: {
 		default: 'upload',
 	},
 });
 
+const selected = defineModel('selected');
 const emit = defineEmits([ 'update' ]);
 
 const input = ref(null);
@@ -66,7 +74,7 @@ async function loadFiles(initialFiles) {
 }
 
 
-function select() {
+function selectFile() {
 	input.value.click();
 }
 
@@ -109,7 +117,7 @@ function remove(index) {
 	previews.value.splice(index, 1);
 	delete files.value[index];
 	files.value.splice(index, 1);
-	emit('update', files.value);
+	emit('update', files.value, index);
 
 	if (files.value.length === 0 && input.value?.value)
 		input.value.value = null;
@@ -130,10 +138,10 @@ function remove(index) {
 		<Button
 			type="button"
 			color="secondary"
-			:icon="uploadIcon"
-			@click.prevent="select"
+			:icon="icon"
+			@click.prevent="selectFile"
 		>
-			{{ $t(uploadLabel) }}
+			{{ $t(label) }}
 		</Button>
 	</div>
 	<div v-if="previews.length > 0" class="mt-2">
@@ -143,10 +151,16 @@ function remove(index) {
 				v-if="isGallery"
 				v-for="(preview, index) in previews"
 				:preview="preview"
+				:select="select"
+				:index="index"
+				v-model="selected"
 				@remove="() => remove(index)"
 			/>
-			<div v-else>
-				<div v-for="(file, index) in files" class="flex justify-between align-middle gap-2 w-full">
+			<div v-else class="w-full border shadow-sm border-slate-500 dark:border-slate-900">
+				<div
+					v-for="(file, index) in files"
+					class="flex align-middle gap-2 w-full px-2 py-1 bg-slate-200 odd:bg-slate-300 dark:bg-slate-700 dark:odd:bg-slate-600"
+				>
 					<font-awesome-icon
 						class="hover:cursor-pointer text-red-500"
 						icon="times"

@@ -3,7 +3,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataListLayout from '@/Layouts/DataListLayout.vue';
 import DataColumn from '@/Classes/Layout/DataColumn';
 
-const props = defineProps<{
+defineProps<{
 	extensions: any,
 }>();
 
@@ -14,7 +14,7 @@ const columns: DataColumn[] = [
 ];
 
 
-function iconCell(extension: DataColumn): string {
+function iconCell(extension: any): string {
 	return `<img src="${extension.icon}" alt="${extension.name}" class="mx-auto" />`;
 }
 </script>

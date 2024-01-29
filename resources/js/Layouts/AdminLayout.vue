@@ -27,7 +27,7 @@ themeHandler.load();
 	<Head :title="title" />
 	<div class="bg-slate-100 dark:bg-slate-900">
 		<!-- Cabeçalho -->
-		<header class="flex fixed w-full h-24 z-10 shadow-xl bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600">
+		<header class="flex fixed w-full h-24 z-20 shadow-xl bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600">
 			<div class="relative w-[72px] min-w-[72px] max-w-[72px] ml-8 overflow-hidden">
 				<Link href="/">
 				<ApplicationLogo class="absolute top-1" />
@@ -62,7 +62,7 @@ themeHandler.load();
 		<!-- Área principal-->
 		<main class="flex min-h-screen pt-24">
 			<nav
-				class="px-2 w-60 shrink-0 bg-gradient-to-b from-75% from-blue-500 to-blue-400 text-blue-100"
+				class="px-2 w-60 shrink-0 bg-gradient-to-b from-75% z-10 from-blue-500 to-blue-400 text-blue-100"
 				:class="{
 					'w-auto hidden sm:block': toggleSideBar,
 					'fixed lg:static min-h-full': !toggleSideBar,

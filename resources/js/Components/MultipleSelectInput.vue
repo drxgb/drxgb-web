@@ -11,11 +11,13 @@ const emit = defineEmits(['change-option']);
 const input = ref(null);
 
 onMounted(() => {
-	[ ...input.value.options ].forEach(option => {
-		if (props.value.find(v => v == option.value)) {
-			option.selected = true;
-		}
-	});
+	if (props.value) {
+		[ ...input.value.options ].forEach(option => {
+			if (props.value.find(v => v == option.value)) {
+				option.selected = true;
+			}
+		});
+	}
 });
 
 
@@ -30,7 +32,7 @@ function update() {
 <template>
 	<select
 		ref="input"
-		class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm group/input:rounded-s-md"
+		class="xgb-input"
 		multiple
 		@change="update()"
 	>

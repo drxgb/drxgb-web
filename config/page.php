@@ -46,6 +46,10 @@ return [
 			'label'	=> 'Platforms',
 			'url'	=> 'admin.platforms.index',
 		],
+		'products'	=> [
+			'label'	=> 'Products',
+			'url'	=> 'admin.products.index',
+		],
 
 
 		//* Abas do painel administrativo

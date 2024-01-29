@@ -53,6 +53,7 @@ function submit(isUpdate) {
 			<div class="px-8 py-4">
 				<div class="flex flex-col sm:flex-row gap-4 w-full mb-4">
 					<div class="w-full sm:w-1/6">
+						<!-- Extensão -->
 						<InputLabel for="extension" :value="$t('Extension')" required />
 						<TextInput
 							id="extension"
@@ -63,6 +64,7 @@ function submit(isUpdate) {
 						<InputError :message="form.errors?.extension" />
 					</div>
 					<div class="w-full sm:w-5/6">
+						<!-- Nome -->
 						<InputLabel for="name" :value="$t('Name')" required />
 						<TextInput
 							id="name"
@@ -75,6 +77,7 @@ function submit(isUpdate) {
 				</div>
 
 				<div class="mb-4">
+					<!-- Ícone -->
 					<InputLabel for="icon" :value="$t('Icon')" />
 					<UploadInput
 							id="icon"

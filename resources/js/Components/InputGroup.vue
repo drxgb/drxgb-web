@@ -1,5 +1,5 @@
 <template>
-	<div class="flex group/input w-full">
+	<div class="flex w-full input-group">
 		<slot />
 	</div>
 </template>
