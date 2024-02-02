@@ -148,6 +148,7 @@ return [
     ],
     'starts_with' => 'O campo :attribute deve começar com os seguintes valores: :values.',
     'string' => 'O campo :attribute deve ser um texto.',
+	'supported_file_extensions' => 'O arquivo enviado deve ser dos tipos: :values.',
     'timezone' => 'O campo :attribute deve ser um fuso horário válido.',
     'unique' => 'O campo :attribute já existe.',
     'uploaded' => 'O campo :attribute falhou em subir o arquivo.',
@@ -171,9 +172,6 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-		'version_files.*.file'	=> [
-			'mimes'		=> 'O arquivo enviado deve ser dos tipos: :values.',
-		],
     ],
 
     /*
@@ -187,6 +185,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+		'version_files'					=> 'Arquivos',
+		'version_files.*.product_file'	=> 'Arquivos',
+		'version_files.*.platform_ids' 	=> 'Platfaormas',
+		'name'							=> 'Nome',
+		'number' 						=> 'Número',
+		'release_date'					=> 'Data de lançamento',
+	],
 
 ];

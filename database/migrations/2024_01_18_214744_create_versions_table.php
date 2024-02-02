@@ -16,7 +16,7 @@ return new class extends Migration
 			$table->integer('number');
 			$table->text('fixes')->nullable();
 			$table->text('release_notes')->nullable();
-			$table->foreignId('product_id')->constrained();
+			$table->foreignId('product_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

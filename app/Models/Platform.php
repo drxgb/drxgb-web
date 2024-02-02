@@ -49,6 +49,21 @@ class Platform extends Model
 
 
 	/**
+	 * Recebe uma lista de extensões suportadas.
+	 * @return array
+	 */
+	public function fileExtensionsList() : array
+	{
+		foreach ($this->fileExtensions()->get() as $fileExtension)
+		{
+			/** @var FileExtension $fileExtension */
+			$supportedExtensions[] = $fileExtension->extension;
+		}
+		return $supportedExtensions ?? [];
+	}
+
+
+	/**
 	 * Recebe a pasta raiz do conteúdo.
 	 * @return string
 	 */

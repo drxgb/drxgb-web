@@ -25,6 +25,6 @@ abstract class Models
 	{
 		return $useRelation
 			? $relation
-			: Attribute::get(fn () : Model|Collection => $relation->get());
+			: Attribute::get(fn () => $relation->get());
 	}
 }

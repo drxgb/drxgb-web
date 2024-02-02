@@ -39,7 +39,11 @@ Route::middleware([
 		Route::resource('platforms', PlatformController::class)->except('show');
 		Route::resource('categories', CategoryController::class)->except('show');
 		Route::resource('products', AdminProductController::class)->except('show');
-		Route::resource('versions', VersionController::class)->only([ 'store' ]);
+
+		Route::prefix('versions')->name('versions.')->group(function ()
+		{
+			Route::post('/save', [ VersionController::class, 'save' ])->name('save');
+		});
 	});
 });
 

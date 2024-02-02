@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +17,11 @@ class Version extends Model
 		'number',
 		'fixes',
 		'release_notes',
+	];
+
+
+	protected $appends = [
+		'files',
 	];
 
 
@@ -35,5 +42,15 @@ class Version extends Model
 	public function product() : HasOne
 	{
 		return $this->hasOne(Product::class);
+	}
+
+
+	/**
+	 * Recebe os arquivos da versão.
+	 * @return Attribute
+	 */
+	public function files() : Attribute
+	{
+		return Attribute::get(fn () : Collection => $this->productFiles()->get());
 	}
 }

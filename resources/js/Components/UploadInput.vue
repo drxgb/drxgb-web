@@ -63,10 +63,17 @@ onMounted(() => {
 
 async function loadFiles(initialFiles) {
 	for (const file of initialFiles) {
-		const response = await fetch(file);
-		const blob = await response.blob();
-		const name = file.split('/').pop();
-		const newFile = new File([ blob ], name, { type: blob.type });
+		let newFile;
+
+		if (file instanceof File) {
+			newFile = file;
+		} else {
+			const response = await fetch(file);
+			const blob = await response.blob();
+			const name = file.split('/').pop();
+
+			newFile = new File([ blob ], name, { type: blob.type });
+		}
 		files.value.push(newFile);
 	}
 	updatePreview();

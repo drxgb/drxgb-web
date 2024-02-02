@@ -27,14 +27,6 @@ interface Iconable extends Storeable
 
 
 	/**
-	 * Salva o arquivo do ícone.
-	 * @param UploadedFile $upload
-	 * @return void
-	 */
-	function saveIcon(UploadedFile $upload) : void;
-
-
-	/**
 	 * O caminho do arquivo do ícone padrão.
 	 * @return string
 	 */

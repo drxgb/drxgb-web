@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Utils\Models;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -21,49 +20,84 @@ class Product extends Model
 		'description',
 		'price',
 		'active',
+		'cover_index',
+	];
+
+
+	protected $casts = [
+		'active'	=> 'boolean',
+	];
+
+
+	protected $appends = [
+		'cover',
+		'images',
+		'related_category',
+		'related_versions',
 	];
 
 
 	/**
-	 * Recebe as versões do produto.
-	 * @param bool $useRelation
-	 * @return Attribute|HasMany
+	 * Recebe a imagem da capa.
+	 * @return Attribute<string>
 	 */
-	public function versions(bool $useRelation = false) : Attribute|HasMany
+	public function cover() : Attribute
 	{
-		return Models::getAttributeOrRelation($this->hasMany(Version::class), $useRelation);
+		return Attribute::get(fn () : string => '');
 	}
 
 
 	/**
 	 * Recebe as imagens do produto.
-	 * @param bool $useRelation
-	 * @return Attribute|HasMany
+	 * @return Attribute<array>
 	 */
-	public function images(bool $useRelation = false) : Attribute|HasMany
+	public function images() : Attribute
 	{
-		return Models::getAttributeOrRelation($this->hasMany(ProductImage::class), $useRelation);
+		return Attribute::get(fn () : array => []);
+	}
+
+
+	/**
+	 * Recebe as versões do produto.
+	 * @return Attribute<Collection<Version>>
+	 */
+	public function relatedVersions() : Attribute
+	{
+		return Attribute::get(fn () : Collection => $this->versions()->get());
 	}
 
 
 	/**
 	 * Recebe a categoria no qual o produto pertence.
-	 * @param bool $useRelation
-	 * @return Attribute|BelongsTo
+	 * @return Attribute<?Category>
 	 */
-	public function category(bool $useRelation = false) : Attribute|BelongsTo
+	public function relatedCategory() : Attribute
 	{
-		return Models::getAttributeOrRelation($this->belongsTo(Category::class), $useRelation);
+		return Attribute::get(
+			fn () : ?Category =>
+				$this->category_id
+					? Category::find($this->category_id)
+					: null
+		);
 	}
 
 
 	/**
-	 * Recebe a capa do produto.
-	 * @param bool $useRelation
-	 * @return Attribute|HasOne
+	 * Recebe as versões relacionadas.
+	 * @return HasMany<Version>
 	 */
-	public function cover(bool $useRelation = false) : Attribute|HasOne
+	public function versions() : HasMany
 	{
-		return Models::getAttributeOrRelation($this->hasOne(ProductImage::class), $useRelation);
+		return $this->hasMany(Version::class);
+	}
+
+
+	/**
+	 * Recebe a categoria na qual pertence.
+	 * @return BelongsTo<Category>
+	 */
+	public function category() : BelongsTo
+	{
+		return $this->belongsTo(Category::class);
 	}
 }

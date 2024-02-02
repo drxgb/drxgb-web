@@ -19,8 +19,8 @@ return new class extends Migration
 			$table->text('description')->nullable();
 			$table->decimal('price');
 			$table->boolean('active');
-			$table->foreignId('category_id')->constrained()->nullable();
-			$table->foreignId('cover_id')->nullable();
+			$table->bigInteger('cover_index')->nullable();
+			$table->foreignId('category_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

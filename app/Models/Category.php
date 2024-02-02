@@ -44,10 +44,20 @@ class Category extends Model
 
 	/**
 	 * Recebe as subcategorias em forma de atributo.
-	 * @return Attribute
+	 * @return Attribute<Collection<Category>>
 	 */
 	public function children() : Attribute
 	{
 		return Attribute::get(fn () : Collection => $this->subcategories()->get());
+	}
+
+
+	/**
+	 * Recebe os produtos da categoria.
+	 * @return HasMany
+	 */
+	public function products() : HasMany
+	{
+		return $this->hasMany(Product::class);
 	}
 }

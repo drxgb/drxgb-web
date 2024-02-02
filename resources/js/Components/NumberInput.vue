@@ -51,11 +51,13 @@ function decrement() {
 			:step="step"
 		/>
 		<Button
+			type="button"
 			:color="color"
 			icon="plus"
 			@click="increment"
 		/>
 		<Button
+			type="button"
 			:color="color"
 			icon="minus"
 			@click="decrement"

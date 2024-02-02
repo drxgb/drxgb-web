@@ -148,6 +148,7 @@ return [
     ],
     'starts_with' => 'The :attribute field must start with one of the following: :values.',
     'string' => 'The :attribute field must be a string.',
+	'supported_file_extensions' => 'The uploaded file must be a file of type: :values.',
     'timezone' => 'The :attribute field must be a valid timezone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
@@ -171,9 +172,6 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-		'version_files.*.file'	=> [
-			'mimes'		=> 'The uploaded file must be a file of type: :values.',
-		],
     ],
 
     /*
@@ -189,8 +187,9 @@ return [
 
     'attributes' => [
 		'version_files'					=> 'Files',
-		'version_files.*.file' 			=> 'Files',
+		'version_files.*.product_file'	=> 'Files',
 		'version_files.*.platform_ids' 	=> 'Platforms',
+		'name'							=> 'Name',
 		'number' 						=> 'Number',
 		'release_date'					=> 'Release date',
 	],

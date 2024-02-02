@@ -3,26 +3,28 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataListLayout from '@/Layouts/DataListLayout.vue';
 import DataColumn from '@/Classes/Layouts/DataColumn';
 
+import type Category from '@/Classes/Models/Category';
+
 defineProps<{
 	products: any,
 }>();
 
 const columns: DataColumn[] = [
-	new DataColumn('Name', 'name'),
+	new DataColumn('Name', 'title'),
 	new DataColumn('Category', categoryName, 'w-1/4 hidden md:table-cell'),
 	new DataColumn('Price', 'price'),
 	new DataColumn('Active', activeIcon, 'w-2'),
 ];
 
 
-function categoryName(product: any): any {
-	return product.category.name;
+function categoryName(product: Product): string {
+	return product.related_category.name;
 }
 
 
-function activeIcon(product: any): any {
+function activeIcon(product: Product): string|null {
 	return product.active
-		? '<font-awesome-icon icon="check" size="xl" />'
+		? '<img src="/img/icon/check.png" />'
 		: null;
 }
 </script>
@@ -32,6 +34,7 @@ function activeIcon(product: any): any {
 		<DataListLayout
 			title="Product"
 			context="admin.products"
+			name-key="title"
 			:content="products"
 			:columns="columns"
 			:viewable="false"

@@ -38,7 +38,7 @@ trait HasIcon
 	 * @param UploadedFile $upload
 	 * @return void
 	 */
-	public function saveIcon(UploadedFile $upload) : void
+	public function saveFile(UploadedFile $upload) : void
 	{
 		$imgExtension = $upload->extension();
 		$filename = $this->getFileName() . '.' . $imgExtension;

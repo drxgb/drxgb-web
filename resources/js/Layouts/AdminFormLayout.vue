@@ -8,13 +8,17 @@ const props = defineProps({
 	content: Object,
 	label: String,
 	form: Object,
+	nameKey: {
+		type: String,
+		default: 'name',
+	},
 });
 
 defineEmits([ 'form-submit' ]);
 
 const isUpdate = ref(false);
 const title = computed(() => (isUpdate.value)
-		? `${trans('Edit')} ${trans(props.content.name)}`
+		? `${trans('Edit')} ${trans(props.content[nameKey])}`
 		: `${trans('Create')} ${trans(props.label).toLowerCase()}`
 );
 

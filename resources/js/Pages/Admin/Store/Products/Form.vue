@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 import { trans } from 'laravel-vue-i18n';
 import AdminFormLayout from '@/Layouts/AdminFormLayout.vue';
 import Button from '@/Components/Button.vue';
@@ -18,15 +18,17 @@ import ToggleInput from '@/Components/ToggleInput.vue';
 import UploadInput from '@/Components/UploadInput.vue';
 import VersionForm from '@/Pages/Admin/Partials/VersionForm.vue';
 
-import type ProductFile from '@/Classes/Models/ProductFile';
 import type Version from '@/Classes/Models/Version';
+import type Platform from '@/Classes/Utils/Platform';
+import type ProductFile from '@/Classes/Models/ProductFile';
+import Versions from '@/Classes/Utils/Versions';
 
 import Forms from '@/Classes/Utils/Forms';
 
 const props = defineProps<{
-	product?: any,
-	categories: any[],
-	platforms?: any[],
+	product?: Product,
+	categories: Category[],
+	platforms?: Platform[],
 }>();
 const form = useForm({
 	title: props.product?.title,
@@ -37,14 +39,34 @@ const form = useForm({
 	active: props.product?.active || true,
 	cover_index: props.product?.cover_index,
 
-	category_id: props.product?.category?.id,
-	versions: props.product?.versions || [],
+	category_id: props.product?.category_id,
+	versions: props.product?.related_versions || [],
 	images: props.product?.images || [],
+	deleted_versions: new Set,
 });
 const showModal: any = ref<boolean>(false);
 const updateVersion: any = ref<boolean>(false);
-const version: any = ref<Version>(null);
+const productVersion: any = ref<Version>(null);
 const versionForm: any = ref<any>(null);
+
+
+function supportedPlatforms(files: ProductFile[]): Platform[] {
+	const platforms = new Set;
+
+	if (files) {
+		files.forEach((file: ProductFile) => {
+			if (file.platform_ids) {
+				file.platform_ids.forEach((id: number) => {
+					const p = props.platforms.find((_p: Platform) => _p.id == id);
+					if (p)
+						platforms.add(p);
+				});
+			}
+		});
+	}
+
+	return [ ...platforms ];
+}
 
 
 function updateImages(images: any[]): void {
@@ -57,7 +79,7 @@ function updateImages(images: any[]): void {
 
 
 function addVersion(): void {
-	version.value = {};
+	productVersion.value = {};
 	updateVersion.value = false;
 	if (versionForm.value) {
 		versionForm.value.clearErrors();
@@ -67,18 +89,36 @@ function addVersion(): void {
 }
 
 
-function storeVersion(_version) {
-	form.versions.push(_version);
-	showModal.value = false;
+function editVersion(version: Version): void {
+	productVersion.value = version;
+	updateVersion.value = true;
+	showModal.value = true;
+	if (versionForm.value) {
+		versionForm.value.clearErrors();
+	}
 }
 
 
-function editVersion(_version: any): void {
-	version.value = _version;
-	updateVersion.value = true;
-	showModal.value = true;
-	if (versionForm.value)
-		versionForm.value.clearErrors();
+function deleteVersion(version: Version) : void {
+	const index = form.versions.indexOf(version);
+	if (index !== -1) {
+		form.versions.splice(index, 1);
+		form.deleted_versions.add(index);
+	}
+}
+
+
+function saveVersion(version: Version) {
+	if (updateVersion.value) {
+		const index = form.versions.indexOf(productVersion.value);
+		if (index !== -1)
+			form.versions[index] = version;
+	} else {
+		form.versions.push(version);
+	}
+
+	productVersion.value = {};
+	showModal.value = false;
 }
 
 
@@ -92,7 +132,25 @@ function closeModal(): void {
 
 
 function submit(isUpdate: boolean): void {
+	if (isUpdate) {
+		router.post(route('admin.products.update'), props.product.id, {
+			_method: 'put',
+			title: form.title,
+			slug: form.slug,
+			page: form.page,
+			description: form.description,
+			price: form.price,
+			active: form.active,
+			cover_index: form.cover_index,
 
+			category_id: form.category?.id,
+			versions: form.versions,
+			images: form.images,
+			deleted_versions: form.deleted_versions,
+		});
+	} else {
+		form.post(route('admin.products.store'));
+	}
 }
 </script>
 
@@ -101,10 +159,11 @@ function submit(isUpdate: boolean): void {
 		:content="product"
 		:form="form"
 		label="Product"
+		name-key="title"
 		@form-submit="submit"
 	>
 		<Card class="sm:rounded-b-none" size="full" no-padding>
-			<div class="px-8 py-4">
+			<section class="px-8 py-4">
 				<!-- Título -->
 				<InputLabel for="title" :value="$t('Title')" required />
 				<TextInput
@@ -174,9 +233,75 @@ function submit(isUpdate: boolean): void {
 				<HrLabel class="my-4" />
 				<InputLabel :value="$t('Version')" required />
 				<div class="my-2">
-					<Button icon="plus" color="primary" @click="addVersion">
+					<Button
+						type="button"
+						icon="plus"
+						color="primary"
+						@click.prevent="addVersion"
+					>
 						{{ $t('Add new version') }}
 					</Button>
+
+					<table
+						v-if="form.versions.length > 0"
+						class="table-fixed w-full my-4 border border-gray-600 dark:border-slate-600"
+					>
+						<thead>
+							<tr class="text-sm sm:text-base bg-gray-300 dark:bg-slate-700">
+								<th class="text-left">
+									{{ $t('Version') }}
+								</th>
+								<th class="hidden sm:table-cell">
+									{{ $t('Files') }}
+								</th>
+								<th>
+									{{ $t('Platforms') }}
+								</th>
+								<th>
+									{{ $t('Actions') }}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								v-for="version in form.versions"
+								class="text-center bg-gray-200 odd:bg-gray-100 dark:bg-slate-500 dark:odd:bg-slate-400"
+							>
+								<td class="text-left">
+									{{ Versions.toString(version.number) }}
+								</td>
+								<td class="hidden sm:table-cell">
+									{{ version.files?.length }}
+								</td>
+								<td>
+									<div class="flex flex-wrap gap-2 justify-center">
+										<img
+											v-for="platform in supportedPlatforms(version.files)"
+											:src="platform.icon"
+											:alt="platform.name"
+											:title="platform.name"
+										/>
+									</div>
+								</td>
+								<td>
+									<div class="flex flex-wrap gap-1 justify-center">
+										<Button
+											type="button"
+											color="warning"
+											icon="edit"
+											@click="editVersion(version)"
+										/>
+										<Button
+											type="button"
+											color="danger"
+											icon="trash"
+											@click="deleteVersion(version)"
+										/>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 
 				<!-- Imagens -->
@@ -193,12 +318,12 @@ function submit(isUpdate: boolean): void {
 					select
 					@update="updateImages"
 				/>
-			</div>
+			</section>
 
 			<!-- Ativo -->
 			<FormRow>
 				<template #label>
-					<InputLabel for="active" class="py-4" :value="$t('Active')" />
+					<InputLabel for="active" class="py-4" :value="$t('Active')" required />
 				</template>
 				<ToggleInput
 					class="my-4"
@@ -214,7 +339,7 @@ function submit(isUpdate: boolean): void {
 	<Modal :show="showModal" @close="closeModal">
 		<template #header>
 			<template v-if="updateVersion">
-				{{ $t('Edit') }} {{ version.number }}
+				{{ $t('Edit') }} {{ Versions.toString(productVersion.number) }}
 			</template>
 			<template v-else>
 				{{ $t('Create') }} {{ $t('Version').toLowerCase() }}
@@ -222,10 +347,10 @@ function submit(isUpdate: boolean): void {
 		</template>
 		<VersionForm
 			ref="versionForm"
-			:version="version"
+			:version="productVersion"
 			:is-update="updateVersion"
 			:platforms="platforms"
-			@submit-version="storeVersion"
+			@submit-version="saveVersion"
 		/>
 	</Modal>
 </template>

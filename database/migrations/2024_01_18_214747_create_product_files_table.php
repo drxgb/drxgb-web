@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
 			$table->string('name');
 			$table->decimal('size');
-			$table->string('file_path');
-			$table->foreignId('version_id')->constrained();
+			$table->string('file_path')->nullable();
+			$table->foreignId('version_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

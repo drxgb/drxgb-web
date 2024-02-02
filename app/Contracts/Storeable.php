@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use Illuminate\Http\UploadedFile;
 
 /**
  * Contrato para os modelos que possuem armazenamento de arquivo.
@@ -22,4 +23,12 @@ interface Storeable
 	 * @return string
 	 */
 	function getFileName() : string;
+
+
+	/**
+	 * Salva o arquivo
+	 * @param UploadedFile $file
+	 * @return void
+	 */
+	function saveFile(UploadedFile $file) : void;
 }

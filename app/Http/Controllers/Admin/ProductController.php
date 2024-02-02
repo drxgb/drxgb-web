@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Platform;
 use App\Models\Product;
-use App\Repositories\CategoryRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Platform;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\ProductRequest;
+use App\Repositories\ProductRepository;
+use App\Repositories\CategoryRepository;
 
 class ProductController extends AdminController
 {
@@ -42,9 +42,11 @@ class ProductController extends AdminController
     /**
      * Armazena uma nova instância do recurso.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+		$this->products->store($request);
+        return to_route('admin.products.index')
+			->with('message', 'Product created successfully!');
     }
 
     /**
@@ -52,7 +54,9 @@ class ProductController extends AdminController
      */
     public function edit(Product $product)
     {
-        //
+        $categories = $this->categories->listWithHierarchy();
+		$platforms = fn () => Platform::all();
+        return $this->view('Form', compact('product', 'categories', 'platforms'));
     }
 
     /**

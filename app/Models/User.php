@@ -87,6 +87,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
 	/**
+	 * Recebe o cargo do usuário.
+	 * @return BelongsTo
+	 */
+	public function role(): BelongsTo
+	{
+		return $this->belongsTo(Role::class);
+	}
+
+
+	/**
 	 * Verifica se o ousuário é um administrador
 	 * @return bool
 	 */

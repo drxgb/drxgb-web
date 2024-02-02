@@ -36,6 +36,7 @@ const form : any = useForm({
 	release_note: props.version?.release_notes,
 	release_date: props.version?.release_date,
 	version_files: props.version?.files || [],
+	deleted_files: new Set,
 });
 const inputVersion = ref<any>({});
 
@@ -48,23 +49,30 @@ defineExpose({
 
 function makeProductFile(): ProductFile {
 	return <ProductFile>{
+		id: null,
 		name: null,
 		platform_ids: [],
 		path: null,
-		file: null,
+		product_file: null,
 	};
+}
+
+
+function getVersionFiles(files: ProductFile[]): File[] {
+	return files.map(f => f.product_file);
 }
 
 
 function updateFiles(files: any[], deletedIndex?: number): void {
 	if (deletedIndex !== undefined && form.version_files[deletedIndex]) {
 		form.version_files.splice(deletedIndex, 1);
+		form.deleted_files.add(deletedIndex);
 	}
 	files.forEach((file: any, index: number): void => {
 		if (!form.version_files[index]) {
 			form.version_files[index] = makeProductFile();
 		}
-		form.version_files[index].file = file;
+		form.version_files[index].product_file = file;
 	});
 }
 
@@ -83,8 +91,7 @@ function fileErrors(index: number): FileErrorBag {
 
 
 function submit(): void {
-	// @ts-ignore
-	form.post(route('admin.versions.store'), {
+	form.post(route('admin.versions.save'), {
 		preserveScroll: true,
 		onSuccess: () => {
 			assign();
@@ -159,7 +166,7 @@ function assign(): void {
 			<div class="my-2">
 				<InputLabel class="mb-2" :value="$t('Files')" required />
 				<UploadInput
-					:initial-files="form.version_files"
+					:initial-files="getVersionFiles(form.version_files)"
 					label="Add files"
 					multiple
 					@update="updateFiles"

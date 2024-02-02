@@ -16,12 +16,14 @@ interface Props {
 	eraseable?: boolean,
 	title?: string,
 	columns?: DataColumn[],
+	nameKey?: string,
 };
 
 const props = withDefaults(defineProps<Props>(), {
 	viewable: true,
 	editable: true,
 	eraseable: true,
+	nameKey: 'name',
 });
 
 const cellClasses: string = 'px-4 py-1 text-sm lg:text-base';
@@ -148,13 +150,13 @@ function deleteItem(item) {
 		@close="closeDeleteModal()"
 	>
 		<template #header>
-			{{ $t('Delete') }} {{ $t(dataItem.name) }}
+			{{ $t('Delete') }} {{ $t(dataItem[nameKey]) }}
 		</template>
 
 		<div class="px-8 py-4">
 			<p>
 				{{ $t('Are you sure to delete') }}
-				<strong>{{ $t(dataItem.name) }}</strong>?
+				<strong>{{ $t(dataItem[nameKey]) }}</strong>?
 			</p>
 			<p>
 				{{ $t('This action is irreversible') }}.
