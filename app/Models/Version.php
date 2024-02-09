@@ -15,8 +15,9 @@ class Version extends Model
 
 	protected $fillable = [
 		'number',
-		'fixes',
+		'release_date',
 		'release_notes',
+		'fixes',
 	];
 
 

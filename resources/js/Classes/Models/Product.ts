@@ -11,6 +11,7 @@ export default interface Product {
 	slug: string,
 	page: string,
 	description: string,
+	category_id?: number,
 	price: number,
 	active: boolean,
 	cover_index: number,

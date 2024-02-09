@@ -28,8 +28,8 @@ function updatePlatformFields(options) {
 function getFileName() {
 	let name;
 
-	if (props.file.file) {
-		name = props.file.file.name;
+	if (props.file.product_file) {
+		name = props.file.product_file.name;
 		return name.substring(0, name.lastIndexOf('.'));
 	}
 }

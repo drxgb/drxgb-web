@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Utils\Upload;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -43,17 +45,25 @@ class Product extends Model
 	 */
 	public function cover() : Attribute
 	{
-		return Attribute::get(fn () : string => '');
+		return Attribute::get(fn () : string =>
+			Storage::Url($this->getImages()[$this->cover_index])
+		);
 	}
 
 
 	/**
 	 * Recebe as imagens do produto.
-	 * @return Attribute<array>
+	 * @return Attribute<array<string>>
 	 */
 	public function images() : Attribute
 	{
-		return Attribute::get(fn () : array => []);
+		return Attribute::get(function () : array
+		{
+			return array_map(
+				fn (string $file) : string => Storage::url($file),
+				$this->getImages()
+			);
+		});
 	}
 
 
@@ -99,5 +109,16 @@ class Product extends Model
 	public function category() : BelongsTo
 	{
 		return $this->belongsTo(Category::class);
+	}
+
+
+	/**
+	 * Retorna um conjunto com as imagens do produto.
+	 * @return array
+	 */
+	public function getImages() : array
+	{
+		$path = Upload::makePath('product-images', $this->id);
+		return Storage::disk('public')->files($path);
 	}
 }

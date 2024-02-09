@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
 use App\Models\Platform;
-use Illuminate\Http\Request;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Repositories\ProductRepository;
 use App\Repositories\CategoryRepository;
 
@@ -42,11 +42,11 @@ class ProductController extends AdminController
     /**
      * Armazena uma nova instância do recurso.
      */
-    public function store(ProductRequest $request)
+    public function store(StoreProductRequest $request)
     {
-		$this->products->store($request);
+		$product = $this->products->store($request);
         return to_route('admin.products.index')
-			->with('message', 'Product created successfully!');
+			->with('message', __('messages.created', [ 'name' => $product->title ]));
     }
 
     /**
@@ -62,9 +62,11 @@ class ProductController extends AdminController
     /**
      * Atualiza o recurso específico no armazenamento.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $this->products->update($request, $product);
+		return to_route('admin.products.index')
+			->with('message', __('messages.updated', [ 'name' => $product->title ]));
     }
 
     /**
@@ -72,7 +74,9 @@ class ProductController extends AdminController
      */
     public function destroy(Product $product)
     {
-        //
+        $this->products->delete($product);
+		return redirect()->back()
+			->with('message', __('messages.deleted', [ 'name' => $product->title ]));
     }
 
 

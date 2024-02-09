@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\Upload;
 use App\Contracts\Storeable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,11 @@ class ProductFile extends Model
 		'name',
 		'size',
 		'file_path',
+	];
+
+	protected $appends = [
+		'path',
+		'platform_ids',
 	];
 
 
@@ -44,6 +50,31 @@ class ProductFile extends Model
 
 
 	/**
+	 * Recebe o caminho do arquivo.
+	 * @return Attribute
+	 */
+	public function path() : Attribute
+	{
+		return Attribute::get(fn () : string => Storage::url($this->getFullPath()));
+	}
+
+
+	/**
+	 * Recebe os IDs das plataformas suportadas pelo arquivo.
+	 * @return Attribute<array<int>>
+	 */
+	public function platformIds() : Attribute
+	{
+		return Attribute::get(
+			fn () : array => array_map(
+				fn (array $platform) : int => $platform['id'],
+				$this->platforms()->get()->toArray()
+			)
+		);
+	}
+
+
+	/**
 	 * Recebe a pasta raiz do conteúdo.
 	 * @return string
 	 */
@@ -64,6 +95,16 @@ class ProductFile extends Model
 
 
 	/**
+	 * Recebe o nome do caminho completo do arquivo.
+	 * @return string
+	 */
+	public function getFullPath() : string
+	{
+		return $this->getRootFolder() . $this->getFileName();
+	}
+
+
+	/**
 	 * Salva o arquivo
 	 * @param UploadedFile $file
 	 * @return void
@@ -74,5 +115,16 @@ class ProductFile extends Model
 		$filename .= '.' . $file->getClientOriginalExtension();
 		$file->storePubliclyAs($this->getRootFolder(), $filename, 'public');
 		$this->file_path = $filename;
+	}
+
+
+	/**
+	 * Apaga o arquivo.
+	 * @return void
+	 */
+	public function deleteFile() : void
+	{
+		Storage::disk('public')->deleteDirectory($this->getRootFolder());
+		$this->file_path = null;
 	}
 }

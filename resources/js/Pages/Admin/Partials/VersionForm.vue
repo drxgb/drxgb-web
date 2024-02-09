@@ -12,10 +12,11 @@ import UploadInput from '@/Components/UploadInput.vue';
 
 import Forms from '@/Classes/Utils/Forms';
 import type ProductFile from '@/Classes/Models/ProductFile';
+import type Version from '@/Classes/Models/Version';
 import Versions from '@/Classes/Utils/Versions';
 
 interface Props {
-	version: any,
+	version: Version,
 	isUpdate: boolean,
 	platforms?: any[],
 };
@@ -31,7 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit : any = defineEmits([ 'submit-version' ]);
 const form : any = useForm({
-	number: props.version?.number,
+	id: props.version?.id,
+	number: props.version?.number?.toString(),
 	fixes: props.version?.fixes,
 	release_note: props.version?.release_notes,
 	release_date: props.version?.release_date,
@@ -39,6 +41,7 @@ const form : any = useForm({
 	deleted_files: new Set,
 });
 const inputVersion = ref<any>({});
+
 
 defineExpose({
 	clearErrors: () => form.clearErrors(),
@@ -58,15 +61,18 @@ function makeProductFile(): ProductFile {
 }
 
 
-function getVersionFiles(files: ProductFile[]): File[] {
-	return files.map(f => f.product_file);
+function getVersionFiles(files: ProductFile[]): (string | File)[] {
+	return files.map(f => f.path ?? f.product_file);
 }
 
 
 function updateFiles(files: any[], deletedIndex?: number): void {
 	if (deletedIndex !== undefined && form.version_files[deletedIndex]) {
+		const file = form.version_files[deletedIndex];
+
 		form.version_files.splice(deletedIndex, 1);
-		form.deleted_files.add(deletedIndex);
+		if (file?.id)
+			form.deleted_files.add(file.id);
 	}
 	files.forEach((file: any, index: number): void => {
 		if (!form.version_files[index]) {
@@ -91,6 +97,7 @@ function fileErrors(index: number): FileErrorBag {
 
 
 function submit(): void {
+	// @ts-ignore
 	form.post(route('admin.versions.save'), {
 		preserveScroll: true,
 		onSuccess: () => {
@@ -102,11 +109,13 @@ function submit(): void {
 
 
 function assign(): void {
+	inputVersion.value.id = form.id;
 	inputVersion.value.number = form.number;
 	inputVersion.value.fixes = form.fixes;
 	inputVersion.value.release_notes = form.release_notes;
 	inputVersion.value.release_date = form.release_date;
 	inputVersion.value.files = form.version_files;
+	inputVersion.value.deleted_files = [ ...form.deleted_files ];
 }
 </script>
 

@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('versions', function (Blueprint $table) {
             $table->id();
 			$table->integer('number');
-			$table->text('fixes')->nullable();
+			$table->date('release_date');
 			$table->text('release_notes')->nullable();
+			$table->text('fixes')->nullable();
 			$table->foreignId('product_id')->nullable()->constrained();
             $table->timestamps();
         });

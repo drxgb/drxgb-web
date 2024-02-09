@@ -16,7 +16,10 @@ return new class extends Migration
 			$table->string('name');
 			$table->decimal('size');
 			$table->string('file_path')->nullable();
-			$table->foreignId('version_id')->nullable()->constrained();
+			$table->foreignId('version_id')->nullable()
+				->constrained()
+				->cascadeOnDelete()
+				->cascadeOnUpdate();
             $table->timestamps();
         });
     }

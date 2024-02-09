@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
-            $table->id();
-			$table->string('name');
-			$table->string('path');
-			$table->bigInteger('size');
-			$table->foreignId('product_id')->constrained();
-            $table->timestamps();
+        Schema::create('platform_product_file', function (Blueprint $table) {
+			$table->foreignId('platform_id')->constrained();
+			$table->foreignId('product_file_id')->constrained();
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('platform_product_file');
     }
 };

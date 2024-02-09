@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 
-class ProductRequest extends AdminRequest
+class UpdateProductRequest extends AdminRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -32,7 +32,6 @@ class ProductRequest extends AdminRequest
 			'versions.*.files'					=> 'required|array',
 			'versions.*.files.*.name'			=> 'nullable',
 			'versions.*.files.*.platform_ids'	=> 'required|array',
-			'versions.*.files.*.product_file'	=> 'required|file',
         ];
     }
 }

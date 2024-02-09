@@ -54,13 +54,13 @@ function decrement() {
 			type="button"
 			:color="color"
 			icon="plus"
-			@click="increment"
+			@click.prevent="increment"
 		/>
 		<Button
 			type="button"
 			:color="color"
 			icon="minus"
-			@click="decrement"
+			@click.prevent="decrement"
 		/>
 	</InputGroup>
 </template>

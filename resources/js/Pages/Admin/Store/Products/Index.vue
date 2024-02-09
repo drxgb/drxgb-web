@@ -18,7 +18,7 @@ const columns: DataColumn[] = [
 
 
 function categoryName(product: Product): string {
-	return product.related_category.name;
+	return product.related_category?.name;
 }
 
 

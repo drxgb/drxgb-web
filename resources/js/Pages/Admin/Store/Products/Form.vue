@@ -18,9 +18,11 @@ import ToggleInput from '@/Components/ToggleInput.vue';
 import UploadInput from '@/Components/UploadInput.vue';
 import VersionForm from '@/Pages/Admin/Partials/VersionForm.vue';
 
-import type Version from '@/Classes/Models/Version';
-import type Platform from '@/Classes/Utils/Platform';
+import type Category from '@/Classes/Models/Category';
+import type Platform from '@/Classes/Models/Platform';
+import type Product from '@/Classes/Models/Product';
 import type ProductFile from '@/Classes/Models/ProductFile';
+import type Version from '@/Classes/Models/Version';
 import Versions from '@/Classes/Utils/Versions';
 
 import Forms from '@/Classes/Utils/Forms';
@@ -39,19 +41,19 @@ const form = useForm({
 	active: props.product?.active || true,
 	cover_index: props.product?.cover_index,
 
-	category_id: props.product?.category_id,
+	category_id: props.product?.category_id?.toString(),
 	versions: props.product?.related_versions || [],
 	images: props.product?.images || [],
 	deleted_versions: new Set,
 });
 const showModal: any = ref<boolean>(false);
 const updateVersion: any = ref<boolean>(false);
-const productVersion: any = ref<Version>(null);
+const productVersion: any = ref<Version>(<Version>{});
 const versionForm: any = ref<any>(null);
 
 
 function supportedPlatforms(files: ProductFile[]): Platform[] {
-	const platforms = new Set;
+	const platforms: Set<Platform> = new Set;
 
 	if (files) {
 		files.forEach((file: ProductFile) => {
@@ -103,7 +105,8 @@ function deleteVersion(version: Version) : void {
 	const index = form.versions.indexOf(version);
 	if (index !== -1) {
 		form.versions.splice(index, 1);
-		form.deleted_versions.add(index);
+		if (version.id)
+			form.deleted_versions.add(version.id);
 	}
 }
 
@@ -133,7 +136,8 @@ function closeModal(): void {
 
 function submit(isUpdate: boolean): void {
 	if (isUpdate) {
-		router.post(route('admin.products.update'), props.product.id, {
+		// @ts-ignore
+		router.post(route('admin.products.update', props.product.id), {
 			_method: 'put',
 			title: form.title,
 			slug: form.slug,
@@ -143,12 +147,13 @@ function submit(isUpdate: boolean): void {
 			active: form.active,
 			cover_index: form.cover_index,
 
-			category_id: form.category?.id,
-			versions: form.versions,
+			category_id: form.category_id,
+			versions: form.versions as any[],
 			images: form.images,
-			deleted_versions: form.deleted_versions,
+			deleted_versions: [ ...form.deleted_versions ] as any[],
 		});
 	} else {
+		// @ts-ignore
 		form.post(route('admin.products.store'));
 	}
 }
@@ -172,7 +177,7 @@ function submit(isUpdate: boolean): void {
 					v-model="form.title"
 					autofocus
 				/>
-				<InputError :message="form.errors?.title" />
+				<InputError :message="$page.props.errors?.title" />
 
 				<div class="flex flex-col sm:flex-row gap-4 w-full my-4">
 					<div class="w-full sm:w-1/2">
@@ -184,7 +189,7 @@ function submit(isUpdate: boolean): void {
 							v-model="form.slug"
 							@input="ev => form.slug = Forms.toKebabCase(ev.target.value)"
 						/>
-						<InputError :message="form.errors?.slug" />
+						<InputError :message="$page.props.errors?.slug" />
 					</div>
 					<div class="w-full sm:w-1/2">
 						<!-- Página -->
@@ -227,7 +232,7 @@ function submit(isUpdate: boolean): void {
 				<small v-show="form.price === 0" class="text-green-400 dark:text-green-500">
 					{{ $t('Free') }}
 				</small>
-				<InputError :message="form.errors?.price" />
+				<InputError :message="$page.props.errors?.price" />
 
 				<!-- Versões -->
 				<HrLabel class="my-4" />
@@ -268,7 +273,7 @@ function submit(isUpdate: boolean): void {
 								class="text-center bg-gray-200 odd:bg-gray-100 dark:bg-slate-500 dark:odd:bg-slate-400"
 							>
 								<td class="text-left">
-									{{ Versions.toString(version.number) }}
+									{{ Versions.toString(version.number as number) }}
 								</td>
 								<td class="hidden sm:table-cell">
 									{{ version.files?.length }}
@@ -289,19 +294,21 @@ function submit(isUpdate: boolean): void {
 											type="button"
 											color="warning"
 											icon="edit"
-											@click="editVersion(version)"
+											@click.prevent="editVersion(version)"
 										/>
 										<Button
 											type="button"
 											color="danger"
 											icon="trash"
-											@click="deleteVersion(version)"
+											@click.prevent="deleteVersion(version)"
 										/>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+
+					<InputError :message="$page.props.errors?.versions" />
 				</div>
 
 				<!-- Imagens -->
