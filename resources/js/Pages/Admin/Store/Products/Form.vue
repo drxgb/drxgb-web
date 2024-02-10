@@ -28,9 +28,9 @@ import Versions from '@/Classes/Utils/Versions';
 import Forms from '@/Classes/Utils/Forms';
 
 const props = defineProps<{
-	product?: Product,
-	categories: Category[],
-	platforms?: Platform[],
+	product?: Product;
+	categories: Category[];
+	platforms?: Platform[];
 }>();
 const form = useForm({
 	title: props.product?.title,
@@ -38,38 +38,35 @@ const form = useForm({
 	page: props.product?.page,
 	description: props.product?.description,
 	price: props.product?.price || 0.0,
-	active: props.product?.active || true,
+	active: props.product?.active ? 'yes' : 'no',
 	cover_index: props.product?.cover_index,
 
 	category_id: props.product?.category_id?.toString(),
 	versions: props.product?.related_versions || [],
 	images: props.product?.images || [],
-	deleted_versions: new Set,
+	deleted_versions: new Set(),
 });
 const showModal: any = ref<boolean>(false);
 const updateVersion: any = ref<boolean>(false);
 const productVersion: any = ref<Version>(<Version>{});
 const versionForm: any = ref<any>(null);
 
-
 function supportedPlatforms(files: ProductFile[]): Platform[] {
-	const platforms: Set<Platform> = new Set;
+	const platforms: Set<Platform> = new Set();
 
 	if (files) {
 		files.forEach((file: ProductFile) => {
 			if (file.platform_ids) {
 				file.platform_ids.forEach((id: number) => {
 					const p = props.platforms.find((_p: Platform) => _p.id == id);
-					if (p)
-						platforms.add(p);
+					if (p) platforms.add(p);
 				});
 			}
 		});
 	}
 
-	return [ ...platforms ];
+	return [...platforms];
 }
-
 
 function updateImages(images: any[]): void {
 	if (images) {
@@ -78,7 +75,6 @@ function updateImages(images: any[]): void {
 		form.images = [];
 	}
 }
-
 
 function addVersion(): void {
 	productVersion.value = {};
@@ -90,7 +86,6 @@ function addVersion(): void {
 	showModal.value = true;
 }
 
-
 function editVersion(version: Version): void {
 	productVersion.value = version;
 	updateVersion.value = true;
@@ -100,22 +95,18 @@ function editVersion(version: Version): void {
 	}
 }
 
-
-function deleteVersion(version: Version) : void {
+function deleteVersion(version: Version): void {
 	const index = form.versions.indexOf(version);
 	if (index !== -1) {
 		form.versions.splice(index, 1);
-		if (version.id)
-			form.deleted_versions.add(version.id);
+		if (version.id) form.deleted_versions.add(version.id);
 	}
 }
-
 
 function saveVersion(version: Version) {
 	if (updateVersion.value) {
 		const index = form.versions.indexOf(productVersion.value);
-		if (index !== -1)
-			form.versions[index] = version;
+		if (index !== -1) form.versions[index] = version;
 	} else {
 		form.versions.push(version);
 	}
@@ -124,15 +115,12 @@ function saveVersion(version: Version) {
 	showModal.value = false;
 }
 
-
 function closeModal(): void {
 	if (confirm(trans('All unsaved changes will be lost. Proceed?'))) {
 		showModal.value = false;
-		if (versionForm.value)
-			versionForm.value.cancel();
+		if (versionForm.value) versionForm.value.cancel();
 	}
 }
-
 
 function submit(isUpdate: boolean): void {
 	if (isUpdate) {
@@ -144,17 +132,20 @@ function submit(isUpdate: boolean): void {
 			page: form.page,
 			description: form.description,
 			price: form.price,
-			active: form.active,
+			active: form.active === 'yes',
 			cover_index: form.cover_index,
 
 			category_id: form.category_id,
 			versions: form.versions as any[],
 			images: form.images,
-			deleted_versions: [ ...form.deleted_versions ] as any[],
+			deleted_versions: [...form.deleted_versions] as any[],
 		});
 	} else {
 		// @ts-ignore
-		form.post(route('admin.products.store'));
+		form.transform(data => ({
+			...data,
+			active: data.active === 'yes',
+		})).post(route('admin.products.store'));
 	}
 }
 </script>
@@ -171,12 +162,7 @@ function submit(isUpdate: boolean): void {
 			<section class="px-8 py-4">
 				<!-- Título -->
 				<InputLabel for="title" :value="$t('Title')" required />
-				<TextInput
-					id="title"
-					class="w-full"
-					v-model="form.title"
-					autofocus
-				/>
+				<TextInput id="title" class="w-full" v-model="form.title" autofocus />
 				<InputError :message="$page.props.errors?.title" />
 
 				<div class="flex flex-col sm:flex-row gap-4 w-full my-4">
@@ -187,7 +173,9 @@ function submit(isUpdate: boolean): void {
 							id="slug"
 							class="w-full"
 							v-model="form.slug"
-							@input="ev => form.slug = Forms.toKebabCase(ev.target.value)"
+							@input="
+								ev => (form.slug = Forms.toKebabCase(ev.target.value))
+							"
 						/>
 						<InputError :message="$page.props.errors?.slug" />
 					</div>
@@ -198,7 +186,9 @@ function submit(isUpdate: boolean): void {
 							id="page"
 							class="w-full"
 							v-model="form.page"
-							@input="ev => form.page = Forms.wipeWhitespaces(ev.target.value)"
+							@input="
+								ev => (form.page = Forms.wipeWhitespaces(ev.target.value))
+							"
 						/>
 					</div>
 				</div>
@@ -228,8 +218,12 @@ function submit(isUpdate: boolean): void {
 					color="secondary"
 					v-model="form.price"
 					:min="0"
+					:step="0.1"
 				/>
-				<small v-show="form.price === 0" class="text-green-400 dark:text-green-500">
+				<small
+					v-show="form.price === 0"
+					class="text-green-400 dark:text-green-500"
+				>
 					{{ $t('Free') }}
 				</small>
 				<InputError :message="$page.props.errors?.price" />
@@ -252,7 +246,9 @@ function submit(isUpdate: boolean): void {
 						class="table-fixed w-full my-4 border border-gray-600 dark:border-slate-600"
 					>
 						<thead>
-							<tr class="text-sm sm:text-base bg-gray-300 dark:bg-slate-700">
+							<tr
+								class="text-sm sm:text-base bg-gray-300 dark:bg-slate-700"
+							>
 								<th class="text-left">
 									{{ $t('Version') }}
 								</th>
@@ -281,7 +277,9 @@ function submit(isUpdate: boolean): void {
 								<td>
 									<div class="flex flex-wrap gap-2 justify-center">
 										<img
-											v-for="platform in supportedPlatforms(version.files)"
+											v-for="platform in supportedPlatforms(
+												version.files
+											)"
 											:src="platform.icon"
 											:alt="platform.name"
 											:title="platform.name"
@@ -330,7 +328,12 @@ function submit(isUpdate: boolean): void {
 			<!-- Ativo -->
 			<FormRow>
 				<template #label>
-					<InputLabel for="active" class="py-4" :value="$t('Active')" required />
+					<InputLabel
+						for="active"
+						class="py-4"
+						:value="$t('Active')"
+						required
+					/>
 				</template>
 				<ToggleInput
 					class="my-4"
@@ -338,10 +341,10 @@ function submit(isUpdate: boolean): void {
 					id="active"
 					v-model="form.active"
 				/>
+				<InputError :message="$page.props.errors?.active" />
 			</FormRow>
 		</Card>
 	</AdminFormLayout>
-
 
 	<Modal :show="showModal" @close="closeModal">
 		<template #header>

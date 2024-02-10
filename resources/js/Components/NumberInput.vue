@@ -23,44 +23,29 @@ const props = defineProps({
 });
 const model = defineModel();
 
-
 function increment() {
 	const next = model.value + props.step;
-	if (next <= props.max)
-		model.value += props.step;
+	if (next <= props.max) model.value += props.step;
 }
-
 
 function decrement() {
 	const prev = model.value - props.step;
-	if (prev >= props.min)
-		model.value -= props.step;
+	if (prev >= props.min) model.value -= props.step;
 }
 </script>
 
 <template>
 	<InputGroup>
 		<input
-			class="xgb-input max-w-24 sm:max-w-48"
+			class="xgb-input max-w-24 sm:max-w-48 text-right"
 			type="number"
 			v-model.number="model"
-			dir="rtl"
 			:id="id"
 			:min="min"
 			:max="max"
 			:step="step"
 		/>
-		<Button
-			type="button"
-			:color="color"
-			icon="plus"
-			@click.prevent="increment"
-		/>
-		<Button
-			type="button"
-			:color="color"
-			icon="minus"
-			@click.prevent="decrement"
-		/>
+		<Button type="button" :color="color" icon="plus" @click.prevent="increment" />
+		<Button type="button" :color="color" icon="minus" @click.prevent="decrement" />
 	</InputGroup>
 </template>

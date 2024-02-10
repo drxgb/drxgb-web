@@ -46,7 +46,9 @@ class Product extends Model
 	public function cover() : Attribute
 	{
 		return Attribute::get(fn () : string =>
-			Storage::Url($this->getImages()[$this->cover_index])
+			$this->cover_index
+				? Storage::Url($this->getImages()[$this->cover_index])
+				: ''
 		);
 	}
 

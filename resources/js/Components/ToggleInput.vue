@@ -29,6 +29,8 @@ const checkClass = reactive({
 			class="hidden peer"
 			:id="id"
 			v-model="model"
+			true-value="yes"
+			false-value="no"
 		/>
 		<span
 			class="absolute cursor-pointer top-0 left-0 right-0 bottom-0 duration-300 rounded-full bg-gray-300 dark:bg-gray-500 before:absolute before:w-[26px] before:h-[26px] before:left-[4px] before:top-[3px] before:bg-white before:rounded-full before:duration-300 peer-checked:before:translate-x-[26px]"
