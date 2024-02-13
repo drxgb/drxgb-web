@@ -67,5 +67,12 @@ return [
 		'edit' => [
 			'label'	=> 'Edit',
 		],
+
+
+		//* Área pública
+		'store' => [
+			'label' => 'Store',
+			'url'	=> 'store.index',
+		],
 	],
 ];

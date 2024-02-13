@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\VersionController;
 use App\Http\Controllers\Public\LanguageController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +34,8 @@ Route::middleware([
 ])->group(function ()
 {
 	//* Painel Administrativo
-	Route::middleware('admin')->name('admin.')->prefix('admin')->group(function () {
+	Route::middleware('admin')->name('admin.')->prefix('admin')->group(function ()
+	{
 		Route::get('/', DashboardController::class)->name('index');
 		Route::resource('file-extensions', FileExtensionController::class)->except('show');
 		Route::resource('platforms', PlatformController::class)->except('show');
@@ -49,6 +51,14 @@ Route::middleware([
 
 
 //* Idiomas
-Route::name('languages.')->controller(LanguageController::class)-> group(function () {
+Route::name('languages.')->controller(LanguageController::class)->group(function ()
+{
 	Route::post('/languages', 'change')->name('change');
+});
+
+
+//* Loja
+Route::name('store.')->prefix('store')->controller(StoreController::class)->group(function ()
+{
+	Route::get('/', 'index')->name('index');
 });

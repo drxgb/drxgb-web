@@ -28,6 +28,7 @@ class Product extends Model
 
 	protected $casts = [
 		'active'	=> 'boolean',
+		'price'		=> 'float',
 	];
 
 
@@ -36,6 +37,8 @@ class Product extends Model
 		'images',
 		'related_category',
 		'related_versions',
+		'has_discount',
+		'final_price',
 	];
 
 
@@ -90,6 +93,30 @@ class Product extends Model
 				$this->category_id
 					? Category::find($this->category_id)
 					: null
+		);
+	}
+
+
+	/**
+	 * Verifica se o produto tem desconto.
+	 * @return Attribute
+	 */
+	public function hasDiscount() : Attribute
+	{
+		return Attribute::get(
+			fn () : bool => $this->final_price != $this->price
+		);
+	}
+
+
+	/**
+	 * Recebe o preço final do produto, incluindo os descontos.
+	 * @return Attribute<float>
+	 */
+	public function finalPrice() : Attribute
+	{
+		return Attribute::get(
+			fn () : float => $this->price
 		);
 	}
 

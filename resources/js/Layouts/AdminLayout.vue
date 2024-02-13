@@ -11,26 +11,29 @@ import ThemeSwitcher from '@/Components/ThemeSwitcher.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 
 defineProps<{
-	title: string,
+	title: string;
 }>();
 
 const toggleSideBar = ref<boolean>(!(window.innerWidth > 768));
-const iconSize = computed<string>(() => document.body.clientWidth < 1024 ? 'xl' : '2xl');
+const iconSize = computed<string>(() =>
+	document.body.clientWidth < 1024 ? 'xl' : '2xl'
+);
 const navHoverClass: string = 'hover:text-blue-200 hover:cursor-pointer';
 const themeHandler: ThemeHandler = ThemeHandler.getInstance();
 
 themeHandler.load();
 </script>
 
-
 <template>
 	<Head :title="title" />
 	<div class="bg-slate-100 dark:bg-slate-900">
 		<!-- Cabeçalho -->
-		<header class="flex fixed w-full h-24 z-20 shadow-xl bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600">
+		<header
+			class="flex fixed w-full h-24 z-20 shadow-xl bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600"
+		>
 			<div class="relative w-[72px] min-w-[72px] max-w-[72px] ml-8 overflow-hidden">
 				<Link href="/">
-				<ApplicationLogo class="absolute top-1" />
+					<ApplicationLogo class="absolute top-1" />
 				</Link>
 			</div>
 
@@ -40,16 +43,21 @@ themeHandler.load();
 						icon="bars"
 						:size="iconSize"
 						:class="navHoverClass"
-						@click="toggleSideBar = !toggleSideBar" />
+						@click="toggleSideBar = !toggleSideBar"
+					/>
 				</div>
 				<div class="flex gap-4">
 					<Tooltip>
 						<template #label>
-							<a :href="(<string>$page.props.emailInboxUrl)" target="_blank">
+							<a
+								:href="($page.props.emailInboxUrl as string)"
+								target="_blank"
+							>
 								<font-awesome-icon
 									icon="envelope"
 									:size="iconSize"
-									:class="navHoverClass" />
+									:class="navHoverClass"
+								/>
 							</a>
 						</template>
 						{{ $t('nav.email_inbox') }}
@@ -66,7 +74,8 @@ themeHandler.load();
 				:class="{
 					'w-auto hidden sm:block': toggleSideBar,
 					'fixed lg:static min-h-full': !toggleSideBar,
-				}">
+				}"
+			>
 				<menu class="mt-4">
 					<li v-for="nav of $page.props.navLinks" class="mb-2">
 						<NavItem :nav="nav" :no-label="toggleSideBar" />
@@ -77,7 +86,7 @@ themeHandler.load();
 				<!-- Cabeçalho da página -->
 				<header class="px-8 py-4 shadow-md bg-gray-200 dark:bg-slate-700">
 					<h1 class="text-2xl mb-2 text-orange-400">{{ title }}</h1>
-					<Breadcrumbs :items="(<string[]>$page.props.breadcrumbs)" />
+					<Breadcrumbs :items="($page.props.breadcrumbs as string[])" />
 				</header>
 
 				<!-- Corpo -->
@@ -86,7 +95,9 @@ themeHandler.load();
 				</article>
 
 				<!-- Rodapé -->
-				<footer class="flex flex-col sm:flex-row gap-2 justify-between mt-auto px-8 py-4 w-full shadow-sm bg-blue-500">
+				<footer
+					class="flex flex-col sm:flex-row gap-2 justify-between mt-auto px-8 py-4 w-full shadow-sm bg-blue-500"
+				>
 					<div class="self-end sm:self-start">
 						<LanguageButton />
 					</div>
