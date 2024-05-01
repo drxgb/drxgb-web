@@ -17,12 +17,15 @@ return new class extends Migration
             $table->string('display_name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
 			$table->foreignId('language_id')->nullable()->constrained();
 			$table->foreignId('role_id')->nullable()->constrained();
             $table->string('profile_photo_path', 2048)->nullable();
+			$table->string('provider')->nullable();
+			$table->string('provider_id')->nullable();
+			$table->string('provider_token')->nullable();
             $table->timestamps();
         });
     }

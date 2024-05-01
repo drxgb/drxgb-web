@@ -23,9 +23,9 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 
 const widthClass = computed(() => {
 	return {
-		'sm': 'w-48',
-		'md': 'w-64',
-		'lg': 'w-72',
+		sm: 'w-48',
+		md: 'w-64',
+		lg: 'w-72',
 	}[props.size.toString()];
 });
 const alignmentClasses = computed(() => {
@@ -44,7 +44,7 @@ function closeOnEscape(e) {
 	if (open.value && e.key === 'Escape') {
 		open.value = false;
 	}
-};
+}
 </script>
 
 <template>
@@ -62,13 +62,18 @@ function closeOnEscape(e) {
 			enter-to-class="transform opacity-100 scale-y-100"
 			leave-active-class="transition ease-in duration-100"
 			leave-from-class="transform opacity-100 scale-y-100"
-			leave-to-class="transform opacity-25 scale-y-0">
+			leave-to-class="transform opacity-25 scale-y-0"
+		>
 			<div
 				v-show="open"
 				class="absolute z-50 mt-2 rounded-md shadow-lg origin-top"
 				:class="[widthClass, alignmentClasses]"
-				style="display: none;">
-				<div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+				style="display: none"
+			>
+				<div
+					class="rounded-md ring-1 ring-black ring-opacity-5 border-4 border-green-600"
+					:class="contentClasses"
+				>
 					<slot name="content" />
 				</div>
 			</div>

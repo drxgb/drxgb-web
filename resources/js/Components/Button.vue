@@ -57,12 +57,12 @@ const iconSize = computed(() => {
 
 <template>
 	<a v-if="href" :href="href" :class="[defaultClass, colorClass, sizeClass, btnClass]">
-		<font-awesome-icon v-if="icon" :icon="icon" :size="iconSize" />
+		<font-awesome-icon v-if="icon" :icon="[fa, icon]" :size="iconSize" />
 		<slot />
 	</a>
 
 	<button v-else :class="[defaultClass, colorClass, sizeClass, btnClass]">
-		<font-awesome-icon v-if="icon" :icon="icon" :size="iconSize" />
+		<font-awesome-icon v-if="icon" :icon="[fa, icon]" :size="iconSize" />
 		<slot />
 	</button>
 </template>

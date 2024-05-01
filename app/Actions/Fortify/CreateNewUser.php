@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\Language;
 use App\Models\User;
+use App\Utils\Languages;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -27,10 +28,7 @@ class CreateNewUser implements CreatesNewUsers
             'terms' 	=> Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-		/** @var string */
-		$locale = app()->getLocale();
-		/** @var Language */
-		$language = Language::where('locale', $locale)->first();
+		$language = Languages::getFromLocale();
 
         return User::create([
             'name' 			=> $input['name'],

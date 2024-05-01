@@ -6,8 +6,10 @@ use App\Http\Controllers\Admin\FileExtensionController;
 use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\VersionController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Public\LanguageController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\ProductController;
 use App\Http\Controllers\Public\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,14 @@ use Illuminate\Support\Facades\Route;
 
 //* Página principal
 Route::get('/', HomeController::class)->name('home');
+
+
+//* Autenticação com rede social
+Route::name('oauth.')->prefix('oauth')->controller(OAuthController::class)->group(function ()
+{
+	Route::get('/{provider}', 'redirect')->name('redirect');
+	Route::get('/{provider}/callback', 'callback')->name('callback');
+});
 
 
 //* Área de usuário autenticado
@@ -61,4 +71,11 @@ Route::name('languages.')->controller(LanguageController::class)->group(function
 Route::name('store.')->prefix('store')->controller(StoreController::class)->group(function ()
 {
 	Route::get('/', 'index')->name('index');
+});
+
+
+//* Produto
+Route::name('product.')->prefix('product')->controller(ProductController::class)->group(function ()
+{
+	Route::get('/{id}/{slug}', 'show')->name('show');
 });

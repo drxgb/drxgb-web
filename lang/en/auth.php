@@ -50,4 +50,11 @@ return [
 	'email_verification_description'	=> "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
 	'email_verification_sent'			=> 'A new verification link has been sent to the email address you provided in your profile settings.',
 	'email_verification_resend'			=> 'Resend Verification Email',
+
+	'two_factor_confirmation'			=> 'Two-factor Confirmation',
+	'two_factor_description'			=> 'Please confirm access to your account by entering the authentication code provided by your authenticator application.',
+	'recovery_code'						=> 'Recovery Code',
+	'recovery_code_description'			=> 'Please confirm access to your account by entering one of your emergency recovery codes.',
+	'use_a_recovery_code'				=> 'Use a recovery code',
+	'use_an_authentication_code'		=> 'Use an authentication code',
 ];

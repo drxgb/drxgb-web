@@ -33,7 +33,7 @@ function logout() {
 
 <template>
 	<nav
-		class="lg:px-20 sm:px-8 px-2 py-4 min-h-12 max-h-12 relative flex items-center justify-between bg-green-600"
+		class="lg:px-20 sm:px-8 px-2 py-4 min-h-12 max-h-12 relative flex items-center justify-between bg-green-600 shadow-lg"
 	>
 		<div class="flex items-center gap-4">
 			<!-- Navegação lateral (Dispositivos móveis) -->

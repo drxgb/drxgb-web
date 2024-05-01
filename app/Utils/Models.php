@@ -3,13 +3,11 @@
 namespace App\Utils;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 
 /**
- * Contém funções utilitároas para modelos.
+ * Contém funções utilitárias para modelos.
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */

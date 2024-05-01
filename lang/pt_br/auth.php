@@ -50,4 +50,11 @@ return [
 	'email_verification_description'	=> 'Antes de continuar, poderia verificar seu endereço de email clicando no link que te enviamos por lá? Caso não tenha recebido, enviaremos um outro com muito prazer.',
 	'email_verification_sent'			=> 'Um novo link de verificação foi enviado para o email que você forneceu em suas configurações de perfil.',
 	'email_verification_resend'			=> 'Reenviar Verificação de Email',
+
+	'two_factor_confirmation'			=> 'Confirmação de Dois fatores',
+	'two_factor_description'			=> 'Confirme o acesso à sua conta entrando com o códido de autenticação fornecido pelo seu aplicativo autenticador.',
+	'recovery_code'						=> 'Código de recuperação',
+	'recovery_code_description'			=> 'Confirme o acesso à sua conta entrando com um de seus códigos de recuperação de emergência.',
+	'use_a_recovery_code'				=> 'Use um código de recuperação',
+	'use_an_authenticator_code'			=> 'Use an código de autenticação',
 ];

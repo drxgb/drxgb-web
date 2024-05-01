@@ -16,11 +16,11 @@ class UpdateUserPassword implements UpdatesUserPasswords
      *
      * @param  array<string, string>  $input
      */
-    public function update(User $user, array $input): void
+    public function update(\Illuminate\Foundation\Auth\User $user, array $input): void
     {
 		/** @var array<string, mixed> */
 		$rules = [
-            'current_password' => ['required', 'string', 'current_password:web'],
+            'current_password' => [ 'string', 'current_password:web' ],
             'password' => $this->passwordRules(),
         ];
 		/** @var array<string, string> */
@@ -28,6 +28,9 @@ class UpdateUserPassword implements UpdatesUserPasswords
             'current_password.current_password' => __('passwords.not_matched'),
 			'password.confirmed'				=> __('passwords.confirm'),
         ];
+
+		if (is_null($input ['current_password']))
+			$input['current_password'] = '';
 
         Validator::make($input, $rules, $messages)->validateWithBag('updatePassword');
         $user->forceFill([

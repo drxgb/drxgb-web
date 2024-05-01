@@ -6,6 +6,7 @@ import Button from '@/Components/Button.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Card from '@/Components/Card.vue';
 
 const recovery = ref(false);
 
@@ -31,68 +32,88 @@ const toggleRecovery = async () => {
     }
 };
 
-const submit = () => {
+function input(event) {
+	const value = event.target.value;
+
+	if (value.length === 6) {
+		submit();
+	}
+}
+
+function submit() {
     form.post(route('two-factor.login'));
 };
 </script>
 
 <template>
-    <AppLayout title="Two-factor Confirmation">
-
-		<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-			<template v-if="! recovery">
-				Please confirm access to your account by entering the authentication code provided by your authenticator application.
-			</template>
-
-			<template v-else>
-				Please confirm access to your account by entering one of your emergency recovery codes.
-			</template>
-		</div>
-
-		<form @submit.prevent="submit">
-			<div v-if="! recovery">
-				<InputLabel for="code" value="Code" />
-				<TextInput
-					id="code"
-					ref="codeInput"
-					v-model="form.code"
-					type="text"
-					inputmode="numeric"
-					class="mt-1 block w-full"
-					autofocus
-					autocomplete="one-time-code"
-				/>
-				<InputError class="mt-2" :message="form.errors.code" />
-			</div>
-
-			<div v-else>
-				<InputLabel for="recovery_code" value="Recovery Code" />
-				<TextInput
-					id="recovery_code"
-					ref="recoveryCodeInput"
-					v-model="form.recovery_code"
-					type="text"
-					class="mt-1 block w-full"
-					autocomplete="one-time-code"
-				/>
-				<InputError class="mt-2" :message="form.errors.recovery_code" />
-			</div>
-
-			<div class="flex items-center justify-end mt-4">
-				<button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
+    <AppLayout :title="$t('auth.two_factor_confirmation')">
+		<section class="flex flex-col justify-center items-center h-full py-8">
+			<h1 class="text-2xl uppercase">{{ $t('auth.two_factor_confirmation') }}</h1>
+			<Card size="xs">
+				<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
 					<template v-if="! recovery">
-						Use a recovery code
+						{{ $t('auth.two_factor_description') }}
 					</template>
 
 					<template v-else>
-						Use an authentication code
+						{{ $t('auth.recovery_code_description') }}
 					</template>
-				</button>
+				</div>
 
-				<Button color="primary" class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-					Log in
-				</Button>
-			</div>
-		</form>
+				<form @submit.prevent="submit">
+					<div v-if="! recovery">
+						<InputLabel for="code" :value="$t('Code')" />
+						<TextInput
+							id="code"
+							ref="codeInput"
+							v-model="form.code"
+							type="text"
+							inputmode="numeric"
+							class="mt-1 block w-full"
+							maxlength="6"
+							autofocus
+							autocomplete="one-time-code"
+							@input="input"
+						/>
+						<InputError class="mt-2" :message="form.errors.code" />
+					</div>
+
+					<div v-else>
+						<InputLabel for="recovery_code" :value="$t('auth.recovery_code')" />
+						<TextInput
+							id="recovery_code"
+							ref="recoveryCodeInput"
+							v-model="form.recovery_code"
+							type="text"
+							class="mt-1 block w-full"
+							autocomplete="one-time-code"
+						/>
+						<InputError class="mt-2" :message="form.errors.recovery_code" />
+					</div>
+
+					<div class="flex items-center justify-end mt-4">
+						<button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
+							<template v-if="! recovery">
+								{{ $t('auth.use_a_recovery_code') }}
+							</template>
+
+							<template v-else>
+								{{ $t('auth.use_an_authenticator_code') }}
+							</template>
+						</button>
+
+						<Button
+							icon="arrow-right-to-bracket"
+							color="primary"
+							class="ms-4"
+							:class="{ 'opacity-25': form.processing }"
+							:disabled="form.processing"
+						>
+							{{ $t('auth.login') }}
+						</Button>
+					</div>
+				</form>
+			</Card>
+		</section>
 	</AppLayout>
 </template>

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Override;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Filesystem\Cloud;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,17 +34,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
 		'language_id',
+		'profile_photo_path',
 		'role_id',
+		'provider',
+		'provider_id',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+	 * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+	 * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
+	protected $hidden = [
+		'password',
         'remember_token',
+		'provider_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
@@ -64,6 +71,28 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
 		'show_name',
     ];
+
+	/**
+     * Receber a URL da foto do perfil de usuário.
+     * @return Attribute
+     */
+    public function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(function (): string
+		{
+			if ($this->profile_photo_path)
+			{
+				/** @var Cloud */
+				$disk = Storage::disk($this->profilePhotoDisk());
+
+				return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
+					? $this->profile_photo_path
+					: $disk->url($this->profile_photo_path);
+			}
+
+            return $this->defaultProfilePhotoUrl();
+        });
+    }
 
 
 	/**
