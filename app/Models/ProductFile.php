@@ -25,6 +25,7 @@ class ProductFile extends Model
 
 	protected $appends = [
 		'path',
+		'supported_platforms',
 		'platform_ids',
 	];
 
@@ -71,6 +72,16 @@ class ProductFile extends Model
 				$this->platforms()->get()->toArray()
 			)
 		);
+	}
+
+
+	/**
+	 * Recebe as plataformas suportadas pelo arquivo.
+	 * @return Attribute<array<Platform>>
+	 */
+	public function supportedPlatforms() : Attribute
+	{
+		return Attribute::get(fn () : array => $this->platforms()->get()->toArray());
 	}
 
 

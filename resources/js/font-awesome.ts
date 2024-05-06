@@ -16,7 +16,9 @@ import {
 	faChevronRight,
 	faCircleCheck,
 	faCircleInfo,
+	faCircleChevronLeft,
 	faCircleQuestion,
+	faCircleChevronRight,
 	faDownload,
 	faEdit,
 	faEnvelope,
@@ -45,6 +47,9 @@ import {
 	faUpload,
 } from '@fortawesome/free-solid-svg-icons';
 import {
+	faHeart as farHeart,
+} from '@fortawesome/free-regular-svg-icons';
+import {
 	faGoogle,
 	faGithub,
 	faItchIo,
@@ -72,7 +77,9 @@ library.add(
 	faChevronRight,
 	faCircleCheck,
 	faCircleInfo,
+	faCircleChevronLeft,
 	faCircleQuestion,
+	faCircleChevronRight,
 	faDownload,
 	faEdit,
 	faEnvelope,
@@ -99,6 +106,9 @@ library.add(
 	faTriangleExclamation,
 	faUser,
 	faUpload,
+
+	// Regular
+	farHeart,
 
 	// Brands
 	faGoogle,

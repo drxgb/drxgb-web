@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { computed, reactive } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import Nav from '@/Components/Nav.vue';
 import Footer from '@/Components/Footer.vue';
 
 interface Props {
 	title: string,
-	full?: boolean
+	full?: boolean,
 }
+
+const page = usePage();
 
 const props = withDefaults(defineProps<Props>(), {
 	title: '',
@@ -22,6 +25,8 @@ const widthClass = reactive({
 const marginTop = reactive({
 	'my-8': !props.full,
 });
+const breadcrumbs = computed(() => page.props.breadcrumbs);
+
 
 const themeHandler: ThemeHandler = ThemeHandler.getInstance();
 themeHandler.load();
@@ -40,6 +45,9 @@ themeHandler.load();
 				<slot name="header" />
 			</header>
 			<main :class="['relative', marginTop]">
+				<template v-if="breadcrumbs?.length > 0">
+					<Breadcrumbs class="mb-4" :items="breadcrumbs" />
+				</template>
 				<slot />
 			</main>
 		</div>

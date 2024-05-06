@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import DisplayTotal from '@/Components/DisplayTotal.vue';
 import HrLabel from '@/Components/HrLabel.vue';
 import ProductCard from '@/Components/ProductCard.vue';
@@ -14,16 +13,10 @@ const props = defineProps({
 	subcategories: Array,
 	filters: Object,
 });
-const page = usePage();
 
 const showSubcategories = ref(false);
 const inputSort = ref(null);
 const inputPerPage = ref(null);
-
-function breadcrumbs() {
-	const items = [...page.props.breadcrumbs];
-	return items;
-}
 
 function applyFilters(filters) {
 	router.visit(route('store.index'), {
@@ -51,8 +44,6 @@ function setPerPage() {
 
 <template>
 	<AppLayout :title="$t('Store')">
-		<Breadcrumbs class="mb-4" :items="breadcrumbs()" />
-
 		<section class="py-4 flex gap-12">
 			<!-- Barra lateral -->
 			<aside class="w-1/6">

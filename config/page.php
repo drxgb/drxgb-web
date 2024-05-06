@@ -70,6 +70,11 @@ return [
 
 
 		//* Área pública
+		'home'	=> [
+			'label'	=> 'Home',
+			'url'	=> 'home',
+		],
+
 		'store' => [
 			'label' => 'Store',
 			'url'	=> 'store.index',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Price;
 use App\Utils\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,13 +26,6 @@ class Product extends Model
 		'cover_index',
 	];
 
-
-	protected $casts = [
-		'active'	=> 'boolean',
-		'price'		=> 'float',
-	];
-
-
 	protected $appends = [
 		'cover',
 		'images',
@@ -39,6 +33,7 @@ class Product extends Model
 		'related_versions',
 		'has_discount',
 		'final_price',
+		'is_free',
 	];
 
 
@@ -116,8 +111,18 @@ class Product extends Model
 	public function finalPrice() : Attribute
 	{
 		return Attribute::get(
-			fn () : float => $this->price
+			fn () : string => number_format(floatval($this->price), 2)
 		);
+	}
+
+
+	/**
+	 * Verifica se o produto é grátis.
+	 * @return Attribute<bool>
+	 */
+	public function isFree() : Attribute
+	{
+		return Attribute::get(fn() : bool => $this->final_price <= 0);
 	}
 
 
@@ -149,5 +154,18 @@ class Product extends Model
 	{
 		$path = Upload::makePath('product-images', $this->id);
 		return Storage::disk('public')->files($path);
+	}
+
+
+	/**
+	 * Recebe os atributos que vão sofrer o cast.
+	 * @return array
+	 */
+	protected function casts() : array
+	{
+		return [
+			'active'		=> 'boolean',
+			'price'			=> Price::class,
+		];
 	}
 }

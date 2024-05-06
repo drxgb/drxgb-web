@@ -20,6 +20,9 @@ export default interface Product {
 
 	cover?: string,
 	images: string[],
-	related_category: Category[],
+	final_price: number,
+	related_category: Category,
 	related_versions: Version[],
+	has_disccount: boolean,
+	is_free: boolean,
 };

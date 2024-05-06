@@ -54,4 +54,12 @@ class Version extends Model
 	{
 		return Attribute::get(fn () : Collection => $this->productFiles()->get());
 	}
+
+
+	protected function casts() : array
+	{
+		return [
+			'release_date'	=> 'datetime:M jS, Y',
+		];
+	}
 }
