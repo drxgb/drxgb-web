@@ -38,7 +38,7 @@ import Subheading from './Partials/Subheading.vue';
 		<hr class="w-5/6 mx-auto" />
 
 		<!-- Softwares & Utilities -->
-		<Subheading :title="$t('Softwares & Utilities')" class="flex-row-reverse">
+		<Subheading :title="$t('Softwares & Utilities')" class="lg:flex-row-reverse">
 			<template #cover>
 				<img src="/img/cover/utilities.jpg" class="rounded-md" />
 			</template>
@@ -72,7 +72,7 @@ import Subheading from './Partials/Subheading.vue';
 		<hr class="w-5/6 mx-auto" />
 
 		<!-- YouTube channel -->
-		<Subheading :title="$t('Visit my YouTube channel')" class="flex-row-reverse">
+		<Subheading :title="$t('Visit my YouTube channel')" class="lg:flex-row-reverse">
 			<template #cover>
 				<iframe
 					class="w-full aspect-video"
