@@ -15,7 +15,7 @@ class JetstreamServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register() : void
     {
         //
     }
@@ -23,7 +23,7 @@ class JetstreamServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot() : void
     {
         $this->configurePermissions();
 

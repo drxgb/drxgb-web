@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 
 /**
  * Responsável por tratar os links de navegação do painel administrativo.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -12,6 +13,7 @@ class NavigationLinks
 {
 	/**
 	 * Recebe a lista de links de navegação.
+	 *
 	 * @return array
 	 */
 	public function get() : array
@@ -25,6 +27,7 @@ class NavigationLinks
 
 	/**
 	 * Callback para capturar nomes de rotas e transformá-las.
+	 *
 	 * @param array $item
 	 * @return array
 	 */

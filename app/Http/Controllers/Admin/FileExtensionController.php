@@ -10,6 +10,7 @@ use App\Repositories\FileExtensionRepository;
 
 /**
  * Ações para manipulação das instâncias da extensão de arquivo.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */

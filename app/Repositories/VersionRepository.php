@@ -11,6 +11,7 @@ class VersionRepository
 {
 	/**
 	 * Cria uma nova versão.
+	 *
 	 * @param array $data
 	 * @param Product $product
 	 * @return Version
@@ -32,6 +33,7 @@ class VersionRepository
 
 	/**
 	 * Atualiza uma versão existente.
+	 *
 	 * @param array $data
 	 * @param Version $version
 	 * @return void
@@ -53,6 +55,7 @@ class VersionRepository
 
 	/**
 	 * Apaga a versão.
+	 *
 	 * @param Version $version
 	 * @return void
 	 */
@@ -68,6 +71,7 @@ class VersionRepository
 
 	/**
 	 * Salva os arquivos de produto.
+	 *
 	 * @param array $data
 	 * @param Version $version
 	 * @return void
@@ -100,6 +104,7 @@ class VersionRepository
 
 	/**
 	 * Apaga o arquivo da versão.
+	 *
 	 * @param ProductFile $file
 	 * @return void
 	 */
@@ -113,6 +118,7 @@ class VersionRepository
 
 	/**
 	 * Verifica se há arquivos para deletar.
+	 *
 	 * @param array $ids
 	 * @return void
 	 */

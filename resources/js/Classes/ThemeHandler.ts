@@ -1,15 +1,19 @@
-export class ThemeHandler {
-	private static instance: ThemeHandler;
+export class ThemeHandler
+{
+	private static instance : ThemeHandler;
 
 
 	/**
 	 * Recebe a instância única do manipulador de temas
 	 * @returns A instância de ThemeHandler
 	 */
-	public static getInstance(): ThemeHandler {
-		if (!ThemeHandler.instance) {
+	public static getInstance() : ThemeHandler
+	{
+		if (!ThemeHandler.instance)
+		{
 			ThemeHandler.instance = new ThemeHandler;
 		}
+
 		return ThemeHandler.instance;
 	}
 
@@ -18,7 +22,8 @@ export class ThemeHandler {
 	 * Recupera o tema atual
 	 * @returns O tema atual
 	 */
-	public getTheme(): string {
+	public getTheme(): string
+	{
 		return localStorage.getItem('xgb_theme') || 'light';
 	}
 
@@ -27,7 +32,8 @@ export class ThemeHandler {
 	 * Altera o tema da página
 	 * @param theme O nome do tema a ser alterado
 	 */
-	public setTheme(theme: string): void {
+	public setTheme(theme: string) : void
+	{
 		if (theme !== 'light' && theme !== 'dark')
 			throw new Error(`${theme} is not a valid theme.`);
 
@@ -39,7 +45,8 @@ export class ThemeHandler {
 	/**
 	 * Carrega o tema atual na página
 	 */
-	public load(): void {
+	public load() : void
+	{
 		const theme = this.getTheme();
 		const html = document.querySelector('html');
 

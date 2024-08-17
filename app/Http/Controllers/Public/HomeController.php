@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 
 /**
- * Controlador da página inicial (Landing Page)
+ * Controlador da página inicial (Landing Page).
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */

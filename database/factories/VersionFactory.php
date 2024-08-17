@@ -14,7 +14,7 @@ class VersionFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition() : array
     {
         return [
             'number'		=> $this->randomVersionNumber(),
@@ -27,6 +27,7 @@ class VersionFactory extends Factory
 
 	/**
 	 * Gera um número de versão aleatória.
+	 *
 	 * @return int
 	 */
 	public function randomVersionNumber() : int

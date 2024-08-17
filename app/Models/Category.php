@@ -24,6 +24,7 @@ class Category extends Model
 
 	/**
 	 * Recebe a categoria pai.
+	 *
 	 * @return BelongsTo
 	 */
 	public function parent() : BelongsTo
@@ -34,6 +35,7 @@ class Category extends Model
 
 	/**
 	 * Recebe as subcategorias.
+	 *
 	 * @return HasMany
 	 */
 	public function subcategories() : HasMany
@@ -44,6 +46,7 @@ class Category extends Model
 
 	/**
 	 * Recebe as subcategorias em forma de atributo.
+	 *
 	 * @return Attribute<Collection<Category>>
 	 */
 	public function children() : Attribute
@@ -54,6 +57,7 @@ class Category extends Model
 
 	/**
 	 * Recebe os produtos da categoria.
+	 *
 	 * @return HasMany
 	 */
 	public function products() : HasMany

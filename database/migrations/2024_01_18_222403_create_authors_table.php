@@ -9,9 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up() : void
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('authors', function (Blueprint $table)
+		{
             $table->id();
 			$table->string('name')->nullable();
 			$table->foreignId('user_id')->nullable()->constrained();
@@ -22,7 +23,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down() : void
     {
         Schema::dropIfExists('authors');
     }

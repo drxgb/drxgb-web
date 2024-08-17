@@ -11,6 +11,7 @@ trait HasIcon
 {
 	/**
 	 * Recebe a imagem do ícone da extensão.
+	 *
 	 * @return Attribute
 	 */
 	public function icon() : Attribute
@@ -25,6 +26,7 @@ trait HasIcon
 
 	/**
 	 * Recebe o caminho do ícone.
+	 *
 	 * @return string
 	 */
 	public function iconPath() : string
@@ -35,6 +37,7 @@ trait HasIcon
 
 	/**
 	 * Salva o arquivo do ícone.
+	 *
 	 * @param UploadedFile $upload
 	 * @return void
 	 */
@@ -49,6 +52,7 @@ trait HasIcon
 
 	/**
 	 * O caminho do arquivo do ícone padrão.
+	 *
 	 * @return string
 	 */
 	public function defaultIcon() : string
@@ -59,6 +63,7 @@ trait HasIcon
 
 	/**
 	 * Apaga o arquivo do ícone.
+	 *
 	 * @return void
 	 */
 	public function deleteIcon() : void

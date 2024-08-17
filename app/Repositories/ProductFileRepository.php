@@ -5,5 +5,5 @@ namespace App\Repositories;
 
 class ProductFileRepository
 {
-
+	//
 }

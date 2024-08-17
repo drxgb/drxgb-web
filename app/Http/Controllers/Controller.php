@@ -18,6 +18,7 @@ class Controller extends BaseController
 
 	/**
 	 * Caminho das migalhas de pão da página.
+	 *
 	 * @property array $breadcrumbs
 	 */
 	protected $breadcrumbs;
@@ -44,7 +45,7 @@ class Controller extends BaseController
 	 * @param string $path
 	 * @return string
 	 */
-	protected function getPageFile(string $path): string
+	protected function getPageFile(string $path) : string
 	{
 		return $this->rootFolder() . "/$path";
 	}
@@ -67,7 +68,7 @@ class Controller extends BaseController
 	 * Recebe o nome da pasta base da página.
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function rootFolder() : string
 	{
 		return 'Public';
 	}

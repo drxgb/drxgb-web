@@ -10,9 +10,8 @@ class LanguageRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
-		/** @var Language */
 		$language = Language::find($this->language_id);
 		return $language !== null;
     }
@@ -22,7 +21,7 @@ class LanguageRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'language_id'	=> 'required',

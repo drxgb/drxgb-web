@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * Responsável por criar, atualizar e apagar extensões de arquivo.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -18,6 +19,7 @@ class FileExtensionRepository
 
 	/**
 	 * Cria uma nova extensão de arquivo.
+	 *
 	 * @param Request $request
 	 * @return FileExtension
 	 */
@@ -38,6 +40,7 @@ class FileExtensionRepository
 
 	/**
 	 * Atualiza a extensão de arquivo.
+	 *
 	 * @param Request $request
 	 * @param FileExtension $fileExtension
 	 * @return void
@@ -56,6 +59,7 @@ class FileExtensionRepository
 
 	/**
 	 * Apaga a extensão de arquivo.
+	 *
 	 * @param FileExtension $fileExtension
 	 * @return void
 	 */

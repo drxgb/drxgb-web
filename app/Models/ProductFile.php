@@ -32,6 +32,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe todas as plataformas suportadas pelo arquivo.
+	 *
 	 * @return BelongsToMany
 	 */
 	public function platforms() : BelongsToMany
@@ -42,6 +43,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe a versão do produto.
+	 *
 	 * @return BelongsTo
 	 */
 	public function version() : BelongsTo
@@ -52,6 +54,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe o caminho do arquivo.
+	 *
 	 * @return Attribute
 	 */
 	public function path() : Attribute
@@ -62,6 +65,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe os IDs das plataformas suportadas pelo arquivo.
+	 *
 	 * @return Attribute<array<int>>
 	 */
 	public function platformIds() : Attribute
@@ -77,6 +81,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe as plataformas suportadas pelo arquivo.
+	 *
 	 * @return Attribute<array<Platform>>
 	 */
 	public function supportedPlatforms() : Attribute
@@ -87,6 +92,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe a pasta raiz do conteúdo.
+	 *
 	 * @return string
 	 */
 	public function getRootFolder() : string
@@ -97,6 +103,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe o nome do arquivo que representa o conteúdo.
+	 *
 	 * @return string
 	 */
 	public function getFileName() : string
@@ -107,6 +114,7 @@ class ProductFile extends Model
 
 	/**
 	 * Recebe o nome do caminho completo do arquivo.
+	 *
 	 * @return string
 	 */
 	public function getFullPath() : string
@@ -116,7 +124,8 @@ class ProductFile extends Model
 
 
 	/**
-	 * Salva o arquivo
+	 * Salva o arquivo.
+	 *
 	 * @param UploadedFile $file
 	 * @return void
 	 */
@@ -131,6 +140,7 @@ class ProductFile extends Model
 
 	/**
 	 * Apaga o arquivo.
+	 *
 	 * @return void
 	 */
 	public function deleteFile() : void

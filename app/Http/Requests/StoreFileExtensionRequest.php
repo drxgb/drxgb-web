@@ -11,7 +11,7 @@ class StoreFileExtensionRequest extends AdminRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'name'		=> 'required|max:255',

@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Contém funções utilitárias para os idiomas.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
 abstract class Languages
 {
 	/**
-	 * Summary of getFromLocale
+	 * Summary of getFromLocale.
+	 *
 	 * @return Language|object|Model|null
 	 */
 	public static function getFromLocale() : mixed

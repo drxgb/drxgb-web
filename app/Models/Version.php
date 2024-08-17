@@ -28,6 +28,7 @@ class Version extends Model
 
 	/**
 	 * Recebe os arquivos pertencentes a esta versão.
+	 *
 	 * @return HasMany
 	 */
 	public function productFiles() : HasMany
@@ -38,6 +39,7 @@ class Version extends Model
 
 	/**
 	 * Recebe o produto desta versão.
+	 *
 	 * @return HasOne
 	 */
 	public function product() : HasOne
@@ -48,6 +50,7 @@ class Version extends Model
 
 	/**
 	 * Recebe os arquivos da versão.
+	 *
 	 * @return Attribute
 	 */
 	public function files() : Attribute
@@ -56,6 +59,9 @@ class Version extends Model
 	}
 
 
+	/**
+	 * @return array
+	 */
 	protected function casts() : array
 	{
 		return [

@@ -1,11 +1,13 @@
-export class Language {
-	private _id: Number;
-	private _name: string;
-	private _locale: string;
-	private _countryFlag: string;
+export class Language
+{
+	private _id : Number;
+	private _name : string;
+	private _locale : string;
+	private _countryFlag : string;
 
 
-	public constructor(id: any, name: string, locale: string, countryFlag: string) {
+	public constructor(id : any, name : string, locale : string, countryFlag : string)
+	{
 		this._id = Number(id);
 		this._name = name;
 		this._locale = locale;
@@ -13,18 +15,22 @@ export class Language {
 	}
 
 
-	get id(): Number {
+	get id() : Number
+	{
 		return this._id;
 	}
-	get name(): string {
+	get name() : string
+	{
 		return this._name;
 	}
 
-	get locale(): string {
+	get locale() : string
+	{
 		return this._locale;
 	}
 
-	get countryFlag(): string {
+	get countryFlag() : string
+	{
 		return this._countryFlag;
 	}
 }

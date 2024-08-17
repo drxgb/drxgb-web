@@ -11,7 +11,6 @@ class AuthenticateLoginAttempt
 {
 	public function passed(Request $request)
 	{
-		/** @var User */
 		$user = User::where('email', $request->name)
 			->orWhere('name', $request->name)
 			->first();

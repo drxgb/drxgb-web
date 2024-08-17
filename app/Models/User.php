@@ -74,9 +74,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
 	/**
      * Receber a URL da foto do perfil de usuário.
+	 *
      * @return Attribute
      */
-    public function profilePhotoUrl(): Attribute
+    public function profilePhotoUrl() : Attribute
     {
         return Attribute::get(function (): string
 		{
@@ -97,19 +98,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
 	/**
 	 * Mostra o nome de exibição ou o nome de usuário, caso contrário.
+	 *
 	 * @return Attribute
 	 */
-	public function showName(): Attribute
+	public function showName() : Attribute
 	{
 		return Attribute::get(fn (): string => $this->display_name ?: $this->name);
 	}
 
 
 	/**
-	 * Recebe o idioma do usuário
+	 * Recebe o idioma do usuário.
+	 *
 	 * @return BelongsTo
 	 */
-	public function language(): BelongsTo
+	public function language() : BelongsTo
 	{
 		return $this->belongsTo(Language::class);
 	}
@@ -117,19 +120,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
 	/**
 	 * Recebe o cargo do usuário.
+	 *
 	 * @return BelongsTo
 	 */
-	public function role(): BelongsTo
+	public function role() : BelongsTo
 	{
 		return $this->belongsTo(Role::class);
 	}
 
 
 	/**
-	 * Verifica se o ousuário é um administrador
+	 * Verifica se o usuário é um administrador.
+	 *
 	 * @return bool
 	 */
-	public function isAdmin(): bool
+	public function isAdmin() : bool
 	{
 		return $this->role_id === 1;
 	}

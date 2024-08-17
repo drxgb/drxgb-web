@@ -11,11 +11,9 @@ trait PasswordValidationRules
      *
      * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    protected function passwordRules(): array
+    protected function passwordRules() : array
     {
-		/** @var int */
 		$length = config('fortify.rules.length');
-		/** @var string */
 		$message = __('passwords.rules', compact('length'));
 
 		/** @var Password */
@@ -26,6 +24,6 @@ trait PasswordValidationRules
 			->requireSpecialCharacter()
 			->withMessage($message);
 
-        return ['required', 'string', $password, 'confirmed'];
+        return [ 'required', 'string', $password, 'confirmed' ];
     }
 }

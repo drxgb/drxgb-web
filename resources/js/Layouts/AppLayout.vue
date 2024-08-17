@@ -25,7 +25,7 @@ const widthClass = reactive({
 const marginTop = reactive({
 	'my-8': !props.full,
 });
-const breadcrumbs = computed(() => page.props.breadcrumbs);
+const breadcrumbs : any = computed(() => page.props.breadcrumbs);
 
 
 const themeHandler: ThemeHandler = ThemeHandler.getInstance();
@@ -40,11 +40,11 @@ themeHandler.load();
 		<Nav />
 
 		<!-- Conteúdo -->
-		<div :class="['h-full mx-auto', widthClass]">
+		<div :class="[ 'h-full mx-auto mt-12', widthClass]">
 			<header v-if="$slots.header">
 				<slot name="header" />
 			</header>
-			<main :class="['relative', marginTop]">
+			<main :class="[ 'relative', marginTop ]">
 				<template v-if="breadcrumbs?.length > 0">
 					<Breadcrumbs class="mb-4" :items="breadcrumbs" />
 				</template>

@@ -9,7 +9,8 @@ use Illuminate\Support\Collection;
 class CategoryRepository
 {
 	/**
-	 * Lista as categorias em forma de hieraquia
+	 * Lista as categorias em forma de hieraquia.
+	 *
 	 * @param Category|array $excluded
 	 * @return Collection<string, array>
 	 */
@@ -33,6 +34,7 @@ class CategoryRepository
 
 	/**
 	 * Cria uma nova categoria.
+	 *
 	 * @param Request $request
 	 * @return Category
 	 */
@@ -54,6 +56,7 @@ class CategoryRepository
 
 	/**
 	 * Atualiza a categoria.
+	 *
 	 * @param \Illuminate\Http\Request $request
 	 * @param \App\Models\Category $category
 	 * @return void
@@ -77,7 +80,8 @@ class CategoryRepository
 
 
 	/**
-	 * Deleta uma categoria
+	 * Deleta uma categoria.
+	 *
 	 * @param Category $category
 	 * @return void
 	 */
@@ -89,6 +93,7 @@ class CategoryRepository
 
 	/**
 	 * Adiciona as subcategorias em sequência.
+	 *
 	 * @param Collection $collection
 	 * @param mixed $group
 	 * @param array<int> $excludedIds

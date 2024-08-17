@@ -3,7 +3,6 @@
 namespace App\Contracts;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Http\UploadedFile;
 
 /**
  * Contrato que contém funções para modelos que possuem ícones.

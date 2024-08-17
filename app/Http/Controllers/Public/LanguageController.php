@@ -10,14 +10,13 @@ use App\Http\Requests\LanguageRequest;
 class LanguageController extends Controller
 {
     /**
-     * Modifica o idioma da página
+     * Modifica o idioma da página.
      */
     public function change(LanguageRequest $request)
     {
-		/** @var array */
 		$input = $request->validated();
-		/** @var Language */
 		$language = Language::find($input['language_id']);
+
 		/** @var User */
 		$user = auth()->user();
 
@@ -28,8 +27,8 @@ class LanguageController extends Controller
 		}
 
 		$request->session()->put('locale', $language->locale);
-		/** @var string */
 		$cookie = cookie('locale', $language->locale, 60 * 24 * 360);
+
 		return redirect()->back()->withCookie($cookie);
     }
 }

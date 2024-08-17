@@ -5,7 +5,7 @@
 
 
 [x-cloak] {
-    display: none;
+	display: none;
 }
 
 .xgb-input {
@@ -14,19 +14,20 @@
 
 
 /* Input groups */
-.input-group > * {
+.input-group>* {
 	@apply rounded-none;
 }
 
-.input-group > button:not(:first-child), button:not(:last-child) {
+.input-group>button:not(:first-child),
+button:not(:last-child) {
 	@apply border border-gray-300 dark:border-gray-600;
 }
 
-.input-group > :first-child {
+.input-group> :first-child {
 	@apply rounded-l-md;
 }
 
-.input-group > :last-child {
+.input-group> :last-child {
 	@apply rounded-r-md;
 }
 
@@ -72,4 +73,20 @@ input[type=number] {
 /* Datepicker */
 :is(.dark) ::-webkit-calendar-picker-indicator {
 	filter: invert(1);
+}
+
+
+/* Scrollbar */
+@layer utilities {
+	::-webkit-scrollbar {
+		@apply bg-slate-900 w-[12px];
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-slate-700 rounded-lg;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-orange-600 rounded-lg;
+	}
 }

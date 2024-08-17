@@ -13,6 +13,7 @@ interface Storeable
 {
 	/**
 	 * Recebe a pasta raiz do conteúdo.
+	 *
 	 * @return string
 	 */
 	function getRootFolder() : string;
@@ -20,13 +21,15 @@ interface Storeable
 
 	/**
 	 * Recebe o nome do arquivo que representa o conteúdo.
+	 *
 	 * @return string
 	 */
 	function getFileName() : string;
 
 
 	/**
-	 * Salva o arquivo
+	 * Salva o arquivo.
+	 *
 	 * @param UploadedFile $file
 	 * @return void
 	 */

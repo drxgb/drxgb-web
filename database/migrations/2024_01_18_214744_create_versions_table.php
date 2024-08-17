@@ -9,9 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up() : void
     {
-        Schema::create('versions', function (Blueprint $table) {
+        Schema::create('versions', function (Blueprint $table)
+		{
             $table->id();
 			$table->integer('number');
 			$table->date('release_date');
@@ -25,7 +26,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down() : void
     {
         Schema::dropIfExists('versions');
     }

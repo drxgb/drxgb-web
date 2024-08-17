@@ -19,7 +19,8 @@ class StoreController extends Controller
 
 
 	/**
-	 * Lista de produtos
+	 * Lista de produtos.
+	 *
 	 * @param Request $request
 	 * @return Response
 	 */
@@ -45,6 +46,7 @@ class StoreController extends Controller
 
 	/**
 	 * Recebe os filtros da página.
+	 *
 	 * @param Request $request
 	 * @return array
 	 */
@@ -64,6 +66,7 @@ class StoreController extends Controller
 
 	/**
 	 * Recebe o nome da pasta base da página.
+	 *
 	 * @return string
 	 */
 	protected function rootFolder(): string

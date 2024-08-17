@@ -19,7 +19,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): ?string
+    public function version(Request $request) : ?string
     {
         return parent::version($request);
     }
@@ -29,7 +29,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+    public function share(Request $request) : array
     {
         return [
             ...parent::share($request),
@@ -46,7 +46,13 @@ class HandleInertiaRequests extends Middleware
     }
 
 
-	protected function getUserPermissions(Request $request): array
+	/**
+	 * Recebe as permissões padrão de usuário.
+	 *
+	 * @param Request $request
+	 * @return array
+	 */
+	protected function getUserPermissions(Request $request) : array
 	{
 		/** @var User */
 		$user = $request->user();

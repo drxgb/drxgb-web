@@ -12,7 +12,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
-    public function register(): void
+    public function register() : void
     {
         $this->app->singleton(
 			NavigationLinks::class,
@@ -25,7 +25,7 @@ class AdminServiceProvider extends ServiceProvider
      *
      * @return array<int, string>
      */
-    public function provides(): array
+    public function provides() : array
     {
         return [ NavigationLinks::class ];
     }

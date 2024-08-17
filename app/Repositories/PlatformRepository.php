@@ -13,6 +13,7 @@ class PlatformRepository
 
 	/**
 	 * Recebe a lista das extensões em ordem alfabética.
+	 *
 	 * @param ?string $sort
 	 * @return array<FileExtension>
 	 */
@@ -27,6 +28,7 @@ class PlatformRepository
 
 	/**
 	 * Crua uma nova plataforma.
+	 *
 	 * @param Request $request
 	 * @return Platform
 	 */
@@ -49,6 +51,7 @@ class PlatformRepository
 
 	/**
 	 * Atualiza uma plataforma.
+	 *
 	 * @param Request $request
 	 * @param Platform $platform
 	 * @return void
@@ -69,6 +72,7 @@ class PlatformRepository
 
 	/**
 	 * Remove uma plataforma.
+	 *
 	 * @param Platform $platform
 	 * @return void
 	 */

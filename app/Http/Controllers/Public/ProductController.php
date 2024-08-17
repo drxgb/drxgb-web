@@ -25,9 +25,10 @@ class ProductController extends Controller
 
 	/**
 	 * Recebe o nome da pasta base da página.
+	 *
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function rootFolder() : string
 	{
 		return 'Public/Store';
 	}

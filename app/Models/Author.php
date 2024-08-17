@@ -17,6 +17,7 @@ class Author extends Model
 
 	/**
 	 * Recebe o usuário que representa o autor.
+	 *
 	 * @return HasOne
 	 */
 	public function user() : HasOne

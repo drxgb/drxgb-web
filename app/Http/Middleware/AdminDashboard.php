@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Trata as páginas que possuem apenas acesso para usuários que usam de
  * algum privilégio administrativo para acessar.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -22,7 +23,7 @@ class AdminDashboard
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
 		$user = $request->user();
 		if (!$user || !$user->isAdmin())

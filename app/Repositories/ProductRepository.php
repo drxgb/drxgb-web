@@ -25,6 +25,7 @@ class ProductRepository
 
 	/**
 	 * Lista dos produtos.
+	 *
 	 * @param array $filters
 	 * @return LengthAwarePaginator|Collection
 	 */
@@ -43,6 +44,7 @@ class ProductRepository
 
 	/**
 	 * Cria um novo produto.
+	 *
 	 * @param Request $request
 	 * @return Product
 	 */
@@ -73,6 +75,7 @@ class ProductRepository
 
 	/**
 	 * Modifica um produto existente.
+	 *
 	 * @param Request $request
 	 * @param Product $product
 	 * @return void
@@ -108,6 +111,7 @@ class ProductRepository
 
 	/**
 	 * Apaga o produto.
+	 *
 	 * @param Product $product
 	 * @return void
 	 */
@@ -125,6 +129,7 @@ class ProductRepository
 
 	/**
 	 * Salva as versões deste produto.
+	 *
 	 * @param Request $request
 	 * @param Product $product
 	 * @return void
@@ -155,6 +160,7 @@ class ProductRepository
 
 	/**
 	 * Apaga as versões que não estão mais relacionadas.
+	 *
 	 * @param ?array $ids
 	 * @return void
 	 */
@@ -175,6 +181,7 @@ class ProductRepository
 
 	/**
 	 * Faz o upload da imagens do produto.
+	 *
 	 * @param Product $product
 	 * @param array<\Illuminate\Http\UploadedFile> $images
 	 * @return void
@@ -195,6 +202,7 @@ class ProductRepository
 
 	/**
 	 * Apaga as imagens do produto.
+	 *
 	 * @param Product $product
 	 * @return void
 	 */
@@ -208,6 +216,7 @@ class ProductRepository
 
 	/**
 	 * Aplica os filtros para a consulta do modelo do produto.
+	 *
 	 * @param Builder $builder
 	 * @param array $filters
 	 * @return void
@@ -254,6 +263,7 @@ class ProductRepository
 
 	/**
 	 * Recebe todos os ids da categoria e das subcategorias recursivamente.
+	 *
 	 * @param int $id
 	 * @return array
 	 */

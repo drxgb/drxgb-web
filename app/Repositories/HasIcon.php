@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * Funções para repositórios que cujo seu modelo possui um ícone.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -15,6 +16,7 @@ trait HasIcon
 {
 	/**
 	 * Atualiza o ícone se for necessário.
+	 *
 	 * @param Request $request
 	 * @param Iconable $iconable
 	 * @return void
@@ -28,6 +30,7 @@ trait HasIcon
 
 	/**
 	 * Deleta o ícone se necessário.
+	 *
 	 * @param Request $request
 	 * @param Iconable $iconable
 	 * @return void
@@ -41,6 +44,7 @@ trait HasIcon
 
 	/**
 	 * Verifica se a instância possui um ícone.
+	 *
 	 * @param Iconable $iconable
 	 * @return bool
 	 */

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 /**
- * Responsável por manipular a requisição recebendo o idioma do usuário
+ * Responsável por manipular a requisição recebendo o idioma do usuário.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -19,7 +20,7 @@ class HandlePageLanguage extends Middleware
 	 * @param Request $request
 	 * @return array<string, mixed>
 	 */
-	public function share(Request $request): array
+	public function share(Request $request) : array
 	{
 		/** @var Collection */
 		$languages = Language::all([ 'id', 'name', 'locale', 'country_flag' ]);
@@ -33,11 +34,12 @@ class HandlePageLanguage extends Middleware
 
 
 	/**
-	 * Recebe o idioma da página
+	 * Recebe o idioma da página.
+	 *
 	 * @param Request $request
 	 * @return Language|null
 	 */
-	protected function getUserLanguage(Request $request): ?Language
+	protected function getUserLanguage(Request $request) : ?Language
 	{
 		/** @var User */
 		$user = auth()->user();

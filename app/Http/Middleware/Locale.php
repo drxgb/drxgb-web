@@ -15,23 +15,26 @@ class Locale
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
 		/** @var User */
 		$user = auth()->user();
-		/** @var Session */
 		$session = $request->session();
-		/** @var string */
 		$key = 'locale';
-		/** @var string */
 		$locale = $user->language->locale ?? config('app.fallback_locale');
 
 		if ($user)
+		{
 			app()->setLocale($locale);
+		}
 		else if ($session->has($key))
+		{
 			app()->setLocale($session->get($key));
+		}
 		else if ($request->hasCookie($key))
+		{
 			app()->setLocale($request->cookie($key));
+		}
 
         return $next($request);
     }

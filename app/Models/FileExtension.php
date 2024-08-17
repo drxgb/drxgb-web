@@ -24,6 +24,7 @@ class FileExtension extends Model
 
 	/**
 	 * Recebe a pasta raiz do conteúdo.
+	 *
 	 * @return string
 	 */
 	public function getRootFolder() : string
@@ -34,6 +35,7 @@ class FileExtension extends Model
 
 	/**
 	 * Recebe o nome do arquivo que representaria o conteúdo.
+	 *
 	 * @return string
 	 */
 	public function getFileName() : string

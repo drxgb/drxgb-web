@@ -30,7 +30,7 @@ class Platform extends Model
 	 * Recebe o relacionamento entre as plataformas e as extensões.
 	 * @return BelongsToMany
 	 */
-	public function fileExtensions(): BelongsToMany
+	public function fileExtensions() : BelongsToMany
 	{
 		return $this->belongsToMany(FileExtension::class);
 	}

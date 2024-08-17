@@ -4,7 +4,8 @@ namespace App\Utils;
 
 
 /**
- * Contém funções utilitárias para strings
+ * Contém funções utilitárias para strings.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -12,6 +13,7 @@ abstract class Strings
 {
 	/**
 	 * Transforma um texto em nome com padrão do nome de usuário.
+	 *
 	 * @param string $input
 	 * @return string
 	 */
@@ -25,6 +27,7 @@ abstract class Strings
 
 	/**
 	 * Transforma um nome de email em um nome de usuário.
+	 *
 	 * @param string $email
 	 * @return string
 	 */

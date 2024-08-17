@@ -15,6 +15,7 @@ class OAuthController extends Controller
 {
     /**
 	 * Ação de redirecionamento.
+	 *
 	 * @return RedirectResponse
 	 */
 	public function redirect(string $provider) : RedirectResponse
@@ -27,6 +28,7 @@ class OAuthController extends Controller
 
 	/**
 	 * Acão de callback.
+	 *
 	 * @return RedirectResponse
 	 */
 	public function callback(Request $request, string $provider) : RedirectResponse

@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePlatformRequest;
 
 /**
  * Ações para manipulação das instâncias de plataforma.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */

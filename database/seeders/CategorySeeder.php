@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run() : void
     {
         $plugins = Category::create([ 'name' => 'Plugins' ]);
         $mv = Category::create([ 'name' => 'RPG Maker MV' ]);

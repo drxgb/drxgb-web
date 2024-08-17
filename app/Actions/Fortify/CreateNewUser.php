@@ -2,7 +2,6 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Language;
 use App\Models\User;
 use App\Utils\Languages;
 use Illuminate\Support\Facades\Hash;
@@ -19,13 +18,13 @@ class CreateNewUser implements CreatesNewUsers
      *
      * @param  array<string, string>  $input
      */
-    public function create(array $input): User
+    public function create(array $input) : User
     {
         Validator::make($input, [
-            'name' 		=> ['required', 'string', 'max:255', 'unique:users'],
-            'email' 	=> ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' 		=> [ 'required', 'string', 'max:255', 'unique:users' ],
+            'email' 	=> [ 'required', 'string', 'email', 'max:255', 'unique:users' ],
             'password' 	=> $this->passwordRules(),
-            'terms' 	=> Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'terms' 	=> Jetstream::hasTermsAndPrivacyPolicyFeature() ? [ 'accepted', 'required' ] : '',
         ])->validate();
 
 		$language = Languages::getFromLocale();

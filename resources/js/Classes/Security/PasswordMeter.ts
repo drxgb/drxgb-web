@@ -1,21 +1,23 @@
-export class PasswordMeter {
+export class PasswordMeter
+{
 	/**
 	 * Verifica a força de uma senha.
 	 * @param password A senha a ser verificada
 	 * @returns O valor da força da senha
 	 */
-	public check(password?: string): number {
+	public check(password?: string) : number
+	{
 		if (!password)
 			return 0;
 
-		const data: any = this.analyzed(password);
+		const data : any = this.analyzed(password);
 		const v = [
 			data.numbers > 0,
 			data.lowerCases > 0,
 			data.upperCases > 0,
 			data.symbols > 0,
 		];
-		const raise = (n: number) => v.filter(x => x === true).length * n;
+		const raise = (n : number) => v.filter(x => x === true).length * n;
 		let strength = 0;
 
 		strength += data.length;
@@ -33,7 +35,8 @@ export class PasswordMeter {
 	 * @param password A senha enviada
 	 * @returns Um conjunto de dados com informações de peso da senha
 	 */
-	private analyzed(password: string): object {
+	private analyzed(password: string) : object
+	{
 		const result = {
 			length: 0,
 			lowerCases: 0,
@@ -42,7 +45,8 @@ export class PasswordMeter {
 			symbols: 0,
 		};
 		const set = new Set<string>(password);
-		const match = (regex: RegExp) => {
+		const match = (regex: RegExp) =>
+		{
 			let p = '';
 			set.forEach(v => p += v);
 

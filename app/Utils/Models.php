@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * Contém funções utilitárias para modelos.
+ *
  * @author Dr.XGB <https://github.com/drxgb>
  * @version 1.0.0
  */
@@ -15,6 +16,7 @@ abstract class Models
 {
 	/**
 	 * Recebe o atributo ou o relacionamento de um modelo.
+	 *
 	 * @param Relation $relation
 	 * @param bool $useRelation
 	 * @return Attribute|Relation

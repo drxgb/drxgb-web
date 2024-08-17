@@ -39,6 +39,7 @@ class Product extends Model
 
 	/**
 	 * Recebe a imagem da capa.
+	 *
 	 * @return Attribute<string>
 	 */
 	public function cover() : Attribute
@@ -53,6 +54,7 @@ class Product extends Model
 
 	/**
 	 * Recebe as imagens do produto.
+	 *
 	 * @return Attribute<array<string>>
 	 */
 	public function images() : Attribute
@@ -69,6 +71,7 @@ class Product extends Model
 
 	/**
 	 * Recebe as versões do produto.
+	 *
 	 * @return Attribute<Collection<Version>>
 	 */
 	public function relatedVersions() : Attribute
@@ -79,6 +82,7 @@ class Product extends Model
 
 	/**
 	 * Recebe a categoria no qual o produto pertence.
+	 *
 	 * @return Attribute<?Category>
 	 */
 	public function relatedCategory() : Attribute
@@ -94,6 +98,7 @@ class Product extends Model
 
 	/**
 	 * Verifica se o produto tem desconto.
+	 *
 	 * @return Attribute
 	 */
 	public function hasDiscount() : Attribute
@@ -106,6 +111,7 @@ class Product extends Model
 
 	/**
 	 * Recebe o preço final do produto, incluindo os descontos.
+	 *
 	 * @return Attribute<float>
 	 */
 	public function finalPrice() : Attribute
@@ -118,6 +124,7 @@ class Product extends Model
 
 	/**
 	 * Verifica se o produto é grátis.
+	 *
 	 * @return Attribute<bool>
 	 */
 	public function isFree() : Attribute
@@ -128,6 +135,7 @@ class Product extends Model
 
 	/**
 	 * Recebe as versões relacionadas.
+	 *
 	 * @return HasMany<Version>
 	 */
 	public function versions() : HasMany
@@ -138,6 +146,7 @@ class Product extends Model
 
 	/**
 	 * Recebe a categoria na qual pertence.
+	 *
 	 * @return BelongsTo<Category>
 	 */
 	public function category() : BelongsTo
@@ -148,6 +157,7 @@ class Product extends Model
 
 	/**
 	 * Retorna um conjunto com as imagens do produto.
+	 *
 	 * @return array
 	 */
 	public function getImages() : array
@@ -159,6 +169,7 @@ class Product extends Model
 
 	/**
 	 * Recebe os atributos que vão sofrer o cast.
+	 *
 	 * @return array
 	 */
 	protected function casts() : array

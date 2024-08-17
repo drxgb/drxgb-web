@@ -7,6 +7,7 @@ abstract class Upload
 {
 	/**
 	 * Monta o caminho com a estrutura padrão das subpastas de acordo com o ID.
+	 *
 	 * @param string $basePath
 	 * @param mixed $id
 	 * @param string $filename

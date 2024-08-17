@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 abstract class AdminController extends Controller
 {
-	protected function rootFolder(): string
+	protected function rootFolder() : string
 	{
 		return 'Admin';
 	}

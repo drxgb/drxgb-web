@@ -11,7 +11,7 @@ class FileExtensionSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run() : void
     {
         FileExtension::create([
 			'name'		=> 'Windows Executable File',

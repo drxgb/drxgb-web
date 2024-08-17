@@ -17,7 +17,7 @@ class VersionController extends AdminController
 			'files'			=> array_map(
 				function (array $file) : array
 				{
-					// Arquivo são removidos porque não devem ser serializados
+					// Arquivos são removidos porque não devem ser serializados
 					unset($file['product_file']);
 					return $file;
 				},

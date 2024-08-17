@@ -10,7 +10,7 @@ class UpdateProductRequest extends AdminRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'title'			=> 'required|string|max:60',

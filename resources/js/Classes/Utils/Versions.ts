@@ -1,13 +1,15 @@
 /**
  * Classe utilitária para definir padrões de versionamento.
  */
-export default class Versions {
+export default class Versions
+{
 	/**
 	 * Recebe o nome da versão em forma de texto.
 	 * @param version Número da versão
 	 * @returns A versão em formato de texto.
 	 */
-	public static toString(version?: number): string {
+	public static toString(version? : number) : string
+	{
 		let major: number,
 			minor: number,
 			patch: number,
@@ -18,6 +20,7 @@ export default class Versions {
 
 		if (!version)
 			version = 0;
+
 		num = Math.floor(version) % 10;
 		typeNum = Math.floor(version / 10) % 10;
 		patch = Math.floor(version / 100) % 100;
@@ -26,10 +29,12 @@ export default class Versions {
 		type = Versions.getType(typeNum);
 
 		result = `${major}.${minor}.${patch}`;
-		if (type) {
+		if (type)
+		{
 			result += ` ${type}`;
 
-			if (num > 0) {
+			if (num > 0)
+			{
 				result += ` ${num}`;
 			}
 		}
@@ -43,7 +48,7 @@ export default class Versions {
 	 * @param type Tipo da versão
 	 * @returns O nome do tipo da versão
 	 */
-	private static getType(type: number): string|null
+	private static getType(type : number) : string|null
 	{
 		const types: object = {
 			1: 'Alpha',

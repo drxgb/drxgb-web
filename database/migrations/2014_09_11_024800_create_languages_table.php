@@ -9,9 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up() : void
     {
-        Schema::create('languages', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table)
+		{
             $table->id();
 			$table->string('name');
 			$table->string('locale');
@@ -23,7 +24,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down() : void
     {
         Schema::dropIfExists('languages');
     }

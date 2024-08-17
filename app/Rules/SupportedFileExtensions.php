@@ -22,7 +22,7 @@ class SupportedFileExtensions implements ValidationRule
      *
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
+    public function validate(string $attribute, mixed $value, Closure $fail) : void
     {
 		/** @var UploadedFile $value */
 		$ext = $value->getClientOriginalExtension();

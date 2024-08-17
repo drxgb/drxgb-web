@@ -13,9 +13,10 @@ class Role extends Model
 
 	/**
 	 * Recebe os usuários que possuem este cargo.
+	 *
 	 * @return HasMany
 	 */
-	public function users(): HasMany
+	public function users() : HasMany
 	{
 		return $this->hasMany(User::class);
 	}
