@@ -50,18 +50,25 @@ function deleteCategory(category)
 			<ListCell v-for="category in categories"
 				class="px-6 flex justify-between border-sky-200 bg-sky-50 text-sky-400 odd:bg-sky-100 dark:border-sky-500 dark:bg-sky-600 dark:text-sky-50 dark:odd:bg-sky-500"
 			>
-				<Link :href="route('admin.categories.edit', category.id)"
-					class="hover:font-bold hover:text-sky-500 hover:dark:text-sky-100"
+				<span :href="route('admin.categories.edit', category.id)"
 					:style="`padding-left: ${24 * category.depth}px;`"
 				>
 					{{ category.depth > 0 ? '--' : '' }}
 					{{ category.name }}
-				</Link>
+				</span>
 
-				<Button icon="trash"
-					color="danger"
-					@click="openDeleteModal(category)"
-				/>
+				<div class="flex gap-x-1">
+					<Button
+						type="button"
+						color="warning"
+						icon="edit"
+						:href="route('admin.categories.edit', category.id)"
+					/>
+					<Button icon="trash"
+						color="danger"
+						@click="openDeleteModal(category)"
+					/>
+				</div>
 			</ListCell>
 		</section>
 	</AdminLayout>

@@ -56,7 +56,7 @@ function deleteItem(item) {
 </script>
 
 <template>
-	<Alert v-if="$page.props.flash.message" type="success" timeout="10" can-close>
+	<Alert v-if="$page.props.flash.message" type="success" :timeout="10" can-close>
 		{{ $page.props.flash.message }}
 	</Alert>
 

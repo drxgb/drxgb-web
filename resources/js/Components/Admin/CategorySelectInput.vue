@@ -9,10 +9,10 @@ const model = defineModel();
 </script>
 
 <template>
-	<SelectInput
-		v-model="model"
-	>
-		<option value="">({{ $t('None') }})</option>
+	<SelectInput v-model="model">
+		<option :value="null">
+			({{ $t('None') }})
+		</option>
 		<option v-for="category in categories" :value="category.id">
 			{{ '&nbsp;'.repeat(4 * category.depth) }}
 			{{ category.depth > 0 ? '--' : '' }}
