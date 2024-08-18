@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up() : void
     {
-        Schema::create('products', function (Blueprint $table)
+        Schema::create('products', function (Blueprint $table) : void
 		{
             $table->id();
 			$table->string('title');
 			$table->string('slug');
 			$table->string('page')->nullable();
-			$table->text('description')->nullable();
+			$table->longText('description')->nullable();
 			$table->decimal('price');
 			$table->boolean('active');
-			$table->bigInteger('cover_index')->nullable();
+			$table->bigInteger('cover_index', unsigned: true)->nullable();
+			$table->bigInteger('download_count', unsigned: true);
 			$table->foreignId('category_id')->nullable()->constrained();
             $table->timestamps();
         });

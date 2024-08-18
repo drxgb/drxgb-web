@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up() : void
     {
-        Schema::create('product_files', function (Blueprint $table)
+        Schema::create('product_files', function (Blueprint $table) : void
 		{
             $table->id();
 			$table->string('name');
 			$table->decimal('size');
 			$table->string('file_path')->nullable();
-			$table->foreignId('version_id')->nullable()
-				->constrained()
-				->cascadeOnDelete()
-				->cascadeOnUpdate();
+			$table->foreignId('version_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

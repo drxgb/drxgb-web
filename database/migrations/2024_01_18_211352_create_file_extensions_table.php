@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up() : void
     {
-        Schema::create('file_extensions', function (Blueprint $table)
+        Schema::create('file_extensions', function (Blueprint $table) : void
 		{
             $table->id();
 			$table->string('name');

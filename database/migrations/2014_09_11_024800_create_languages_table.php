@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
 			$table->string('name');
 			$table->string('locale');
-			$table->string('country_flag', 2);
+			$table->string('country_flag', 3);
             $table->timestamps();
         });
     }

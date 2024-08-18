@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up() : void
     {
-        Schema::create('platform_product_file', function (Blueprint $table)
+        Schema::create('platform_product_file', function (Blueprint $table) : void
 		{
 			$table->foreignId('platform_id')->constrained();
 			$table->foreignId('product_file_id')->constrained();
