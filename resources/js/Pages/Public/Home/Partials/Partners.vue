@@ -1,16 +1,51 @@
+<script setup lang="ts">
+interface Link
+{
+	href : string,
+	title : string,
+	src : string,
+	class? : string,
+};
+
+const links : Link[] = [
+	{
+		href: 'https://condadobraveheart.com/',
+		title: 'Condado Braveheart',
+		src: '/img/brands/condado.png',
+		class: 'max-h-[128px]',
+	},
+	{
+		href: 'https://carlosdavilla.org/',
+		src: '/img/brands/cats.png',
+		title: 'Cats from the Underground',
+		class: 'max-h-[128px]',
+	},
+	{
+		href: 'https://cesber.wixsite.com/tocadodragao',
+		title: 'Toca do Dragão',
+		src: '/img/brands/toca-do-dragao.gif',
+		class: 'max-h-[160px]',
+	},
+	{
+		href: 'https://oz-digital-games.itch.io/',
+		title: 'OZ Digital Games',
+		src: '/img/brands/oz.png',
+		class: 'max-h-[112px]',
+	},
+];
+</script>
+
 <template>
 	<section class="px-4 sm:px-48 py-12 flex flex-wrap justify-center items-center gap-4 bg-orange-500">
-		<a href="https://condadobraveheart.com/" target="_blank">
-			<img class="max-h-[128px]" src="/img/brands/condado.png" alt="Condado Braveheart" />
-		</a>
-		<a href="https://carlosdavilla.org/" target="_blank">
-			<img class="max-h-[128px]" src="/img/brands/cats.png" alt="Cats from the Underground" />
-		</a>
-		<a href="https://cesber.wixsite.com/tocadodragao" target="_blank">
-			<img class="max-h-[160px]" src="/img/brands/toca-do-dragao.gif" alt="Toca do Dragão" />
-		</a>
-		<a href="https://oz-digital-games.itch.io/" target="_blank">
-			<img class="max-h-[112px]" src="/img/brands/oz.png" alt="OZ Digital Games" />
+		<a v-for="link of links"
+			:href="link.href"
+			target="_blank"
+		>
+			<img :src="link.src"
+				:alt="link.title"
+				:title="link.title"
+				:class="link.class"
+			/>
 		</a>
 	</section>
 </template>

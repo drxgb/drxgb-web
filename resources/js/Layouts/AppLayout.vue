@@ -2,9 +2,9 @@
 import { computed, reactive } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import { ThemeHandler } from '@/Classes/ThemeHandler';
-import Breadcrumbs from '@/Components/Breadcrumbs.vue';
-import Nav from '@/Components/Nav.vue';
-import Footer from '@/Components/Footer.vue';
+import Breadcrumbs from '@/Components/Container/Breadcrumbs.vue';
+import Nav from '@/Templates/Navigation/Nav.vue';
+import Footer from '@/Templates/Footer.vue';
 
 interface Props {
 	title: string,

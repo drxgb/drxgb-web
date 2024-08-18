@@ -3,15 +3,15 @@ import { computed } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 import Alert from '@/Components/Alert.vue';
-import Card from '@/Components/Card.vue';
+import Card from '@/Components/Card/Card.vue';
 import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import Button from '@/Components/Button.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import Button from '@/Components/Input/Button.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import HrLabel from '@/Components/HrLabel.vue';
-import FormRow from '@/Components/FormRow.vue';
+import HrLabel from '@/Components/Container/HrLabel.vue';
+import FormRow from '@/Components/Container/FormRow.vue';
 import PasswordInput from '@/Components/PasswordInput.vue';
 
 defineProps({
@@ -28,13 +28,15 @@ const otherErrors = computed(() =>
 	Object.keys(form.errors).filter(k => k !== 'email' && k !== 'password')
 );
 
-function submit() {
+function submit()
+{
 	form.transform(data => ({
 		...data,
 		remember: form.remember ? 'on' : '',
 	})).post(route('login'), {
 		onFinish: () => form.reset('password'),
-		onSuccess: page => {
+		onSuccess: page =>
+		{
 			loadLanguageAsync(page.props.language.locale);
 		},
 	});
@@ -47,7 +49,11 @@ function submit() {
 			<h1 class="text-2xl uppercase">{{ $t('auth.login') }}</h1>
 
 			<!-- Erros -->
-			<Alert v-if="otherErrors.length > 0" type="danger" size="sm" class="mt-8">
+			<Alert v-if="otherErrors.length > 0"
+				type="danger"
+				size="sm"
+				class="mt-8"
+			>
 				<ul>
 					<li v-for="e in otherErrors">
 						{{ form.errors[e] }}
@@ -67,16 +73,14 @@ function submit() {
 				>
 					<FormRow>
 						<template #label>
-							<InputLabel
-								for="name"
+							<InputLabel for="name"
 								:value="`${$t('auth.email')} / ${$t('auth.username')}`"
 							/>
 						</template>
 						<div>
-							<TextInput
+							<TextInput v-model="form.name"
 								id="name"
 								class="w-full my-2"
-								v-model="form.name"
 								required
 								autofocus
 								autocomplete="name"
@@ -90,10 +94,9 @@ function submit() {
 							<InputLabel for="password" :value="$t('auth.password')" />
 						</template>
 						<div>
-							<PasswordInput
+							<PasswordInput v-model="form.password"
 								id="password"
 								class="w-full my-2"
-								v-model="form.password"
 								required
 								autocomplete="current-password"
 							/>
@@ -104,8 +107,7 @@ function submit() {
 					<FormRow>
 						<div class="block mt-4">
 							<label class="flex items-center">
-								<Checkbox
-									v-model:checked="form.remember"
+								<Checkbox v-model:checked="form.remember"
 									name="remember"
 								/>
 								<span
@@ -117,16 +119,14 @@ function submit() {
 						</div>
 
 						<div class="flex flex-col sm:flex-row items-center my-4 gap-4">
-							<Button
-								icon="arrow-right-to-bracket"
+							<Button icon="arrow-right-to-bracket"
 								color="primary"
 								:class="{ 'opacity-25': form.processing }"
 								:disabled="form.processing"
 							>
 								{{ $t('auth.login') }}
 							</Button>
-							<Link
-								v-if="can.resetPassword"
+							<Link v-if="can.resetPassword"
 								:href="route('password.request')"
 								class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
 							>
@@ -138,15 +138,13 @@ function submit() {
 
 				<div class="px-2 sm:px-8 py-4">
 					<!-- Conectar com redes sociais -->
-					<div
-						v-if="can.useSocialMedia"
+					<div v-if="can.useSocialMedia"
 						class="flex flex-col items-center gap-2 mt-4"
 					>
 						<HrLabel>{{ $t('Or') }}</HrLabel>
 						<span>{{ $t('auth.connect_with') }}:</span>
 						<div class="flex flex-col sm:flex-row justify-center gap-4">
-							<Button
-								:href="route('oauth.redirect', 'google')"
+							<Button :href="route('oauth.redirect', 'google')"
 								icon="google"
 								color="custom"
 								fa="fab"
@@ -154,8 +152,7 @@ function submit() {
 							>
 								{{ $t('Google') }}
 							</Button>
-							<Button
-								:href="route('oauth.redirect', 'twitter-oauth-2')"
+							<Button :href="route('oauth.redirect', 'twitter-oauth-2')"
 								icon="x-twitter"
 								color="custom"
 								fa="fab"
@@ -163,8 +160,7 @@ function submit() {
 							>
 								{{ $t('X') }}
 							</Button>
-							<Button
-								:href="route('oauth.redirect', 'github')"
+							<Button :href="route('oauth.redirect', 'github')"
 								icon="github"
 								color="custom"
 								fa="fab"
@@ -176,15 +172,13 @@ function submit() {
 					</div>
 
 					<!-- Registro -->
-					<div
-						v-if="can.register"
+					<div v-if="can.register"
 						class="flex flex-col items-center gap-2 mt-4"
 					>
 						<hr class="dark:border-white w-full mb-2" />
 						<span>{{ $t('auth.not_registered_yet') }}</span>
-						<Button
+						<Button :href="route('register')"
 							icon="arrow-right-to-bracket"
-							:href="route('register')"
 							color="info"
 						>
 							{{ $t('auth.register') }}

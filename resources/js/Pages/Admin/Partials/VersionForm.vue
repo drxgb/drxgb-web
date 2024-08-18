@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import Button from '@/Components/Button.vue';
-import DateInput from '@/Components/DateInput.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import InputError from '@/Components/InputError.vue';
+import Button from '@/Components/Input/Button.vue';
+import DateInput from '@/Components/Input/DateInput.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import InputError from '@/Components/Input/InputError.vue';
 import ProductFileForm from '@/Pages/Admin/Partials/ProductFileForm.vue';
-import TextArea from '@/Components/TextArea.vue';
-import TextInput from '@/Components/TextInput.vue';
-import UploadInput from '@/Components/UploadInput.vue';
+import TextArea from '@/Components/Input/TextArea.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
+import UploadInput from '@/Components/Input/UploadInput.vue';
 
 import Forms from '@/Classes/Utils/Forms';
 import type ProductFile from '@/Classes/Models/ProductFile';
@@ -50,7 +50,8 @@ defineExpose({
 });
 
 
-function makeProductFile(): ProductFile {
+function makeProductFile() : ProductFile
+{
 	return <ProductFile>{
 		id: null,
 		name: null,
@@ -61,21 +62,26 @@ function makeProductFile(): ProductFile {
 }
 
 
-function getVersionFiles(files: ProductFile[]): (string | File)[] {
+function getVersionFiles(files: ProductFile[]) : (string | File)[]
+{
 	return files.map(f => f.path ?? f.product_file);
 }
 
 
-function updateFiles(files: any[], deletedIndex?: number): void {
-	if (deletedIndex !== undefined && form.version_files[deletedIndex]) {
+function updateFiles(files: any[], deletedIndex?: number) : void
+{
+	if (deletedIndex !== undefined && form.version_files[deletedIndex])
+	{
 		const file = form.version_files[deletedIndex];
 
 		form.version_files.splice(deletedIndex, 1);
 		if (file?.id)
 			form.deleted_files.add(file.id);
 	}
-	files.forEach((file: any, index: number): void => {
-		if (!form.version_files[index]) {
+	files.forEach((file: any, index: number): void =>
+	{
+		if (!form.version_files[index])
+		{
 			form.version_files[index] = makeProductFile();
 		}
 		form.version_files[index].product_file = file;
@@ -83,12 +89,14 @@ function updateFiles(files: any[], deletedIndex?: number): void {
 }
 
 
-function updateFilePlatforms(file: ProductFile, fields: any): void {
+function updateFilePlatforms(file: ProductFile, fields: any) : void
+{
 	file.platform_ids = fields.platforms.map((platform: any) => platform.id);
 }
 
 
-function fileErrors(index: number): FileErrorBag {
+function fileErrors(index: number) : FileErrorBag
+{
 	return <FileErrorBag>{
 		platform: form.errors[`version_files.${index}.platform_ids`],
 		file: form.errors[`version_files.${index}.file`],
@@ -96,7 +104,8 @@ function fileErrors(index: number): FileErrorBag {
 }
 
 
-function submit(): void {
+function submit() : void
+{
 	// @ts-ignore
 	form.post(route('admin.versions.save'), {
 		preserveScroll: true,
@@ -108,7 +117,8 @@ function submit(): void {
 }
 
 
-function assign(): void {
+function assign() : void
+{
 	inputVersion.value.id = form.id;
 	inputVersion.value.number = form.number;
 	inputVersion.value.fixes = form.fixes;
@@ -126,10 +136,9 @@ function assign(): void {
 			<div class="mb-4 flex gap-4">
 				<div class="w-1/2">
 					<InputLabel for="number" :value="$t('Number')" required />
-					<TextInput
+					<TextInput v-model="form.number"
 						class="w-full"
 						id="number"
-						v-model="form.number"
 						@keypress="Forms.filterOnlyNumbers"
 					/>
 					<small>
@@ -142,10 +151,9 @@ function assign(): void {
 				<!-- Data de lançamento -->
 				<div class="w-1/2">
 					<InputLabel for="release-date" :value="$t('Release date')" required />
-					<DateInput
+					<DateInput v-model="form.release_date"
 						class="w-full"
 						id="release-date"
-						v-model="form.release_date"
 					/>
 					<InputError :message="form.errors?.release_date" />
 				</div>
@@ -154,35 +162,31 @@ function assign(): void {
 			<!-- Notas de lançamento -->
 			<div class="my-2">
 				<InputLabel for="release-notes" :value="$t('Release notes')" />
-				<TextArea
+				<TextArea v-model="form.release_notes"
 					id="release-notes"
 					class="w-full"
-					v-model="form.release_notes"
 				/>
 			</div>
 
 			<!-- Correções -->
 			<div class="my-2">
 				<InputLabel for="fixes" :value="$t('Fixes')" />
-				<TextArea
+				<TextArea v-model="form.fixes"
 					id="fixes"
 					class="w-full"
-					v-model="form.fixes"
 				/>
 			</div>
 
 			<!-- Arquivos -->
 			<div class="my-2">
 				<InputLabel class="mb-2" :value="$t('Files')" required />
-				<UploadInput
-					:initial-files="getVersionFiles(form.version_files)"
+				<UploadInput :initial-files="getVersionFiles(form.version_files)"
 					label="Add files"
 					multiple
 					@update="updateFiles"
 				/>
 
-				<ProductFileForm
-					v-for="(file, index) in form.version_files"
+				<ProductFileForm v-for="(file, index) in form.version_files"
 					class="py-2 border-b border-b-slate-600 dark:border-b-slate-400"
 					:platforms="platforms"
 					:file="file"

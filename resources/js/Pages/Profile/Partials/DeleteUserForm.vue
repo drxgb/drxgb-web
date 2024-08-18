@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import ActionSection from '@/Components/ActionSection.vue';
-import Button from '@/Components/Button.vue';
-import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import PasswordInput from '@/Components/PasswordInput.vue';
+import ActionSection from '@/Components/Section/ActionSection.vue';
+import Button from '@/Components/Input/Button.vue';
+import DialogModal from '@/Components/Modal/DialogModal.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import PasswordInput from '@/Components/Input/PasswordInput.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -14,13 +14,14 @@ const form = useForm({
     password: '',
 });
 
-const confirmUserDeletion = () => {
+const confirmUserDeletion = () =>
+{
     confirmingUserDeletion.value = true;
-
     setTimeout(() => passwordInput.value.focus(), 250);
 };
 
-const deleteUser = () => {
+const deleteUser = () =>
+{
     form.delete(route('current-user.destroy'), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
@@ -29,7 +30,8 @@ const deleteUser = () => {
     });
 };
 
-const closeModal = () => {
+const closeModal = () =>
+{
     confirmingUserDeletion.value = false;
 
     form.reset();
@@ -52,10 +54,10 @@ const closeModal = () => {
             </div>
 
             <div class="mt-5">
-                <Button
-					color="custom"
+                <Button color="custom"
 					class="bg-white text-red-500 hover:bg-red-700 hover:text-red-50"
-					@click="confirmUserDeletion">
+					@click="confirmUserDeletion"
+				>
                     {{ $t('profile.delete_account') }}
                 </Button>
             </div>
@@ -70,9 +72,8 @@ const closeModal = () => {
                     {{ $t('profile.delete_account_confirm') }}
 
                     <div class="mt-4">
-                        <PasswordInput
+                        <PasswordInput v-model="form.password"
                             ref="passwordInput"
-                            v-model="form.password"
                             class="mt-1 block w-3/4"
                             :placeholder="$t('auth.password')"
                             autocomplete="current-password"
@@ -88,8 +89,7 @@ const closeModal = () => {
                         {{ $t('Cancel') }}
                     </Button>
 
-                    <Button
-						color="danger"
+                    <Button color="danger"
                         class="ms-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"

@@ -1,5 +1,5 @@
 <script setup>
-import Button from '@/Components/Button.vue';
+import Button from '@/Components/Input/Button.vue';
 </script>
 
 <template>
@@ -12,20 +12,20 @@ import Button from '@/Components/Button.vue';
 		</p>
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<Button
-				:href="route('login')"
+			<Button :href="route('login')"
 				class="w-full lg:w-80"
 				icon="arrow-right-to-bracket"
 				size="xl"
-				color="success">
+				color="success"
+			>
 				{{ $t('auth.login') }}
 			</Button>
-			<Button
-				:href="route('register')"
+			<Button :href="route('register')"
 				class="w-full lg:w-80"
 				icon="arrow-right-to-bracket"
 				size="xl"
-				color="info">
+				color="info"
+			>
 				{{ $t('auth.register') }}
 			</Button>
 		</div>

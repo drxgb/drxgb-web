@@ -2,10 +2,10 @@
 import { ref } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import DisplayTotal from '@/Components/DisplayTotal.vue';
-import HrLabel from '@/Components/HrLabel.vue';
-import ProductCard from '@/Components/ProductCard.vue';
-import SelectInput from '@/Components/SelectInput.vue';
+import DisplayTotal from '@/Templates/DisplayTotal.vue';
+import HrLabel from '@/Components/Container/HrLabel.vue';
+import ProductCard from '@/Components/Card/ProductCard.vue';
+import SelectInput from '@/Components/Input/SelectInput.vue';
 
 const props = defineProps({
 	products: Object,
@@ -18,7 +18,8 @@ const showSubcategories = ref(false);
 const inputSort = ref(null);
 const inputPerPage = ref(null);
 
-function applyFilters(filters) {
+function applyFilters(filters)
+{
 	router.visit(route('store.index'), {
 		data: filters,
 		preserveState: true,
@@ -27,14 +28,16 @@ function applyFilters(filters) {
 	});
 }
 
-function sort() {
+function sort()
+{
 	applyFilters({
 		...props.filters,
 		o: inputSort.value.input.value,
 	});
 }
 
-function setPerPage() {
+function setPerPage()
+{
 	applyFilters({
 		...props.filters,
 		p: inputPerPage.value.value,
@@ -49,26 +52,25 @@ function setPerPage() {
 			<aside class="w-1/6">
 				<h1 class="text-2xl">{{ $t('Related categories') }}</h1>
 				<div class="py-4">
-					<h3 v-if="category" class="text-xl my-2">{{ category.name }}</h3>
+					<h3 v-if="category" class="text-xl my-2">
+						{{ category.name }}
+					</h3>
+
 					<menu class="my-2" :class="{ 'ml-8': category }">
 						<li v-for="(subcategory, i) in subcategories">
-							<Link
-								v-if="showSubcategories || (!showSubcategories && i < 4)"
+							<Link v-if="showSubcategories || (!showSubcategories && i < 4)"
 								class="hover:text-orange-300"
-								:href="
-									route('store.index', {
-										...filters,
-										category: subcategory.id,
-									})
-								"
+								:href="route('store.index', {
+									...filters,
+									category: subcategory.id,
+								})"
 							>
 								{{ subcategory.name }}
 							</Link>
 						</li>
 					</menu>
 
-					<span
-						v-if="subcategories.length > 5"
+					<span v-if="subcategories.length > 5"
 						class="cursor-pointer hover:text-orange-300"
 						@click="showSubcategories = !showSubcategories"
 					>
@@ -86,18 +88,13 @@ function setPerPage() {
 								<font-awesome-icon class="mr-1" icon="sort" />
 								{{ $t('Sort by') }}
 							</span>
-							<SelectInput
+							<SelectInput v-model="filters.o"
 								ref="inputSort"
-								v-model="filters.o"
 								@change="sort"
 							>
 								<option value="0">{{ $t('Most relevant') }}</option>
-								<option value="1">
-									{{ $t('Expensiver to cheaper') }}
-								</option>
-								<option value="2">
-									{{ $t('Cheaper to expensiver') }}
-								</option>
+								<option value="1">{{ $t('Expensiver to cheaper') }}</option>
+								<option value="2">{{ $t('Cheaper to expensiver') }}</option>
 								<option value="3">{{ $t('Recent to older') }}</option>
 								<option value="4">{{ $t('Older to recent') }}</option>
 								<option value="5">{{ $t('A-Z') }}</option>
@@ -110,9 +107,8 @@ function setPerPage() {
 								<font-awesome-icon class="mr-1" icon="file-lines" />
 								{{ $t('Show per page') }}
 							</span>
-							<SelectInput
+							<SelectInput v-model="filters.p"
 								ref="inputPerPage"
-								v-model="filters.p"
 								@change="setPerPage"
 							>
 								<option v-for="i in 5">
@@ -128,7 +124,9 @@ function setPerPage() {
 				<HrLabel class="my-4" />
 
 				<div class="grid grid-cols-4 gap-12">
-					<ProductCard v-for="product in products.data" :product="product" />
+					<ProductCard v-for="product in products.data"
+						:product="product"
+					/>
 				</div>
 			</article>
 		</section>

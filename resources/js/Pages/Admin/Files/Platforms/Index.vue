@@ -2,8 +2,9 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataListLayout from '@/Layouts/DataListLayout.vue';
 import DataColumn from '@/Classes/Layouts/DataColumn';
+import type Platform from '@/Classes/Models/Platform';
 
-const props = defineProps<{
+defineProps<{
 	platforms: any,
 }>();
 
@@ -14,15 +15,15 @@ const columns: DataColumn[] = [
 ];
 
 
-function iconCell(platform: DataColumn): string {
+function iconCell(platform : Platform) : string
+{
 	return `<img src="${platform.icon}" alt="${platform.name}" class="mx-auto" />`;
 }
 </script>
 
 <template>
 	<AdminLayout :title="$t('Platforms')">
-		<DataListLayout
-			title="Platform"
+		<DataListLayout title="Platform"
 			context="admin.platforms"
 			:content="platforms"
 			:columns="columns"

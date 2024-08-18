@@ -17,15 +17,16 @@ createInertiaApp({
 		`./Pages/${name}.vue`,
 		import.meta.glob<any>('./Pages/**/*.vue')
 	),
-	// @ts-ignore
-	setup({ el, App, props, plugin }) {
+	setup({ el, App, props, plugin }) : any
+	{
 		return createApp({ render: () => h(App, props) })
 			.use(plugin as any)
 			.use(ZiggyVue, (window as any).Ziggy)
 			.use(i18nVue, {
-				resolve: async lang => {
+				resolve: async (lang : any) : Promise<any> =>
+				{
 					const langs = import.meta.glob('../../lang/*.json');
-					return await langs[`../../lang/${lang}.json`]();
+					return await langs[ `../../lang/${lang}.json` ]();
 				}
 			})
 			.component('font-awesome-icon', FontAwesomeIcon)

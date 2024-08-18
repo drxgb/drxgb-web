@@ -1,5 +1,5 @@
 <script setup>
-import Button from '@/Components/Button.vue';
+import Button from '@/Components/Input/Button.vue';
 import Slide from '@/Transitions/Slide.vue';
 </script>
 
@@ -14,8 +14,7 @@ import Slide from '@/Transitions/Slide.vue';
 				{{ $t('home.head_description') }}
 			</p>
 
-			<Button
-				:href="route('register')"
+			<Button :href="route('register')"
 				color="primary"
 				size="xl"
 				class="w-full h-16"
@@ -25,9 +24,8 @@ import Slide from '@/Transitions/Slide.vue';
 		</div>
 
 		<div class="justify-end w-1/2 hidden lg:flex">
-			<Slide from="right" duration="500">
-				<img
-					src="/img/drxgb.png"
+			<Slide from="right" :duration="500">
+				<img src="/img/drxgb.png"
 					:alt="$page.props.appName"
 					class="z-10"
 				/>

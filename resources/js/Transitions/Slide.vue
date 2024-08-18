@@ -1,5 +1,5 @@
 <script setup>
-import {computed, reactive} from 'vue';
+import { reactive } from 'vue';
 
 const props = defineProps({
 	from: {
@@ -37,7 +37,8 @@ const end = reactive({
 		:enter-to-class="end[from]"
 		:leave-active-class="end.duration"
 		:leave-from-class="end[from]"
-		:leave-to-class="start[from]">
+		:leave-to-class="start[from]"
+	>
 		<slot />
 	</transition>
 </template>

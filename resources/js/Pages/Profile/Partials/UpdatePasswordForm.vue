@@ -1,12 +1,12 @@
 <script setup>
-import {ref} from 'vue';
-import {useForm} from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import Button from '@/Components/Button.vue';
-import PasswordInput from '@/Components/PasswordInput.vue';
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import ActionMessage from '@/Templates/ActionMessage.vue';
+import FormSection from '@/Components/Section/FormSection.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import Button from '@/Components/Input/Button.vue';
+import PasswordInput from '@/Components/Input/PasswordInput.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -17,18 +17,22 @@ const form = useForm({
 	password_confirmation: '',
 });
 
-function updatePassword() {
+function updatePassword()
+{
 	form.put(route('user-password.update'), {
 		errorBag: 'updatePassword',
 		preserveScroll: true,
 		onSuccess: () => form.reset(),
-		onError: () => {
-			if (form.errors.password) {
+		onError: () =>
+		{
+			if (form.errors.password)
+			{
 				form.reset('password', 'password_confirmation');
 				passwordInput.value.focus();
 			}
 
-			if (form.errors.current_password) {
+			if (form.errors.current_password)
+			{
 				form.reset('current_password');
 				currentPasswordInput.value.focus();
 			}
@@ -50,10 +54,9 @@ function updatePassword() {
 		<template #form>
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="current_password" :value="$t('profile.current_password')" />
-				<PasswordInput
+				<PasswordInput v-model="form.current_password"
 					id="current_password"
 					ref="currentPasswordInput"
-					v-model="form.current_password"
 					class="mt-1 block w-full"
 					autocomplete="current-password" />
 				<InputError :message="form.errors.current_password" class="mt-2" />
@@ -61,10 +64,9 @@ function updatePassword() {
 
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="password" :value="$t('profile.new_password')" />
-				<PasswordInput
+				<PasswordInput v-model="form.password"
 					id="password"
 					ref="passwordInput"
-					v-model="form.password"
 					class="mt-1 block w-full"
 					autocomplete="new-password" />
 				<InputError :message="form.errors.password" class="mt-2" />
@@ -72,9 +74,8 @@ function updatePassword() {
 
 			<div class="col-span-6 sm:col-span-4">
 				<InputLabel for="password_confirmation" :value="$t('profile.confirm_password')" />
-				<PasswordInput
+				<PasswordInput v-model="form.password_confirmation"
 					id="password_confirmation"
-					v-model="form.password_confirmation"
 					class="mt-1 block w-full"
 					autocomplete="new-password" />
 				<InputError :message="form.errors.password_confirmation" class="mt-2" />
@@ -86,7 +87,10 @@ function updatePassword() {
 				{{ $t('Saved') }}
 			</ActionMessage>
 
-			<Button color="primary" icon="floppy-disk" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+			<Button color="primary"
+				icon="floppy-disk"
+				:class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+			>
 				{{ $t('Save') }}
 			</Button>
 		</template>

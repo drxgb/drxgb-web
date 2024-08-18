@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Button from '@/Components/Button.vue';
+import Button from '@/Components/Input/Button.vue';
 import Hero from './Partials/Hero.vue';
 import Partners from './Partials/Partners.vue';
 import Subheading from './Partials/Subheading.vue';
@@ -25,13 +25,17 @@ import Subheading from './Partials/Subheading.vue';
 			<template #action>
 				<div class="flex justify-around">
 					<Link href="/" class="hover:animate-heart text-center">
-						<img src=" /img/icon/mv.png" alt="RPG Maker MV" />
-						<h3 class="text-lg font-semibold mt-2">MV</h3>
+						<img src=" /img/icon/mv.png" :alt="$t('RPG Maker MV')" />
+						<h3 class="text-lg font-semibold mt-2">
+							{{ $t('MV') }}
+						</h3>
 					</Link>
 
 					<Link href="/" class="hover:animate-heart text-center">
-						<img src="/img/icon/mz.png" alt="RPG Maker MZ" />
-						<h3 class="text-lg font-semibold mt-2">MZ</h3>
+						<img src="/img/icon/mz.png" :alt="$t('RPG Maker MZ')" />
+						<h3 class="text-lg font-semibold mt-2">
+							{{ $t('MZ')}}
+						</h3>
 					</Link>
 				</div>
 			</template>
@@ -80,9 +84,8 @@ import Subheading from './Partials/Subheading.vue';
 		<!-- YouTube channel -->
 		<Subheading :title="$t('Visit my YouTube channel')" reversed>
 			<template #cover>
-				<iframe
+				<iframe src="https://www.youtube-nocookie.com/embed/1HzXbl6iFJQ?si=kfIb1jrCQvg9WMKA"
 					class="w-full aspect-video"
-					src="https://www.youtube-nocookie.com/embed/1HzXbl6iFJQ?si=kfIb1jrCQvg9WMKA"
 					:title="$page.props.appName"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					allowfullscreen></iframe>
@@ -93,7 +96,13 @@ import Subheading from './Partials/Subheading.vue';
 			</template>
 
 			<template #action>
-				<Button href="/" color="primary" fa="fab" icon="youtube" size="lg" class="w-full">
+				<Button href="/"
+					color="primary"
+					fa="fab"
+					icon="youtube"
+					size="lg"
+					class="w-full"
+				>
 					{{ $t('Subscribe') }}
 				</Button>
 			</template>

@@ -18,7 +18,8 @@ createServer((page: any) =>
 			`./Pages/${name}.vue`,
 			import.meta.glob<DefineComponent>('./Pages/**/*.vue')
 		),
-		setup({ App, props, plugin }) {
+		setup({ App, props, plugin })
+		{
 			return createSSRApp({ render: () => h(App, props) })
 				.use(plugin)
 				.use(ZiggyVue, {
@@ -27,9 +28,10 @@ createServer((page: any) =>
 				})
 				.use(i18nVue, {
 					lang: 'pt',
-					resolve: (lang: any) => {
+					resolve: (lang: any) : Promise<any> =>
+					{
 						const langs: any = import.meta.glob('../../lang/*.json', { eager: true });
-						return langs[`../../lang/${lang}.json`].default;
+						return langs[ `../../lang/${lang}.json` ].default;
 					},
 				});
 		},

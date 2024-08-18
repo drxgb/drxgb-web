@@ -2,8 +2,7 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import DataListLayout from '@/Layouts/DataListLayout.vue';
 import DataColumn from '@/Classes/Layouts/DataColumn';
-
-import type Category from '@/Classes/Models/Category';
+import type Product from '@/Classes/Models/Product';
 
 defineProps<{
 	products: any,
@@ -17,12 +16,14 @@ const columns: DataColumn[] = [
 ];
 
 
-function categoryName(product: Product): string {
+function categoryName(product : Product) : string
+{
 	return product.related_category?.name;
 }
 
 
-function activeIcon(product: Product): string|null {
+function activeIcon(product : Product) : string|null
+{
 	return product.active
 		? '<img src="/img/icon/check.png" />'
 		: null;
@@ -31,8 +32,7 @@ function activeIcon(product: Product): string|null {
 
 <template>
 	<AdminLayout :title="$t('Products')">
-		<DataListLayout
-			title="Product"
+		<DataListLayout title="Product"
 			context="admin.products"
 			name-key="title"
 			:content="products"

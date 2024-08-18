@@ -15,10 +15,7 @@ defineProps({
 			<h1 class="text-5xl font-bold mb-8">
 				{{ title }}
 			</h1>
-			<p
-				class="text-justify lg:text-left my-8"
-				:class="{ 'lg:text-right': !reversed }"
-			>
+			<p class="text-justify lg:text-left my-8" :class="{ 'lg:text-right': !reversed }">
 				<slot name="description" />
 			</p>
 			<div class="w-full relative">

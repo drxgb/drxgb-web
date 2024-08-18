@@ -1,5 +1,5 @@
 <script setup>
-import SelectInput from '@/Components/SelectInput.vue';
+import SelectInput from '@/Components/Input/SelectInput.vue';
 
 defineProps({
 	categories: Array,

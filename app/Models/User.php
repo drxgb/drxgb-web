@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Override;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -77,7 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	 *
      * @return Attribute
      */
-	#[Override]
     public function profilePhotoUrl() : Attribute
     {
         return Attribute::get(function (): string

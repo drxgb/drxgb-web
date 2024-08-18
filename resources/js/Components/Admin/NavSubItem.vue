@@ -16,19 +16,23 @@ const activeClass = reactive({
 });
 
 
-onMounted(() => {
-	if (isActive()) {
+onMounted(() =>
+{
+	if (isActive())
+	{
 		onActive();
 	}
 });
 
 
-function isActive() {
+function isActive()
+{
 	return props.item.active;
 }
 
 
-function onActive() {
+function onActive()
+{
 	opened.value = true;
 	emit('active');
 }

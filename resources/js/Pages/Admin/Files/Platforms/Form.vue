@@ -2,12 +2,12 @@
 import { onMounted } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import AdminFormLayout from '@/Layouts/AdminFormLayout.vue';
-import Card from '@/Components/Card.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import InputError from '@/Components/InputError.vue';
-import TextInput from '@/Components/TextInput.vue';
-import MultipleSelectInput from '@/Components/MultipleSelectInput.vue';
-import UploadInput from '@/Components/UploadInput.vue';
+import Card from '@/Components/Card/Card.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
+import MultipleSelectInput from '@/Components/Input/MultipleSelectInput.vue';
+import UploadInput from '@/Components/Input/UploadInput.vue';
 
 const props = defineProps({
 	platform: Object,
@@ -23,13 +23,15 @@ const form = useForm({
 	icon: null,
 });
 
-onMounted(() => {
+onMounted(() =>
+{
 	if (props.platform?.icon_path)
 		form.icon = props.platform.icon;
 });
 
 
-function updateIcon(icons) {
+function updateIcon(icons)
+{
 	if (icons && icons.length > 0)
 		form.icon = icons[0];
 	else
@@ -37,8 +39,10 @@ function updateIcon(icons) {
 }
 
 
-function submit(isUpdate) {
-	if (isUpdate) {
+function submit(isUpdate)
+{
+	if (isUpdate)
+	{
 		router.post(route('admin.platforms.update', props.platform.id), {
 			_method: 'put',
 			...form,
@@ -50,8 +54,7 @@ function submit(isUpdate) {
 </script>
 
 <template>
-	<AdminFormLayout
-		:content="platform"
+	<AdminFormLayout :content="platform"
 		:form="form"
 		label="Platform"
 		@form-submit="submit"
@@ -61,20 +64,18 @@ function submit(isUpdate) {
 					<div class="flex flex-col sm:flex-row gap-4 w-full mb-4">
 						<div class="w-full sm:w-1/6">
 							<InputLabel for="short-name" :value="$t('Short name')" required />
-							<TextInput
+							<TextInput v-model="form.short_name"
 								id="short-name"
 								class="w-full"
-								v-model="form.short_name"
 								autofocus
 							/>
 							<InputError :message="form.errors?.short_name" />
 						</div>
 						<div class="w-full sm:w-5/6">
 							<InputLabel for="name" :value="$t('Name')" required />
-							<TextInput
+							<TextInput v-model="form.name"
 								id="name"
 								class="w-full"
-								v-model="form.name"
 								autofocus
 							/>
 							<InputError :message="form.errors?.name" />
@@ -83,11 +84,10 @@ function submit(isUpdate) {
 
 					<div class="mb-4">
 						<InputLabel for="icon" :value="$t('Icon')" />
-						<UploadInput
+						<UploadInput ref="uploadInput"
 							id="icon"
-							ref="uploadInput"
 							accept="image/png, image/bmp, image/gif"
-							upload-label="Choose icon"
+							:label="$t('Choose icon')"
 							:initial-files="platform?.icon_path ? platform.icon : null"
 							@update="updateIcon"
 						/>
@@ -96,15 +96,13 @@ function submit(isUpdate) {
 
 					<div class="w-full">
 						<InputLabel for="file-extensions" :value="$t('File extensions')" />
-						<MultipleSelectInput
-							id="file-extensions"
+						<MultipleSelectInput id="file-extensions"
 							class="w-full"
 							size="15"
 							:value="form.file_extensions"
 							@change-option="options => form.file_extensions = options"
 						>
-							<option
-								v-for="extension in extensions"
+							<option v-for="extension in extensions"
 								:value="extension.id"
 								:style="`background-image: url(${extension.icon})`"
 								class="bg-no-repeat pl-8"

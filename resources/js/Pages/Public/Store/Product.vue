@@ -2,14 +2,14 @@
 import { computed } from 'vue';
 
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Button from '@/Components/Button.vue';
-import Carousel from '@/Components/Carousel.vue';
-import Divider from '@/Components/Divider.vue';
-import HrTitle from '@/Components/HrTitle.vue';
-import PhotoGallery from '@/Components/PhotoGallery.vue';
-import ProductCard from '@/Components/ProductCard.vue';
-import VersionCard from '@/Components/VersionCard.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Button from '@/Components/Input/Button.vue';
+import Carousel from '@/Templates/Carousel.vue';
+import Divider from '@/Templates/Divider.vue';
+import HrTitle from '@/Components/Container/HrTitle.vue';
+import PhotoGallery from '@/Components/Container/PhotoGallery.vue';
+import ProductCard from '@/Components/Card/ProductCard.vue';
+import VersionCard from '@/Components/Card/VersionCard.vue';
+import Tooltip from '@/Components/Container/Tooltip.vue';
 
 import type Product from '@/Classes/Models/Product';
 import type Version from '@/Classes/Models/Version';
@@ -41,8 +41,7 @@ const lastVersion = computed<Version>(() => recentVersions.value[0]);
 
 				<!-- Versões -->
 				<HrTitle>{{ $t('Version updates') }}</HrTitle>
-				<VersionCard
-					v-for="version in recentVersions"
+				<VersionCard v-for="version in recentVersions"
 					:version="version"
 				/>
 
@@ -67,8 +66,7 @@ const lastVersion = computed<Version>(() => recentVersions.value[0]);
 
 					<Tooltip>
 						<template #label>
-							<font-awesome-icon
-								:icon="[ 'far', 'heart' ]"
+							<font-awesome-icon :icon="[ 'far', 'heart' ]"
 								size="xl"
 								class="cursor-pointer"
 							/>
@@ -83,28 +81,27 @@ const lastVersion = computed<Version>(() => recentVersions.value[0]);
 
 				<div class="flex flex-col w-full gap-y-2 my-8">
 					<template v-if="product.is_free">
-						<Button
+						<Button color="primary"
 							icon="download"
 							size="lg"
-							color="primary"
-							>
+						>
 							{{ $t('download') }}
 						</Button>
 					</template>
 
 					<template v-else>
-						<h1 class="text-7xl text-green-500 font-bold mb-8">${{ product.final_price }}</h1>
-						<Button
+						<h1 class="text-7xl text-green-500 font-bold mb-8">
+							${{ product.final_price }}
+						</h1>
+						<Button color="primary"
 							icon="cart-shopping"
 							size="lg"
-							color="primary"
 						>
 							{{ $t('Buy') }}
 						</Button>
-						<Button
+						<Button color="secondary"
 							icon="cart-plus"
 							size="lg"
-							color="secondary"
 						>
 							{{ $t('Add to Cart') }}
 						</Button>
@@ -112,7 +109,10 @@ const lastVersion = computed<Version>(() => recentVersions.value[0]);
 						<div class="flex flex-col my-4">
 							<small class="text-justify">
 								{{ $t('Payment method is provided by') }}
-								<a href="https://stripe.com" target="_blank" class="text-orange-500 hover:text-orange-300 dark:text-orange-400 hover:dark:text-orange-200 underline transition-colors">
+								<a href="https://stripe.com"
+									target="_blank"
+									class="text-orange-500 hover:text-orange-300 dark:text-orange-400 hover:dark:text-orange-200 underline transition-colors"
+								>
 									{{ $t('Stripe') }}
 								</a>
 								{{ $t('According to your region') }}.

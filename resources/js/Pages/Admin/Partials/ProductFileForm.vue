@@ -1,9 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import InputError from '@/Components/InputError.vue';
-import MultipleSelectInput from '@/Components/MultipleSelectInput.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { ref } from 'vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import MultipleSelectInput from '@/Components/Input/MultipleSelectInput.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
 
 const props = defineProps({
 	platforms: Array,
@@ -16,7 +16,8 @@ const emit = defineEmits([ 'update' ]);
 const selectedPlatforms = ref([]);
 
 
-function updatePlatformFields(options) {
+function updatePlatformFields(options)
+{
 	options = options.map(option => Number(option));
 	selectedPlatforms.value = props.platforms.filter(platform => options.includes(platform.id));
 	emit('update', {
@@ -25,7 +26,8 @@ function updatePlatformFields(options) {
 }
 
 
-function getFileName() {
+function getFileName()
+{
 	let name;
 
 	if (props.file.product_file) {
@@ -40,10 +42,9 @@ function getFileName() {
 		<!-- Nome -->
 		<div>
 			<InputLabel for="filename" :value="$t('Name')" />
-			<TextInput
+			<TextInput v-model="form.name"
 				id="filename"
 				class="w-full"
-				v-model="form.name"
 				:placeholder="getFileName()"
 			/>
 			<InputError :message="errors?.file" />
@@ -57,8 +58,7 @@ function getFileName() {
 				:value="file.platform_ids"
 				@change-option="updatePlatformFields"
 			>
-				<option
-					v-for="platform in platforms"
+				<option v-for="platform in platforms"
 					:value="platform.id"
 					:style="`background-image: url(${platform.icon})`"
 					class="bg-no-repeat pl-12 pt-2 h-[40px]"

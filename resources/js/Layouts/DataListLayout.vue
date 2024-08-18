@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import Alert from '@/Components/Alert.vue';
-import Button from '@/Components/Button.vue';
-import Paginator from '@/Components/Paginator.vue';
+import Alert from '@/Components/Container/Alert.vue';
+import Button from '@/Components/Input/Button.vue';
+import Paginator from '@/Templates/Paginator.vue';
 import DataColumn from '@/Classes/Layouts/DataColumn';
-import DisplayTotal from '@/Components/DisplayTotal.vue';
-import Modal from '@/Components/Modal.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import DisplayTotal from '@/Templates/DisplayTotal.vue';
+import Modal from '@/Components/Modal/Modal.vue';
+import Tooltip from '@/Components/Container/Tooltip.vue';
 
 interface Props {
 	content: any;

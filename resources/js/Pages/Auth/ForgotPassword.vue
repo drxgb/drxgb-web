@@ -1,11 +1,11 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Button from '@/Components/Button.vue';
-import Card from '@/Components/Card.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from '@/Components/Button/Button.vue';
+import Card from '@/Components/Card/Card.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
 
 defineProps({
     status: String,
@@ -15,7 +15,8 @@ const form = useForm({
     email: '',
 });
 
-const submit = () => {
+const submit = () =>
+{
     form.post(route('password.email'));
 };
 </script>
@@ -25,7 +26,11 @@ const submit = () => {
 		<section class="flex flex-col justify-center items-center h-full py-8">
 			<h1 class="text-2xl uppercase">{{ $t('auth.forgot_password') }}</h1>
 
-			<Alert v-if="status" type="success" size="sm" class="mt-8">
+			<Alert v-if="status"
+				type="success"
+				size="sm"
+				class="mt-8"
+			>
 				{{ status }}
 			</Alert>
 
@@ -37,9 +42,8 @@ const submit = () => {
 				<form @submit.prevent="submit">
 					<div>
 						<InputLabel for="email" :value="$t('auth.email')" />
-						<TextInput
+						<TextInput v-model="form.email"
 							id="email"
-							v-model="form.email"
 							type="email"
 							class="mt-1 block w-full"
 							required

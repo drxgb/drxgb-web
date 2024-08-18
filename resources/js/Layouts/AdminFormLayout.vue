@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { trans } from 'laravel-vue-i18n';
+import { trans as __ } from 'laravel-vue-i18n';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import Button from '@/Components/Button.vue';
+import Button from '@/Components/Input/Button.vue';
 
 const props = defineProps({
 	content: Object,
@@ -18,8 +18,8 @@ defineEmits([ 'form-submit' ]);
 
 const isUpdate = ref(false);
 const title = computed(() => (isUpdate.value)
-		? `${trans('Edit')} ${trans(props.content[props.nameKey])}`
-		: `${trans('Create')} ${trans(props.label).toLowerCase()}`
+		? `${__('Edit')} ${__(props.content[props.nameKey])}`
+		: `${__('Create')} ${__(props.label).toLowerCase()}`
 );
 
 onMounted(() => {
@@ -35,12 +35,18 @@ onMounted(() => {
 		<form @submit.prevent="$emit('form-submit', isUpdate)">
 			<slot />
 
-			<progress v-if="form.progress" :value="form.progress.percentage" max="100">
+			<progress v-if="form.progress"
+				:value="form.progress.percentage"
+				max="100"
+			>
 				{{ form.progress.percentage }}%
 			</progress>
 
 			<div class="w-full px-8 py-4 rounded-b-md bg-slate-200 dark:bg-slate-700 text-center">
-				<Button color="primary" icon="save" class="w-full sm:w-48">
+				<Button color="primary"
+					icon="save"
+					class="w-full sm:w-48"
+				>
 					{{ $t('Save') }}
 				</Button>
 			</div>

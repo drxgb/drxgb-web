@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import ActionSection from '@/Components/ActionSection.vue';
-import Button from '@/Components/Button.vue';
+import ActionMessage from '@/Templates/ActionMessage.vue';
+import ActionSection from '@/Components/Section/ActionSection.vue';
+import Button from '@/Components/Input/Button.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import SectionBorder from '@/Components/SectionBorder.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Input/InputError.vue';
+import InputLabel from '@/Components/Input/InputLabel.vue';
+import SectionBorder from '@/Components/Section/SectionBorder.vue';
+import TextInput from '@/Components/Input/TextInput.vue';
 
 const props = defineProps({
     tokens: Array,
