@@ -2,19 +2,19 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Utils\Upload;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Filesystem\FilesystemAdapter;
+use Tests\TestCase;
 
 class UploadFilesTest extends TestCase
 {
     /**
      * Verifica se os arquivos foram armazenados.
      */
-    public function test_files_are_uploaded(): void
+    public function test_files_are_uploaded() : void
     {
         Storage::fake('images');
 
@@ -36,7 +36,6 @@ class UploadFilesTest extends TestCase
 
 			foreach ($files as $file)
 			{
-				/** @var File $file */
 				$fs->put(Upload::makePath($basePath, $id), $file);
 				$fs->assertExists(Upload::makePath($basePath, $id, $file->hashName()));
 			}

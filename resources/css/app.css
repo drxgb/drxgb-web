@@ -4,89 +4,108 @@
 @tailwind utilities;
 
 
-[x-cloak] {
+[x-cloak]
+{
 	display: none;
 }
 
-.xgb-input {
+.xgb-input
+{
 	@apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm;
 }
 
 
 /* Input groups */
-.input-group>* {
+.input-group>*
+{
 	@apply rounded-none;
 }
 
 .input-group>button:not(:first-child),
-button:not(:last-child) {
+button:not(:last-child)
+{
 	@apply border border-gray-300 dark:border-gray-600;
 }
 
-.input-group> :first-child {
+.input-group> :first-child
+{
 	@apply rounded-l-md;
 }
 
-.input-group> :last-child {
+.input-group> :last-child
+{
 	@apply rounded-r-md;
 }
 
 
 /* Input number */
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button
+{
 	-webkit-appearance: none;
 	margin: 0;
 }
 
-input[type=number] {
+input[type=number]
+{
 	-moz-appearance: textfield;
 }
 
 
 /* Input styles */
-.input-primary {
+.input-primary
+{
 	@apply text-white bg-orange-500 hover:bg-orange-700 focus:bg-orange-200 active:bg-orange-300;
 }
 
-.input-secondary {
+.input-secondary
+{
 	@apply text-white bg-purple-700 hover:bg-purple-900 focus:bg-purple-400 active:bg-purple-500;
 }
 
-.input-success {
+.input-success
+{
 	@apply text-white bg-green-500 hover:bg-green-700 focus:bg-green-200 active:bg-green-300;
 }
 
-.input-info {
+.input-info
+{
 	@apply text-white bg-blue-500 hover:bg-blue-700 focus:bg-blue-200 active:bg-blue-300;
 }
 
-.input-warning {
+.input-warning
+{
 	@apply text-white bg-amber-500 hover:bg-amber-700 focus:bg-amber-200 active:bg-amber-300;
 }
 
-.input-danger {
+.input-danger
+{
 	@apply text-white bg-red-500 hover:bg-red-700 focus:bg-red-200 active:bg-red-300;
 }
 
 
 /* Datepicker */
-:is(.dark) ::-webkit-calendar-picker-indicator {
+:is(.dark) ::-webkit-calendar-picker-indicator
+{
 	filter: invert(1);
 }
 
 
 /* Scrollbar */
-@layer utilities {
-	::-webkit-scrollbar {
+@layer utilities
+{
+	::-webkit-scrollbar
+	{
 		@apply bg-slate-900 w-[12px];
 	}
 
-	::-webkit-scrollbar-track {
+	::-webkit-scrollbar-track
+	{
 		@apply bg-slate-700 rounded-lg;
 	}
 
-	::-webkit-scrollbar-thumb {
+	::-webkit-scrollbar-thumb
+	{
 		@apply bg-orange-600 rounded-lg;
 	}
 }
