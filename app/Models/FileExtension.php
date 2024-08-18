@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Contracts\Iconable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class FileExtension extends Model
 	implements Iconable

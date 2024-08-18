@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
-use App\Models\Platform;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Repositories\ProductRepository;
+use App\Models\Platform;
+use App\Models\Product;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ProductRepository;
 
 class ProductController extends AdminController
 {

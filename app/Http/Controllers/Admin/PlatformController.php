@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Platform;
-use App\Repositories\PlatformRepository;
 use App\Http\Requests\StorePlatformRequest;
 use App\Http\Requests\UpdatePlatformRequest;
+use App\Models\Platform;
+use App\Repositories\PlatformRepository;
 
 
 /**

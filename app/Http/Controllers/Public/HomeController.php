@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Public;
 
-use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 

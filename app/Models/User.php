@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Override;
-use Laravel\Sanctum\HasApiTokens;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Filesystem\Cloud;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+use Override;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -77,6 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
 	 *
      * @return Attribute
      */
+	#[Override]
     public function profilePhotoUrl() : Attribute
     {
         return Attribute::get(function (): string

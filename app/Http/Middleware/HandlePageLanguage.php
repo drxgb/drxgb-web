@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Inertia\Middleware;
 use App\Models\Language;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Inertia\Middleware;
 
 /**
  * Responsável por manipular a requisição recebendo o idioma do usuário.

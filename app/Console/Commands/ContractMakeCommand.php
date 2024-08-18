@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Console\Concerns\CreatesMatchingTest;
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'make:contract')]

@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Product;
-use App\Models\Version;
 use App\Models\ProductFile;
+use App\Models\Version;
 use Illuminate\Http\UploadedFile;
 
 class VersionRepository

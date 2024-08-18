@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Public;
 
-use App\Models\User;
-use App\Models\Language;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LanguageRequest;
+use App\Models\Language;
+use App\Models\User;
 
 class LanguageController extends Controller
 {

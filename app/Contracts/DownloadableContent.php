@@ -10,5 +10,5 @@ namespace App\Contracts;
  */
 interface DownloadableContent
 {
-
+	//
 }

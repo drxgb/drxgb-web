@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\FileExtension;
 use App\Models\Platform;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class PlatformRepository

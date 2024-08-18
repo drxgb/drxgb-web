@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Utils\Upload;
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Version;
+use App\Utils\Upload;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
