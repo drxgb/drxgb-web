@@ -74,8 +74,8 @@ class CategoryController extends AdminController
 	/**
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function viewRootFolder(): string
 	{
-		return parent::rootFolder() . '/Store/Categories';
+		return parent::viewRootFolder() . '/Store/Categories';
 	}
 }

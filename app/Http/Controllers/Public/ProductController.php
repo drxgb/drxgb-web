@@ -28,7 +28,7 @@ class ProductController extends Controller
 	 *
 	 * @return string
 	 */
-	protected function rootFolder() : string
+	protected function viewRootFolder() : string
 	{
 		return 'Public/Store';
 	}

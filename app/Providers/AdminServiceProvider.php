@@ -14,6 +14,8 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register() : void
     {
+		ServiceProvider::addProviderToBootstrapFile(self::class);
+
         $this->app->singleton(
 			NavigationLinks::class,
 			fn () : NavigationLinks => new NavigationLinks

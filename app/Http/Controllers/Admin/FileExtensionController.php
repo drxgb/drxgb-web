@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\FileExtension;
 use App\Http\Requests\StoreFileExtensionRequest;
 use App\Http\Requests\UpdateFileExtensionRequest;
-use App\Repositories\FileExtensionRepository;
-
+use App\Services\FileExtension\CreatorService;
+use App\Services\FileExtension\DeleterService;
+use App\Services\FileExtension\EditorService;
 
 /**
  * Ações para manipulação das instâncias da extensão de arquivo.
@@ -16,14 +17,6 @@ use App\Repositories\FileExtensionRepository;
  */
 class FileExtensionController extends AdminController
 {
-	public function __construct(
-		private FileExtensionRepository $fileExtensions
-	)
-	{
-		parent::__construct();
-	}
-
-
     /**
      * Mostra a lista dos recursos.
      */
@@ -46,7 +39,13 @@ class FileExtensionController extends AdminController
      */
     public function store(StoreFileExtensionRequest $request)
     {
-		$this->fileExtensions->store($request);
+		$attributes = $request->safe()->only([ 'name', 'extension' ]);
+		$upload = $request->file('icon');
+
+		/** @var CreatorService */
+		$creator = app()->make(CreatorService::class);
+		$creator->fill($attributes)->setUploadedFile($upload)->save();
+
         return to_route('admin.file-extensions.index');
     }
 
@@ -63,7 +62,13 @@ class FileExtensionController extends AdminController
      */
     public function update(UpdateFileExtensionRequest $request, FileExtension $fileExtension)
     {
-		$this->fileExtensions->update($request, $fileExtension);
+		$attributes = $request->safe()->only([ 'name', 'extension' ]);
+		$upload = $request->file('icon');
+
+		/** @var EditorService */
+		$editor = app()->make(EditorService::class, compact('fileExtension'));
+		$editor->fill($attributes)->setUploadedFile($upload)->save();
+
 		return to_route('admin.file-extensions.index');
     }
 
@@ -72,7 +77,10 @@ class FileExtensionController extends AdminController
      */
     public function destroy(FileExtension $fileExtension)
     {
-		$this->fileExtensions->delete($fileExtension);
+		/** @var DeleterService */
+		$deleter = app()->make(DeleterService::class, compact('fileExtension'));
+		$deleter->delete();
+
 		return redirect()->back();
     }
 
@@ -80,8 +88,8 @@ class FileExtensionController extends AdminController
 	/**
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function viewRootFolder(): string
 	{
-		return parent::rootFolder() . '/Files/FileExtensions';
+		return parent::viewRootFolder() . '/Files/FileExtensions';
 	}
 }

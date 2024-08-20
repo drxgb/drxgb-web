@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Contracts\Iconable;
+use App\Contracts\Storeable;
+use App\HasSingleUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FileExtension extends Model
-	implements Iconable
+	implements Iconable, Storeable
 {
-    use HasFactory, HasIcon;
+    use HasFactory, HasIcon, HasSingleUpload;
 
 	protected $fillable = [
 		'name',
@@ -30,16 +32,5 @@ class FileExtension extends Model
 	public function getRootFolder() : string
 	{
 		return 'extension-icon';
-	}
-
-
-	/**
-	 * Recebe o nome do arquivo que representaria o conteúdo.
-	 *
-	 * @return string
-	 */
-	public function getFileName() : string
-	{
-		return $this->extension;
 	}
 }

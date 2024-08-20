@@ -83,8 +83,8 @@ class ProductController extends AdminController
 	/**
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function viewRootFolder(): string
 	{
-		return parent::rootFolder() . '/Store/Products';
+		return parent::viewRootFolder() . '/Store/Products';
 	}
 }

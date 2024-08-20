@@ -16,25 +16,4 @@ interface Iconable extends Storeable
 	 * @return Attribute
 	 */
 	function icon() : Attribute;
-
-
-	/**
-	 * Recebe o caminho do ícone.
-	 * @return string
-	 */
-	function iconPath() : string;
-
-
-	/**
-	 * O caminho do arquivo do ícone padrão.
-	 * @return string
-	 */
-	function defaultIcon() : string;
-
-
-	/**
-	 * Apaga o arquivo do ícone.
-	 * @return void
-	 */
-	function deleteIcon() : void;
 }

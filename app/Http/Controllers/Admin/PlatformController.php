@@ -82,8 +82,8 @@ class PlatformController extends AdminController
 	/**
 	 * @return string
 	 */
-	protected function rootFolder(): string
+	protected function viewRootFolder(): string
 	{
-		return parent::rootFolder() . '/Files/Platforms';
+		return parent::viewRootFolder() . '/Files/Platforms';
 	}
 }

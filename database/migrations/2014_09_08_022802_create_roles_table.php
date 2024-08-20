@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
 			$table->string('name');
 			$table->integer('priority')->default(0);
+			$table->boolean('is_admin')->default(false);
             $table->timestamps();
         });
     }

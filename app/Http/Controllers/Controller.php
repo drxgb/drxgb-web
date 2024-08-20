@@ -47,7 +47,7 @@ class Controller extends BaseController
 	 */
 	protected function getPageFile(string $path) : string
 	{
-		return $this->rootFolder() . "/$path";
+		return $this->viewRootFolder() . "/$path";
 	}
 
 
@@ -68,7 +68,7 @@ class Controller extends BaseController
 	 * Recebe o nome da pasta base da página.
 	 * @return string
 	 */
-	protected function rootFolder() : string
+	protected function viewRootFolder() : string
 	{
 		return 'Public';
 	}

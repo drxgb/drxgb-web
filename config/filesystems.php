@@ -14,6 +14,7 @@ return [
     */
 
     'default' => env('FILESYSTEM_DISK', 'local'),
+	'test_disk' => env('TEST_DISK', 'local-test'),
 
     /*
     |--------------------------------------------------------------------------
