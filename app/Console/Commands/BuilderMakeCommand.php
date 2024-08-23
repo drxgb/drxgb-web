@@ -41,6 +41,6 @@ class BuilderMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Builders';
+        return "$rootNamespace\Builders";
     }
 }

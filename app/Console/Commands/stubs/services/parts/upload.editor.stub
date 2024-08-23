@@ -1,0 +1,6 @@
+{{ #imports }}
+use App\Services\{{ uploadType }}File;
+use App\Services\MustDelete{{ uploadType }}File;
+{{ #traits }}
+	use {{ uploadType }}File;
+	use MustDelete{{ uploadType }}File;

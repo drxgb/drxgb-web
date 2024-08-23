@@ -1,0 +1,30 @@
+{{ #imports }}
+use App\Contracts\Attachable;
+use App\Contracts\Detachable;
+use App\Services\MustAttach;
+{{ #traits }}
+	use MustAttach;
+{{ #protectedMethods }}
+
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onAttach(mixed $data) : void
+	{
+		// TODO: Implementar onAttach()
+	}
+
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onDetach(mixed $data) : void
+	{
+		// TODO: Implementar onDetach()
+	}
+
+{{ #interfaces }}
+, Attachable, Detachable

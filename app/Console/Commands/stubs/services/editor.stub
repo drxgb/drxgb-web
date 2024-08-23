@@ -1,0 +1,37 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Contracts\Saveable;
+use App\Services\MustSave;
+use App\Services\Service;
+{{ #imports }}
+
+
+/**
+ * Responsável por editar.
+ *
+ * @author Dr.XGB <https://drxgb.com>
+ * @version 1.0.0
+ */
+class {{ class }} extends Service implements Saveable{{ #interfaces }}
+{
+	use MustSave;
+{{ #traits }}
+
+
+{{ #properties }}
+{{ #constructor }}
+{{ #publicMethods }}
+
+	/**
+	 * @return mixed
+	 */
+	protected function onSave() : mixed
+	{
+		// TODO: Implementar \{{ namespace }}\{{ class }}::onSave()
+		return null;
+	}
+{{ #protectedMethods }}
+{{ #privateMethods }}
+}

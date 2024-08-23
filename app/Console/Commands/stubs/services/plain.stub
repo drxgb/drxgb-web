@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Services\Service;
+{{ #imports }}
+
+
+/**
+ * Responsável por...
+ *
+ * @author Dr.XGB <https://drxgb.com>
+ * @version 1.0.0
+ */
+class {{ class }} extends Service{{ #interfaces }}
+{
+{{ #traits }}
+{{ #properties }}
+{{ #constructor }}
+{{ #publicMethods }}
+{{ #protectedMethods }}
+{{ #privateMethods }}
+}

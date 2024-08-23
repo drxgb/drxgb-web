@@ -1,0 +1,30 @@
+{{ #imports }}
+use App\Contracts\Associatable;
+use App\Contracts\Disassociatable;
+use App\Services\MustAssociate;
+{{ #traits }}
+	use MustAssociate;
+{{ #protectedMethods }}
+
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onAssociate(mixed $data) : void
+	{
+		// TODO: Implementar onAssociate()
+	}
+	
+	
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onDisassociate() : void
+	{
+		// TODO: Implementar onDisassociate()
+	}
+
+{{ #interfaces }}
+, Associatable, Disassociatable

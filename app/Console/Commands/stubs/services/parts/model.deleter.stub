@@ -1,0 +1,21 @@
+{{ #imports }}
+use {{ modelNamespace }};
+{{ #properties }}
+	/**
+	 * O modelo.
+	 *
+	 * @var {{ modelClass }}
+	 */
+	protected ${{ modelProperty }};
+
+
+{{ #constructor }}
+	/**
+	 * @param {{ modelClass }} ${{ modelProperty }}
+	 */
+	public function __construct({{ modelClass }} ${{ modelProperty }})
+	{
+		parent::__construct();
+		$this->{{ modelProperty }} = ${{ modelProperty }};
+	}
+

@@ -1,0 +1,37 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Contracts\Deletable;
+use App\Services\MustDelete;
+use App\Services\Service;
+{{ #imports }}
+
+
+/**
+ * Responsável por deletar.
+ *
+ * @author Dr.XGB <https://drxgb.com>
+ * @version 1.0.0
+ */
+class {{ class }} extends Service implements Deletable{{ #interfaces }}
+{
+	use MustDelete;
+{{ #traits }}
+
+
+{{ #properties }}
+{{ #constructor }}
+{{ #publicMethods }}
+
+	/**
+	 * @return bool
+	 */
+	protected function onDelete() : bool
+	{
+		// TODO: Implementar \{{ namespace }}\{{ class }}::onDelete()
+		return true;
+	}
+{{ #protectedMethods }}
+{{ #privateMethods }}
+}

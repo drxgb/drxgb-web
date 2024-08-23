@@ -1,0 +1,4 @@
+{{ #imports }}
+use App\Services\{{ uploadType }}File;
+{{ #traits }}
+	use {{ uploadType }}File;

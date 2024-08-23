@@ -1,0 +1,35 @@
+{{ #imports }}
+use {{ modelNamespace }};
+{{ #properties }}
+	/**
+	 * O modelo.
+	 *
+	 * @var {{ modelClass }}
+	 */
+	protected ${{ modelProperty }};
+
+
+{{ #publicMethods }}
+	/**
+	 * @param array $attributes
+	 * @return static
+	 */
+	#[\Override]
+	public function fill(array $attributes) : static
+	{
+		$this->{{ modelProperty }}->fill($attributes);
+		return $this;
+	}
+
+
+{{ #protectedMethods }}
+
+
+	/**
+	 * @return void
+	 */
+	#[\Override]
+	protected function setup() : void
+	{
+		$this->{{ modelProperty }} = new {{ modelClass }};
+	}

@@ -13,6 +13,14 @@ use Illuminate\Http\UploadedFile;
 interface Storeable
 {
 	/**
+	 * Recebe o disco onde o arquivo está armazenado.
+	 *
+	 * @return string
+	 */
+	function getFileDisk() : string;
+
+
+	/**
 	 * Recebe a pasta raiz do conteúdo.
 	 *
 	 * @return ?string
@@ -26,6 +34,14 @@ interface Storeable
 	 * @return ?string
 	 */
 	function getFileName() : ?string;
+
+
+	/**
+	 * Recebe a extensão do arquivo.
+	 *
+	 * @return string
+	 */
+	function getFileExtension() : string;
 
 
 	/**
@@ -46,6 +62,14 @@ interface Storeable
 
 
 	/**
+	 * Recebe o nome do campo do caminho do arquivo.
+	 *
+	 * @return string
+	 */
+	function getPathFieldName() : string;
+
+
+	/**
 	 * Recebe o nome do campo do arquivo.
 	 *
 	 * @return string
@@ -61,6 +85,15 @@ interface Storeable
 	 * @return void
 	 */
 	function saveFile(UploadedFile $file, string $filename) : void;
+
+
+	/**
+	 * Renomeia o arquivo.
+	 *
+	 * @param string|null $newName
+	 * @return void
+	 */
+	function renameFile(?string $newName = null) : void;
 
 
 	/**

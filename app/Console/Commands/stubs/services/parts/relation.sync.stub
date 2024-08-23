@@ -1,0 +1,19 @@
+{{ #imports }}
+use App\Contracts\Syncable;
+use App\Services\MustSync;
+{{ #traits }}
+	use MustSync;
+{{ #protectedMethods }}
+
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onSync(mixed $data) : void
+	{
+		// TODO: Implementar onSync()
+	}
+
+{{ #interfaces }}
+, Syncable
