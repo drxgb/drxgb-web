@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Utils;
+namespace App;
 
 
-trait GetterTrait
+trait HasDefaultGetter
 {
 	/**
 	 * Recebe o atributo.

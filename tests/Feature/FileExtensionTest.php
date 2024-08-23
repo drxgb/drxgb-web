@@ -2,34 +2,29 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\Role;
-use App\Models\User;
-use Tests\FakeFileSystem;
-use Illuminate\Support\Str;
 use App\Models\FileExtension;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use function PHPUnit\Framework\assertSame;
-use function PHPUnit\Framework\assertTrue;
-
 use App\Services\FileExtension\CreatorService;
 use App\Services\FileExtension\DeleterService;
 use App\Services\FileExtension\EditorService;
+use App\StorePublicFiles;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Tests\CreatesAdminUser;
+use Tests\FakeFileSystem;
+use Tests\TestCase;
+
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 
 class FileExtensionTest extends TestCase
 {
 	use RefreshDatabase;
 	use FakeFileSystem;
-
-
-	/**
-	 * O usuário administrador de teste.
-	 *
-	 * @var User
-	 */
-	private $user;
+	use CreatesAdminUser;
+	use StorePublicFiles;
 
 
     /**
@@ -91,16 +86,15 @@ class FileExtensionTest extends TestCase
 
 		$user = $this->user;
 		$fs = $this->fs;
-		$path = $this->randomIconName();
 		$attributes = FileExtension::factory()->raw();
 
 		$data = array_merge($attributes, [
-			'icon'	=> UploadedFile::fake()->image($path, 16, 16),
+			'icon'	=> $this->generateFakeIcon(),
 		]);
 
 		$this->actingAs($user)->post(route('admin.file-extensions.store'), $data);
 		$this->assertAuthenticated();
-		$fs->assertExists("extension-icon/{$attributes['extension']}.png");
+		$fs->assertExists("extension-icon/{$attributes['extension']}.gif");
 	}
 
 
@@ -156,8 +150,7 @@ class FileExtensionTest extends TestCase
 	{
 		$this->setupFileSystem();
 
-		$filename = $this->randomIconName();
-		$upload = UploadedFile::fake()->image($filename, 16, 16);
+		$upload = $this->generateFakeIcon();
 
 		$fileExtension = FileExtension::factory()->create();
 		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
@@ -181,8 +174,8 @@ class FileExtensionTest extends TestCase
 		$fs = $this->fs;
 
 		$attributes = FileExtension::factory()->raw();
-		$oldIcon = UploadedFile::fake()->image($this->randomIconName(), 16, 16);
-		$newIcon = UploadedFile::fake()->image($this->randomIconName(), 16, 16);
+		$oldIcon = $this->generateFakeIcon();
+		$newIcon = $this->generateFakeIcon();
 
 		$creator = $this->app->make(CreatorService::class);
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($oldIcon)->save();
@@ -194,6 +187,34 @@ class FileExtensionTest extends TestCase
 		$editor->fill($attributes)->setUploadedFile($newIcon)->save();
 		$newPath = $fileExtension->getFullFileName();
 
+		$fs->assertMissing($oldPath);
+		$fs->assertExists($newPath);
+	}
+
+
+	/**
+	 * Testa se o arquivo deve ser renomeado quando a extensão é modificada.
+	 *
+	 * @return void
+	 */
+	public function test_file_extension_must_rename_file_on_update() : void
+	{
+		$this->setupFileSystem();
+
+		$fs = $this->fs;
+
+		$attributes = FileExtension::factory()->raw();
+		$icon = $this->generateFakeIcon();
+		$creator = $this->app->make(CreatorService::class);
+		$fileExtension = $creator->fill($attributes)->setUploadedFile($icon)->save();
+		$oldPath = $fileExtension->getFullFileName();
+
+		$extension = Str::limit(fake()->fileExtension(), 3, '');
+
+		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
+		$editor->fill(compact('extension'))->save();
+
+		$newPath = $fileExtension->getFullFileName();
 		$fs->assertMissing($oldPath);
 		$fs->assertExists($newPath);
 	}
@@ -213,7 +234,7 @@ class FileExtensionTest extends TestCase
 		$fs = $this->fs;
 
 		$attributes = FileExtension::factory()->raw();
-		$upload = UploadedFile::fake()->image($this->randomIconName(), 16, 16);
+		$upload = $this->generateFakeIcon();
 
 		$creator = $this->app->make(CreatorService::class);
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($upload)->save();
@@ -258,7 +279,7 @@ class FileExtensionTest extends TestCase
 		$fs = $this->fs;
 
 		$attributes = FileExtension::factory()->raw();
-		$upload = UploadedFile::fake()->image($this->randomIconName(), 16, 16);
+		$upload = $this->generateFakeIcon();
 
 		$creator = $this->app->make(CreatorService::class);
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($upload)->save();
@@ -278,10 +299,7 @@ class FileExtensionTest extends TestCase
 	protected function setUp() : void
 	{
 		parent::setUp();
-
-		$this->user = User::factory()
-			->for(Role::factory()->createOne([ 'is_admin' => true ]))
-			->create();
+		$this->createAdminUser();
 	}
 
 
@@ -290,11 +308,7 @@ class FileExtensionTest extends TestCase
 	 */
 	protected function tearDown() : void
 	{
-		$role = $this->user->Role;
-
-		$this->user->delete();
-		$role->delete();
-
+		$this->deleteAdminUser();
 		parent::tearDown();
 	}
 
@@ -307,6 +321,19 @@ class FileExtensionTest extends TestCase
 	 */
 	private function randomIconName(int $length = 16) : string
 	{
-		return Str::random($length) . '.png';
+		return fake()->streetName() . '.png';
+	}
+
+
+	/**
+	 * Cria um ícone aleatório.
+	 *
+	 * @param string|null $filename
+	 * @return UploadedFile
+	 */
+	private function generateFakeIcon(?string $filename = null) : UploadedFile
+	{
+		$filename ??= $this->randomIconName();
+		return UploadedFile::fake()->image($filename, 16, 16);
 	}
 }

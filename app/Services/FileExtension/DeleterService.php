@@ -2,12 +2,14 @@
 
 namespace App\Services\FileExtension;
 
+use App\Contracts\Deletable;
 use App\Services\MustDelete;
 use App\Services\Service;
 use App\Models\FileExtension;
 use App\Services\MustDeleteSingleFile;
 
-class DeleterService extends Service
+
+class DeleterService extends Service implements Deletable
 {
 	use MustDelete;
 	use MustDeleteSingleFile;

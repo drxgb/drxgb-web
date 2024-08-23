@@ -14,9 +14,10 @@ class CreatorServiceProvider extends ServiceProvider
      */
     public function register() : void
     {
-        $this->app->singleton(\App\Services\FileExtension\CreatorService::class,
-			fn () : Service => new \App\Services\FileExtension\CreatorService
-		);
+		foreach ($this->provides() as $providerClass)
+		{
+			$this->app->singleton($providerClass, fn () : Service => new $providerClass);
+		}
     }
 
 
@@ -29,6 +30,7 @@ class CreatorServiceProvider extends ServiceProvider
 	{
 		return [
 			\App\Services\FileExtension\CreatorService::class,
+			\App\Services\Platform\CreatorService::class,
 		];
 	}
 }

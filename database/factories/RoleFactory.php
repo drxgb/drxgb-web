@@ -22,4 +22,17 @@ class RoleFactory extends Factory
 			'is_admin'	=> false,
         ];
     }
+
+
+	/**
+	 * Cargo gerado deve ser administrativo.
+	 *
+	 * @return static
+	 */
+	public function admin() : static
+	{
+		return $this->state(fn ($attributes) : array => [
+			'is_admin' => true,
+		]);
+	}
 }

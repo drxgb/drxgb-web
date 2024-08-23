@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Language;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -22,8 +24,8 @@ class UserFactory extends Factory
     public function definition() : array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('p4s5w0Rd_'),
             'two_factor_secret' => null,
@@ -31,8 +33,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
-			'language_id' => null,
-			'role_id' => null,
+			'language_id' => Language::factory(),
+			'role_id' => Role::factory(),
         ];
     }
 
@@ -68,4 +70,17 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+
+	/**
+	 * Usuário deve possuir privilégios admnistrativos.
+	 *
+	 * @return static
+	 */
+	public function admin() : static
+	{
+		return $this->state(fn (array $attributes) : array => [
+			'role_id'	=> Role::factory()->admin(),
+		]);
+	}
 }

@@ -16,9 +16,26 @@ trait FakeFileSystem
 	private $fs;
 
 
+	/**
+	 * Recebe o tipo do disco onde serão armazenados
+	 * os arquivos de teste.
+	 *
+	 * @return string
+	 */
+	protected function getDisk() : string
+	{
+		return 'public';
+	}
+
+
+	/**
+	 * Inicializa a simulação do sistema de arquivos.
+	 *
+	 * @return void
+	 */
 	private function setupFileSystem() : void
 	{
-		$disk = config('filesystems.test_disk', 'local-test');
+		$disk = $this->getDisk();
 
 		Storage::fake($disk);
 		$this->fs = Storage::disk($disk);

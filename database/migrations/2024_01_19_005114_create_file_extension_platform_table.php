@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('file_extension_platform', function (Blueprint $table) : void
 		{
-			$table->foreignId('file_extension_id')->constrained();
-			$table->foreignId('platform_id')->constrained();
+			$table->foreignId('file_extension_id')->constrained()->cascadeOnDelete();
+			$table->foreignId('platform_id')->constrained()->cascadeOnDelete();
         });
     }
 

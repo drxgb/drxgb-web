@@ -6,7 +6,9 @@ use App\Http\Requests\StorePlatformRequest;
 use App\Http\Requests\UpdatePlatformRequest;
 use App\Models\Platform;
 use App\Repositories\PlatformRepository;
-
+use App\Services\Platform\CreatorService;
+use App\Services\Platform\DeleterService;
+use App\Services\Platform\EditorService;
 
 /**
  * Ações para manipulação das instâncias de plataforma.
@@ -33,6 +35,7 @@ class PlatformController extends AdminController
 		return $this->view('Index', compact('platforms'));
     }
 
+
     /**
      * Mostra o formulário de criação do novo recurso.
      */
@@ -42,14 +45,26 @@ class PlatformController extends AdminController
         return $this->view('Form', compact('extensions'));
     }
 
+
     /**
      * Armazena uma nova instância do recurso.
      */
     public function store(StorePlatformRequest $request)
     {
-		$this->platforms->store($request);
+		$attributes = $request->safe()->only([ 'name', 'short_name' ]);
+		$fileExtensions = $request->file_extensions;
+		$icon = $request->icon;
+
+		/** @var CreatorService */
+		$creator = app()->make(CreatorService::class);
+		$creator->fill($attributes)
+			->attach($fileExtensions)
+			->setUploadedFile($icon)
+			->save();
+
         return to_route('admin.platforms.index');
     }
+
 
     /**
      * Mostra o formulário de edição do recurso específico.
@@ -60,21 +75,35 @@ class PlatformController extends AdminController
         return $this->view('Form', compact('platform', 'extensions'));
     }
 
+
     /**
      * Atualiza o recurso específico no armazenamento.
      */
     public function update(UpdatePlatformRequest $request, Platform $platform)
     {
-        $this->platforms->update($request, $platform);
+		$attributes = $request->safe()->only([ 'name', 'short_name' ]);
+		$fileExtensions = $request->file_extensions;
+		$icon = $request->icon;
+
+		/** @var EditorService */
+		$editor = app()->make(EditorService::class, compact('platform'));
+		$editor->fill($attributes)
+			->sync($fileExtensions)
+			->setUploadedFile($icon)
+			->save();
+
 		return to_route('admin.platforms.index');
     }
+
 
     /**
      * Remove o recurso específico no armazenamento.
      */
     public function destroy(Platform $platform)
     {
-        $this->platforms->delete($platform);
+		$deleter = app()->make(DeleterService::class, compact('platform'));
+		$deleter->delete();
+
 		return redirect()->back();
     }
 

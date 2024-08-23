@@ -2,17 +2,18 @@
 
 namespace App\Services\FileExtension;
 
-use App\Contracts\Saveable;
-use App\Models\FileExtension;
-use App\Services\MustDeleteSingleFile;
-use App\Services\MustSave;
 use App\Services\Service;
-use App\Services\SingleUpload;
+use App\Services\MustSave;
+use App\Contracts\Saveable;
+use App\Services\SingleFile;
+use App\Models\FileExtension;
+use App\Events\StoreableUpdated;
+use App\Services\MustDeleteSingleFile;
 
 
 class EditorService extends Service implements Saveable
 {
-	use SingleUpload;
+	use SingleFile;
 	use MustSave;
 	use MustDeleteSingleFile;
 
@@ -53,19 +54,16 @@ class EditorService extends Service implements Saveable
 	protected function onSave() : FileExtension
 	{
 		$fileExtension = $this->fileExtension;
-		$key = $fileExtension->getFileFieldName();
+		$key = $fileExtension->getPathFieldName();
 
 		tap($fileExtension->$key, function (?string $previous) use ($fileExtension) : void
 		{
 			$fileExtension->save();
 
-			if ($this->deleteFile)
+			if (! $this->cleanUnusedFile($fileExtension, $previous))
 			{
-				$this->deleteFile($fileExtension, $previous);
-			}
-			else
-			{
-				$this->saveUpload($fileExtension, $fileExtension->extension);
+				$this->saveFile($fileExtension, $fileExtension->extension);
+				StoreableUpdated::dispatch($fileExtension);
 			}
 		});
 

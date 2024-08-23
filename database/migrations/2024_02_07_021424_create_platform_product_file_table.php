@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('platform_product_file', function (Blueprint $table) : void
 		{
-			$table->foreignId('platform_id')->constrained();
-			$table->foreignId('product_file_id')->constrained();
+			$table->foreignId('platform_id')->constrained()->cascadeOnDelete();
+			$table->foreignId('product_file_id')->constrained()->cascadeOnDelete();
         });
     }
 

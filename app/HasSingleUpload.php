@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasSingleUpload
 {
-	use StoreUploadedFiles;
+	use StorePublicFiles;
 
 
 	/**
@@ -18,16 +18,17 @@ trait HasSingleUpload
 	 */
 	public function saveFile(UploadedFile $file, string $filename) : void
 	{
-		$key = $this->getFileFieldName();
+		$key = $this->getPathFieldName();
 
 		tap($this->$key, function (?string $previous) use ($file, $filename, $key) : void
 		{
-			$disk = $this->getFileDisk();
 			$basePath = $this->getRootFolder();
-			$ext = $this->getUploadedFileExtension($file);
+			$disk = $this->getFileDisk();
+			$ext = $this->getFileExtension();
+			$filename .= ".{$ext}";
 
 			$this->store($file, $basePath, $filename, $disk);
-			$this->forceFill([ $key	=> "$filename.$ext" ])->saveQuietly();
+			$this->forceFill([ $key	=> $filename ])->saveQuietly();
 
 			if (!empty($previous) && $this->$key !== $previous)
 			{
@@ -38,12 +39,43 @@ trait HasSingleUpload
 
 
 	/**
+	 * @param string|null $newName
+	 * @return void
+	 */
+	public function renameFile(?string $newName = null) : void
+	{
+		$fileKey = $this->getFileFieldName();
+		$filename = $this->$fileKey;
+		$extension = $this->getFileExtension();
+		$filename .= ".{$extension}";
+
+		if (is_null($newName))
+		{
+			$root = $this->getRootFolder();
+			$newName = "{$root}/{$filename}";
+		}
+
+		$pathKey = $this->getPathFieldName();
+		$oldName = $this->getFullFileName();
+
+		$fs = Storage::disk($this->getFileDisk());
+
+		if (! is_null($this->$pathKey) && $fs->exists($oldName) && $oldName !== $newName)
+		{
+			$fs->move($oldName, $newName);
+		}
+
+		$this->forceFill([ $pathKey => $filename ])->saveQuietly();
+	}
+
+
+	/**
 	 * @param ?string $filename
 	 * @return void
 	 */
 	public function deleteFile(?string $filename = null) : void
 	{
-		$key = $this->getFileFieldName();
+		$key = $this->getPathFieldName();
 
 		if (is_null($filename))
 		{
@@ -54,8 +86,16 @@ trait HasSingleUpload
 			return;
 		}
 
-		$path = "{$this->getRootFolder()}/$filename";
-		Storage::disk($this->getFileDisk())->delete($path);
+		$disk = $this->getFileDisk();
+		$path = "{$this->getRootFolder()}/{$filename}";
+
+		if (! pathinfo($path, PATHINFO_EXTENSION))
+		{
+			$ext = $this->getFileExtension();
+			$path .= ".{$ext}";
+		}
+
+		Storage::disk($disk)->delete($path);
 		$this->forceFill([ $key => null ])->saveQuietly();
 	}
 
@@ -65,7 +105,7 @@ trait HasSingleUpload
 	 */
 	public function getFileName() : ?string
 	{
-		$key = $this->getFileFieldName();
+		$key = $this->getPathFieldName();
 		return $this->$key;
 	}
 
@@ -88,6 +128,6 @@ trait HasSingleUpload
 	 */
 	public function getDefaultFileName() : string
 	{
-		return "{$this->getRootFolder()}/_default.png";
+		return "{$this->getRootFolder()}/_default.{$this->getFileExtension()}";
 	}
 }

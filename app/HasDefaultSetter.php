@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Utils;
+namespace App;
 
 
-trait SetterTrait
+trait HasDefaultSetter
 {
 	/**
 	 * Define o valor do atributo.

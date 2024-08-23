@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\Service;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -13,10 +15,13 @@ class DeleterServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function register() : void
     {
-        $this->app->singleton(\App\Services\FileExtension\DeleterService::class,
-			fn (\App\Models\FileExtension $fileExtension) =>
-				new \App\Services\FileExtension\DeleterService($fileExtension)
-		);
+		foreach ($this->provides() as $class)
+		{
+			$this->app->singleton(
+				$class,
+				fn (Model $model) : Service => new $class($model)
+			);
+		}
     }
 
 
@@ -27,6 +32,7 @@ class DeleterServiceProvider extends ServiceProvider implements DeferrableProvid
 	{
 		return [
 			\App\Services\FileExtension\DeleterService::class,
+			\App\Services\Platform\DeleterService::class,
 		];
 	}
 }

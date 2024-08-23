@@ -3,23 +3,36 @@
 namespace App\Models;
 
 use App\Contracts\Iconable;
+use App\Contracts\Storeable;
+use App\Events\StoreableUpdated;
+use App\HasSingleUpload;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Platform extends Model
-	implements Iconable
-{
-    use HasFactory, HasIcon;
 
+class Platform extends Model implements Iconable, Storeable
+{
+    use HasFactory;
+	use HasIcon;
+	use HasSingleUpload;
+
+
+	/**
+	 * @var array
+	 */
 	protected $fillable = [
 		'name',
 		'short_name',
 		'icon_path',
 	];
 
+
+	/**
+	 * @var array
+	 */
 	protected $appends = [
 		'icon',
 		'supported_file_extensions',
@@ -28,6 +41,7 @@ class Platform extends Model
 
 	/**
 	 * Recebe o relacionamento entre as plataformas e as extensões.
+	 *
 	 * @return BelongsToMany
 	 */
 	public function fileExtensions() : BelongsToMany
@@ -38,6 +52,7 @@ class Platform extends Model
 
 	/**
 	 * Recebe as extensões suportadas por esta plataforma.
+	 *
 	 * @return Attribute
 	 */
 	public function supportedFileExtensions() : Attribute
@@ -50,6 +65,7 @@ class Platform extends Model
 
 	/**
 	 * Recebe uma lista de extensões suportadas.
+	 *
 	 * @return array
 	 */
 	public function fileExtensionsList() : array
@@ -65,6 +81,7 @@ class Platform extends Model
 
 	/**
 	 * Recebe a pasta raiz do conteúdo.
+	 *
 	 * @return string
 	 */
 	public function getRootFolder() : string
@@ -74,11 +91,10 @@ class Platform extends Model
 
 
 	/**
-	 * Recebe o nome do arquivo que representa o conteúdo.
 	 * @return string
 	 */
-	public function getFileName() : string
+	public function getFileFieldName() : string
 	{
-		return $this->short_name;
+		return 'short_name';
 	}
 }

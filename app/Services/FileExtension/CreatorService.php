@@ -6,12 +6,12 @@ use App\Contracts\Saveable;
 use App\Models\FileExtension;
 use App\Services\MustSave;
 use App\Services\Service;
-use App\Services\SingleUpload;
+use App\Services\SingleFile;
 
 
 class CreatorService extends Service implements Saveable
 {
-	use SingleUpload;
+	use SingleFile;
 	use MustSave;
 
 
@@ -42,7 +42,7 @@ class CreatorService extends Service implements Saveable
 	{
 		$fileExtension = $this->fileExtension;
 		$fileExtension->save();
-		$this->saveUpload($fileExtension, $fileExtension->extension);
+		$this->saveFile($fileExtension, $fileExtension->extension);
 
 		return $fileExtension;
 	}

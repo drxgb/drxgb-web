@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Service;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class EditorServiceProvider extends ServiceProvider
@@ -14,10 +15,10 @@ class EditorServiceProvider extends ServiceProvider
      */
     public function register() : void
     {
-        $this->app->singleton(\App\Services\FileExtension\EditorService::class,
-			fn (\App\Models\FileExtension $fileExtension) : Service =>
-				new \App\Services\FileExtension\EditorService($fileExtension)
-		);
+		foreach ($this->provides() as $class)
+		{
+			$this->app->singleton($class, fn (Model $model) : Service => new $class($model));
+		}
     }
 
 
@@ -28,6 +29,7 @@ class EditorServiceProvider extends ServiceProvider
 	{
 		return [
 			\App\Services\FileExtension\EditorService::class,
+			\App\Services\Platform\EditorService::class,
 		];
 	}
 }

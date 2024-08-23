@@ -11,9 +11,18 @@ trait HasIcon
 	/**
 	 * @return string
 	 */
-	public function getFileFieldName() : string
+	public function getPathFieldName() : string
 	{
 		return 'icon_path';
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getFileExtension() : string
+	{
+		return 'gif';
 	}
 
 
