@@ -40,14 +40,15 @@ class CategoryRepository
 	 */
 	public function store(Request $request) : Category
 	{
+		/** @var Category */
 		$category = Category::create([
 			'name' => $request->name,
 		]);
 
 		if ($request->parent_id)
 		{
-			$parent = Category::find($request->parent_id);
-			$parent->subcategories()->save($category);
+			$category->parent()->associate($request->parent_id);
+			$category->save();
 		}
 
 		return $category;
@@ -66,15 +67,16 @@ class CategoryRepository
 		$category->update([
 			'name' => $request->name,
 		]);
+
 		if ($request->parent_id)
 		{
-			$parent = Category::find($request->parent_id);
-			$category->parent()->associate($parent);
+			$category->parent()->associate($request->parent_id);
 		}
 		else
 		{
 			$category->parent()->disassociate();
 		}
+
 		$category->save();
 	}
 

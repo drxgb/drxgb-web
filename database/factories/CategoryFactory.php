@@ -20,4 +20,15 @@ class CategoryFactory extends Factory
             'name'	=> fake()->title(),
         ];
     }
+
+
+	/**
+	 * Cria uma categoria pai.
+	 *
+	 * @return static
+	 */
+	public function withParent() : static
+	{
+		return $this->for($this->create(), 'parent');
+	}
 }
