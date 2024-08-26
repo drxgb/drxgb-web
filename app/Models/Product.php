@@ -162,7 +162,7 @@ class Product extends Model
 	 */
 	public function getImages() : array
 	{
-		$path = Upload::makePath('product-images', $this->id);
+		$path = Upload::makePathById('product-images', $this->id);
 		return Storage::disk('public')->files($path);
 	}
 

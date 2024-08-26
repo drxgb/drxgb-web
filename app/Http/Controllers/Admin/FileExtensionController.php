@@ -43,7 +43,7 @@ class FileExtensionController extends AdminController
 		$upload = $request->file('icon');
 
 		/** @var CreatorService */
-		$creator = app()->make(CreatorService::class);
+		$creator = app(CreatorService::class);
 		$creator->fill($attributes)->setUploadedFile($upload)->save();
 
         return to_route('admin.file-extensions.index');
@@ -66,7 +66,7 @@ class FileExtensionController extends AdminController
 		$upload = $request->file('icon');
 
 		/** @var EditorService */
-		$editor = app()->make(EditorService::class, compact('fileExtension'));
+		$editor = app(EditorService::class, compact('fileExtension'));
 		$editor->fill($attributes)->setUploadedFile($upload)->save();
 
 		return to_route('admin.file-extensions.index');
@@ -78,7 +78,7 @@ class FileExtensionController extends AdminController
     public function destroy(FileExtension $fileExtension)
     {
 		/** @var DeleterService */
-		$deleter = app()->make(DeleterService::class, compact('fileExtension'));
+		$deleter = app(DeleterService::class, compact('fileExtension'));
 		$deleter->delete();
 
 		return redirect()->back();

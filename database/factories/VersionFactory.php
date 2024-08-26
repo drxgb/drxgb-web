@@ -30,7 +30,7 @@ class VersionFactory extends Factory
 	 *
 	 * @return int
 	 */
-	public function randomVersionNumber() : int
+	private function randomVersionNumber() : int
 	{
 		$major = fake()->numberBetween(1, 2);
 		$minor = fake()->numberBetween(0, 20);

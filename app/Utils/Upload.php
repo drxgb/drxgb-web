@@ -13,7 +13,7 @@ abstract class Upload
 	 * @param string $filename
 	 * @return string
 	 */
-	public static function makePath(string $basePath, ?int $id = null, ?string $filename = null) : string
+	public static function makePathById(string $basePath, ?int $id = null, ?string $filename = null) : string
 	{
 		if (!is_null($id))
 		{

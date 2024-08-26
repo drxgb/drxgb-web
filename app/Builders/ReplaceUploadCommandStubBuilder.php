@@ -19,7 +19,18 @@ class ReplaceUploadCommandStubBuilder extends CommandStubBuilder
 	protected function buildParts() : array
 	{
 		$command = $this->command;
-		$uploadType = ucfirst($command->option('upload'));
+		$uploadType = $command->option('upload');
+
+		switch ($uploadType)
+		{
+			case 'multiple';
+				$uploadType .= 'Files';
+				break;
+
+			default:
+				$uploadType .= 'File';
+		}
+		$uploadType = ucfirst($uploadType);
 
 		$stub = $this->getPartStub("upload.{$command->option('type')}");
 		$stub = str_replace("{{ uploadType }}", $uploadType, $stub);

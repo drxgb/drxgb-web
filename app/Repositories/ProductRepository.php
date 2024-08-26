@@ -188,7 +188,7 @@ class ProductRepository
 	 */
 	private function uploadImages(Product $product, array $images) : void
 	{
-		$path = Upload::makePath('product-images', $product->id);
+		$path = Upload::makePathById('product-images', $product->id);
 		Storage::disk('public')->deleteDirectory($path);
 
 		foreach ($images as $i => $image)
@@ -208,7 +208,7 @@ class ProductRepository
 	 */
 	private function deleteImages(Product $product) : void
 	{
-		$path = Upload::makePath('product-images', $product->id);
+		$path = Upload::makePathById('product-images', $product->id);
 		Storage::disk('public')->deleteDirectory($path);
 	}
 

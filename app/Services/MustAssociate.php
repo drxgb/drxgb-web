@@ -14,6 +14,14 @@ trait MustAssociate
 
 
 	/**
+	 * Sinaliza se o dado deve ser desassociado.
+	 *
+	 * @var boolean
+	 */
+	protected $mustDisassociate = false;
+
+
+	/**
 	 * Ação realizada na associação dos dados.
 	 *
 	 * @param mixed $data
@@ -37,6 +45,8 @@ trait MustAssociate
 	public function associate(mixed $data) : static
 	{
 		$this->associatedData = $data;
+		$this->mustDisassociate = false;
+
 		return $this;
 	}
 
@@ -47,6 +57,8 @@ trait MustAssociate
 	public function disassociate() : static
 	{
 		$this->associatedData = null;
+		$this->mustDisassociate = true;
+
 		return $this;
 	}
 
@@ -62,7 +74,7 @@ trait MustAssociate
 		{
 			$this->onAssociate($this->associatedData);
 		}
-		else
+		if ($this->mustDisassociate)
 		{
 			$this->onDisassociate();
 		}

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,7 @@ class ProductFileFactory extends Factory
     public function definition() : array
     {
         return [
-            'name'		=> fake()->title(),
-			'size'		=> fake()->randomNumber(4),
-			'file_path'	=> fake()->filePath(),
+            'name'		=> Str::random(),
         ];
     }
 }

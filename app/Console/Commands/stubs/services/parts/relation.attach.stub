@@ -6,7 +6,6 @@ use App\Services\MustAttach;
 	use MustAttach;
 {{ #protectedMethods }}
 
-
 	/**
 	 * @param mixed $data
 	 * @return void
@@ -25,6 +24,5 @@ use App\Services\MustAttach;
 	{
 		// TODO: Implementar onDetach()
 	}
-
 {{ #interfaces }}
 , Attachable, Detachable

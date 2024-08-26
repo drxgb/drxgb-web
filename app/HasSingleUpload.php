@@ -96,7 +96,11 @@ trait HasSingleUpload
 		}
 
 		Storage::disk($disk)->delete($path);
-		$this->forceFill([ $key => null ])->saveQuietly();
+
+		if ($this->exists)
+		{
+			$this->forceFill([ $key => null ])->saveQuietly();
+		}
 	}
 
 

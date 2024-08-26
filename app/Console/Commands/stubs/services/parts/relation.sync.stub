@@ -5,7 +5,6 @@ use App\Services\MustSync;
 	use MustSync;
 {{ #protectedMethods }}
 
-
 	/**
 	 * @param mixed $data
 	 * @return void
@@ -14,6 +13,5 @@ use App\Services\MustSync;
 	{
 		// TODO: Implementar onSync()
 	}
-
 {{ #interfaces }}
 , Syncable

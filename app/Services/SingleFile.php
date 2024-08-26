@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Storeable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 trait SingleFile
 {
@@ -13,17 +11,17 @@ trait SingleFile
 	/**
 	 * O arquivo de upload.
 	 *
-	 * @var UploadedFile
+	 * @var UploadedFile|null
 	 */
-	protected $uploadedFile;
+	protected $uploadedFile = null;
 
 
 	/**
 	 * Recebe o arquivo de upload.
 	 *
-	 * @return UploadedFile
+	 * @return UploadedFile|null
 	 */
-	public function getUploadedFile() : UploadedFile
+	public function getUploadedFile() : ?UploadedFile
 	{
 		return $this->uploadedFile;
 	}

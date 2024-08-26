@@ -9,17 +9,17 @@ trait MustDelete
 	/**
 	 * Ação realizada durante a remoção.
 	 *
-	 * @return boolean
+	 * @return mixed
 	 */
-	protected abstract function onDelete() : bool;
+	protected abstract function onDelete() : mixed;
 
 
 	/**
 	 * Realiza o processo de remoção.
 	 *
-	 * @return boolean
+	 * @return mixed
 	 */
-	public function delete() : bool
+	public function delete() : mixed
 	{
 		DB::beginTransaction();
 

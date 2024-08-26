@@ -34,9 +34,9 @@ class DeleterService extends Service implements Deletable
 
 
 	/**
-	 * @return boolean
+	 * @return mixed
 	 */
-	protected function onDelete() : bool
+	protected function onDelete() : mixed
 	{
 		$result = $this->fileExtension->delete();
 		$this->deleteFile($this->fileExtension);

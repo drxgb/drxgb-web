@@ -16,17 +16,21 @@ trait MustSave
 
 
 	/**
-	 * Realiza o processo de gravação.
-	 *
 	 * @return mixed
 	 */
-	public function save() : mixed
+	public function save(bool $newTransaction = true) : mixed
 	{
-		DB::beginTransaction();
+		if ($newTransaction)
+		{
+			DB::beginTransaction();
+		}
 
 		$result = $this->onSave();
 
-		DB::commit();
+		if ($newTransaction)
+		{
+			DB::commit();
+		}
 
 		return $result;
 	}

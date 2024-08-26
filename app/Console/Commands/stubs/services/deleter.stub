@@ -25,9 +25,9 @@ class {{ class }} extends Service implements Deletable{{ #interfaces }}
 {{ #publicMethods }}
 
 	/**
-	 * @return bool
+	 * @return mixed
 	 */
-	protected function onDelete() : bool
+	protected function onDelete() : mixed
 	{
 		// TODO: Implementar \{{ namespace }}\{{ class }}::onDelete()
 		return true;

@@ -6,7 +6,6 @@ use App\Services\MustAssociate;
 	use MustAssociate;
 {{ #protectedMethods }}
 
-
 	/**
 	 * @param mixed $data
 	 * @return void
@@ -15,8 +14,8 @@ use App\Services\MustAssociate;
 	{
 		// TODO: Implementar onAssociate()
 	}
-	
-	
+
+
 	/**
 	 * @param mixed $data
 	 * @return void
@@ -25,6 +24,5 @@ use App\Services\MustAssociate;
 	{
 		// TODO: Implementar onDisassociate()
 	}
-
 {{ #interfaces }}
 , Associatable, Disassociatable

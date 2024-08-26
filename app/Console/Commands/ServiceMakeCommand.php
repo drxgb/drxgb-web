@@ -206,7 +206,7 @@ class ServiceMakeCommand extends GeneratorCommand
 	 */
 	protected function getRelationOptions() : array
 	{
-		return [ 'associate', 'attach', 'sync' ];
+		return [ 'associate', 'attach', 'sync', 'assign-single', 'assign-multiple' ];
 	}
 
 

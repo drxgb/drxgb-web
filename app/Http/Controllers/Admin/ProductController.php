@@ -8,6 +8,7 @@ use App\Models\Platform;
 use App\Models\Product;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
+use App\Services\Product\CreatorService;
 
 class ProductController extends AdminController
 {
@@ -44,7 +45,20 @@ class ProductController extends AdminController
      */
     public function store(StoreProductRequest $request)
     {
-		$product = $this->products->store($request);
+		$attributes = $request->safe()->only([
+			'title', 'slug', 'page', 'description', 'price', 'active',
+		]);
+		$versions = $request->versions;
+		$images = $request->images;
+
+		/** @var CreatorService */
+		$creator = app(CreatorService::class);
+		$product = $creator->fill($attributes)
+			->assign($versions)
+			->setUploadedFiles($images)
+			->shouldRefresh()
+			->save();
+
         return to_route('admin.products.index')
 			->with('message', __('messages.created', [ 'name' => $product->title ]));
     }

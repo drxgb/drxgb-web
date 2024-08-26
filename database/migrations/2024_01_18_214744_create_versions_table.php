@@ -18,7 +18,7 @@ return new class extends Migration
 			$table->date('release_date');
 			$table->text('release_notes')->nullable();
 			$table->text('fixes')->nullable();
-			$table->foreignId('product_id')->nullable()->constrained();
+			$table->foreignId('product_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

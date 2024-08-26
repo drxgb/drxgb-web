@@ -15,9 +15,10 @@ return new class extends Migration
 		{
             $table->id();
 			$table->string('name');
-			$table->decimal('size');
+			$table->string('extension', 8)->nullable();
+			$table->decimal('size')->nullable();
 			$table->string('file_path')->nullable();
-			$table->foreignId('version_id')->nullable()->constrained();
+			$table->foreignId('version_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

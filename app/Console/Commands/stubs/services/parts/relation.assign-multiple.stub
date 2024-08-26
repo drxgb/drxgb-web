@@ -1,0 +1,17 @@
+{{ #imports }}
+use App\Contracts\Assignable;
+use App\Services\MustAssignMultiple;
+{{ #traits }}
+	use MustAssignMultiple;
+{{ #protectedMethods }}
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onAssign(mixed $data) : void
+	{
+		// TODO: Implementar onAssign()
+	}
+{{ #interfaces }}
+, Assignable

@@ -56,7 +56,7 @@ class PlatformController extends AdminController
 		$icon = $request->icon;
 
 		/** @var CreatorService */
-		$creator = app()->make(CreatorService::class);
+		$creator = app(CreatorService::class);
 		$creator->fill($attributes)
 			->attach($fileExtensions)
 			->setUploadedFile($icon)
@@ -86,7 +86,7 @@ class PlatformController extends AdminController
 		$icon = $request->icon;
 
 		/** @var EditorService */
-		$editor = app()->make(EditorService::class, compact('platform'));
+		$editor = app(EditorService::class, compact('platform'));
 		$editor->fill($attributes)
 			->sync($fileExtensions)
 			->setUploadedFile($icon)
@@ -101,7 +101,7 @@ class PlatformController extends AdminController
      */
     public function destroy(Platform $platform)
     {
-		$deleter = app()->make(DeleterService::class, compact('platform'));
+		$deleter = app(DeleterService::class, compact('platform'));
 		$deleter->delete();
 
 		return redirect()->back();

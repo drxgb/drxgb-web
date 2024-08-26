@@ -1,6 +1,6 @@
 {{ #imports }}
-use App\Services\{{ uploadType }}File;
-use App\Services\MustDelete{{ uploadType }}File;
+use App\Services\{{ uploadType }};
+use App\Services\MustDelete{{ uploadType }};
 {{ #traits }}
-	use {{ uploadType }}File;
-	use MustDelete{{ uploadType }}File;
+	use {{ uploadType }};
+	use MustDelete{{ uploadType }};

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Storeable;
+use Illuminate\Support\Facades\Storage;
 
 trait MustDeleteSingleFile
 {
@@ -49,7 +50,9 @@ trait MustDeleteSingleFile
 	 */
 	protected function cleanUnusedFile(Storeable $storable, ?string $filename) : bool
 	{
-		if ($filename && $this->deleteFile)
+		$disk = Storage::disk($storable->getFileDisk());
+
+		if ($filename && ($disk->exists($filename) || $this->deleteFile))
 		{
 			$this->deleteFile($storable, $filename);
 			return true;

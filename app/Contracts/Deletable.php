@@ -14,7 +14,7 @@ interface Deletable
 	/**
 	 * Realiza o processo de remoção.
 	 *
-	 * @return boolean
+	 * @return mixed
 	 */
-	function delete() : bool;
+	function delete() : mixed;
 }

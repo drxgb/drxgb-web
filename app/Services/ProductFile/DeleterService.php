@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services\Platform;
+namespace App\Services\ProductFile;
 
 use App\Contracts\Deletable;
-use App\Models\Platform;
+use App\Models\ProductFile;
 use App\Services\MustDelete;
 use App\Services\MustDeleteSingleFile;
 use App\Services\Service;
 
 
 /**
- * Responsável por deletar.
+ * Responsável por deletar o arquivo do produto.
  *
  * @author Dr.XGB <https://drxgb.com>
  * @version 1.0.0
@@ -22,20 +22,20 @@ class DeleterService extends Service implements Deletable
 
 
 	/**
-	 * O modelo da plataform.
+	 * O modelo do arquivo do produto.
 	 *
-	 * @var Platform
+	 * @var ProductFile
 	 */
-	protected $platform;
+	protected $productFile;
 
 
 	/**
-	 * @param Platform $platform
+	 * @param ProductFile $productFile
 	 */
-	public function __construct(Platform $platform)
+	public function __construct(ProductFile $productFile)
 	{
 		parent::__construct();
-		$this->platform = $platform;
+		$this->productFile = $productFile;
 	}
 
 
@@ -44,8 +44,8 @@ class DeleterService extends Service implements Deletable
 	 */
 	protected function onDelete() : mixed
 	{
-		$result = $this->platform->delete();
-		$this->deleteFile($this->platform);
+		$result = $this->productFile->delete();
+		$this->deleteFile($this->productFile);
 
 		return $result;
 	}

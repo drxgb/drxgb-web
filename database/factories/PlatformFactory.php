@@ -21,7 +21,7 @@ class PlatformFactory extends Factory
     {
         return [
             'name'			=> fake()->title(),
-			'short_name'	=> Str::random(8),
+			'short_name'	=> fake()->unique()->shuffleString(Str::random(8)),
         ];
     }
 

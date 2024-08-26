@@ -31,6 +31,8 @@ class CreatorServiceProvider extends ServiceProvider
 		return [
 			\App\Services\FileExtension\CreatorService::class,
 			\App\Services\Platform\CreatorService::class,
+			\App\Services\Product\CreatorService::class,
+			\App\Services\ProductFile\CreatorService::class,
 		];
 	}
 }

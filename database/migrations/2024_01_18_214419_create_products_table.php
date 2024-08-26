@@ -21,7 +21,7 @@ return new class extends Migration
 			$table->decimal('price');
 			$table->boolean('active');
 			$table->bigInteger('cover_index', unsigned: true)->nullable();
-			$table->bigInteger('download_count', unsigned: true);
+			$table->bigInteger('download_count', unsigned: true)->default(0);
 			$table->foreignId('category_id')->nullable()->constrained();
             $table->timestamps();
         });

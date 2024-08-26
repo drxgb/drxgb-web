@@ -28,7 +28,7 @@ class UploadFilesTest extends TestCase
 		{
 			$files = array_map(
 				fn (mixed $name): File => UploadedFile::fake()->image(
-					Upload::makePath($basePath, $id, "$name.png")
+					Upload::makePathById($basePath, $id, "$name.png")
 				),
 				range(0, random_int(1, 5)),
 			);
@@ -36,8 +36,8 @@ class UploadFilesTest extends TestCase
 
 			foreach ($files as $file)
 			{
-				$fs->put(Upload::makePath($basePath, $id), $file);
-				$fs->assertExists(Upload::makePath($basePath, $id, $file->hashName()));
+				$fs->put(Upload::makePathById($basePath, $id), $file);
+				$fs->assertExists(Upload::makePathById($basePath, $id, $file->hashName()));
 			}
 		}
     }

@@ -3,23 +3,26 @@
 namespace App\Models;
 
 use App\Contracts\Storeable;
+use App\HasFileExtension;
+use App\HasSingleUpload;
 use App\Utils\Upload;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class ProductFile extends Model
 	implements Storeable
 {
     use HasFactory;
+	use HasSingleUpload;
+	use HasFileExtension;
+
 
 	protected $fillable = [
 		'name',
-		'size',
 		'file_path',
 	];
 
@@ -97,55 +100,24 @@ class ProductFile extends Model
 	 */
 	public function getRootFolder() : string
 	{
-		return Upload::makePath('product-files', $this->id);
+		return Upload::makePathById('product-files', $this->id);
 	}
 
 
 	/**
-	 * Recebe o nome do arquivo que representa o conteúdo.
-	 *
 	 * @return string
 	 */
-	public function getFileName() : string
+	public function getFileFieldName() : string
 	{
-		return $this->name ?? $this->file_path;
+		return 'name';
 	}
 
 
 	/**
-	 * Recebe o nome do caminho completo do arquivo.
-	 *
 	 * @return string
 	 */
-	public function getFullPath() : string
+	public function getPathFieldName() : string
 	{
-		return $this->getRootFolder() . $this->getFileName();
-	}
-
-
-	/**
-	 * Salva o arquivo.
-	 *
-	 * @param UploadedFile $file
-	 * @return void
-	 */
-	public function saveFile(UploadedFile $file) : void
-	{
-		$filename = pathinfo($this->name, PATHINFO_FILENAME);
-		$filename .= '.' . $file->getClientOriginalExtension();
-		$file->storePubliclyAs($this->getRootFolder(), $filename, 'public');
-		$this->file_path = $filename;
-	}
-
-
-	/**
-	 * Apaga o arquivo.
-	 *
-	 * @return void
-	 */
-	public function deleteFile() : void
-	{
-		Storage::disk('public')->deleteDirectory($this->getRootFolder());
-		$this->file_path = null;
+		return 'file_path';
 	}
 }

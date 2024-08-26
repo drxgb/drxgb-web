@@ -257,7 +257,7 @@ class PlatformTest extends TestCase
 		$response = $this->actingAs($user)->delete($uri);
 
 		$response->assertRedirect();
-		$this->assertModelExists($platform);
+		$this->assertModelMissing($platform);
 		$this->fs->assertMissing($iconPath);
 	}
 

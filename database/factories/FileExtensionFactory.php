@@ -17,8 +17,8 @@ class FileExtensionFactory extends Factory
     public function definition() : array
     {
         return [
-			'name'			=> $this->faker->text(8),
-            'extension'		=> substr($this->faker->fileExtension(), 0, 3),
+			'name'			=> fake()->text(8),
+            'extension'		=> substr(fake()->unique()->fileExtension(), 0, 3),
         ];
     }
 }
