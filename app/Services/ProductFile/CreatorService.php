@@ -52,9 +52,17 @@ class CreatorService extends Service implements Saveable, Associatable, Disassoc
 	protected function onSave() : mixed
 	{
 		$productFile = $this->productFile;
+		$upload = $this->getUploadedFile();
+
+		if ($this->hasUpload())
+		{
+			$productFile->forceFill([
+				'extension'		=> $upload->getClientOriginalExtension(),
+				'size'			=> $upload->getSize(),
+			]);
+		}
 
 		$this->applyAssociation();
-		$productFile->setFileExtension($this->getUploadedFile());
 		$productFile->save();
 		$this->saveFile($productFile, $productFile->name);
 

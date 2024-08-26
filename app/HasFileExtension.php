@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Http\UploadedFile;
 
 trait HasFileExtension
 {
@@ -24,23 +23,5 @@ trait HasFileExtension
 	{
 		$key = $this->getFileExtensionFieldName();
 		return $this->$key;
-	}
-
-
-	/**
-	 * Modifica a extensão de arquivo do modelo.
-	 *
-	 * @param UploadedFile|null $upload
-	 * @return void
-	 */
-	public function setFileExtension(?UploadedFile $upload) : void
-	{
-		if (! is_null($upload))
-		{
-			$extension = $upload->getClientOriginalExtension();
-			$key = $this->getFileExtensionFieldName();
-
-			$this->forceFill(compact($key));
-		}
 	}
 }

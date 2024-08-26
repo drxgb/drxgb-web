@@ -68,8 +68,17 @@ class EditorService extends Service implements Saveable, Associatable, Disassoci
 
 		tap($productFile->$key, function (?string $previous) use ($productFile) : void
 		{
+			$upload = $this->getUploadedFile();
+
+			if ($this->hasUpload())
+			{
+				$productFile->forceFill([
+					'extension'		=> $upload->getClientOriginalExtension(),
+					'size'			=> $upload->getSize(),
+				]);
+			}
+
 			$this->applyAssociation();
-			$productFile->setFileExtension($this->getUploadedFile());
 			$productFile->save();
 
 			if (! $this->cleanUnusedFile($productFile, $previous))
