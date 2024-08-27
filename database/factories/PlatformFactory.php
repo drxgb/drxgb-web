@@ -19,9 +19,11 @@ class PlatformFactory extends Factory
      */
     public function definition() : array
     {
+		$len = fake()->numberBetween(3, 12);
+
         return [
-            'name'			=> fake()->title(),
-			'short_name'	=> fake()->unique()->shuffleString(Str::random(8)),
+            'name'			=> fake()->colorName(),
+			'short_name'	=> fake()->unique()->shuffleString(Str::random($len)),
         ];
     }
 
@@ -29,11 +31,12 @@ class PlatformFactory extends Factory
 	/**
 	 * Cria as extensões de arquivo associadas à plataforma.
 	 *
-	 * @param integer $count
+	 * @param integer|null $count
 	 * @return static
 	 */
-	public function withFileExtensions(int $count = 5) : static
+	public function withFileExtensions(?int $count = null) : static
 	{
+		$count ??= fake()->numberBetween(1, 3);
 		return $this->hasAttached(FileExtension::factory()->count($count));
 	}
 }

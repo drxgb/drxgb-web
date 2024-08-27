@@ -15,9 +15,9 @@ class EditorServiceProvider extends ServiceProvider
      */
     public function register() : void
     {
-		foreach ($this->provides() as $class)
+		foreach ($this->actions() as $service => $method)
 		{
-			$this->app->singleton($class, fn (Model $model) : Service => new $class($model));
+			$this->app->$method($service, fn (Model $model) : Service => new $service($model));
 		}
     }
 
@@ -27,9 +27,22 @@ class EditorServiceProvider extends ServiceProvider
 	 */
 	public function provides() : array
 	{
+		return array_keys($this->actions());
+	}
+
+
+	/**
+	 * Recebe as ações que devem ser realizadas para cada serviço.
+	 *
+	 * @return array
+	 */
+	private function actions() : array
+	{
 		return [
-			\App\Services\FileExtension\EditorService::class,
-			\App\Services\Platform\EditorService::class,
+			\App\Services\FileExtension\EditorService::class	=> 'singleton',
+			\App\Services\Platform\EditorService::class			=> 'singleton',
+			//\App\Services\Product\EditorService::class			=> 'singleton',
+			\App\Services\ProductFile\EditorService::class		=> 'bind',
 		];
 	}
 }

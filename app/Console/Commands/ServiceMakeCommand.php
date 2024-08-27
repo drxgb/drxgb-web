@@ -39,6 +39,27 @@ class ServiceMakeCommand extends GeneratorCommand
 
 
 	/**
+	 * Verifica se a opção é válida.
+	 *
+	 * @param string $context
+	 * @param ?string $option
+	 * @return bool
+	 */
+	public function isValidOption(string $context, ?string $option = null) : bool
+	{
+		$method = 'get' . ucfirst($context) . 'Options';
+
+		if (! method_exists($this, $method))
+		{
+			return false;
+		}
+
+		$option ??= $this->option($context);
+		return $option && in_array($option, $this->$method());
+	}
+
+
+	/**
 	 * @return string
 	 */
 	protected function getStub() : string
@@ -134,26 +155,6 @@ class ServiceMakeCommand extends GeneratorCommand
 		}
 
 		return $name;
-	}
-
-
-	/**
-	 * Verifica se a opção é válida.
-	 *
-	 * @param string $context
-	 * @return bool
-	 */
-	protected function isValidOption(string $context) : bool
-	{
-		$method = 'get' . ucfirst($context) . 'Options';
-
-		if (! method_exists($this, $method))
-		{
-			return false;
-		}
-
-		$option = $this->option($context);
-		return $option && in_array($option, $this->$method());
 	}
 
 

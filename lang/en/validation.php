@@ -195,5 +195,4 @@ return [
 		'number' 						=> 'Number',
 		'release_date'					=> 'Release date',
 	],
-
 ];

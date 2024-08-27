@@ -38,7 +38,7 @@ trait MustAssignSingle
 	 *
 	 * @return void
 	 */
-	public function applyAssignment() : void
+	protected function applyAssignment() : void
 	{
 		if (! is_null($this->assignedData))
 		{

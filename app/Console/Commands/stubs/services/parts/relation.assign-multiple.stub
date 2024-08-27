@@ -5,6 +5,7 @@ use App\Services\MustAssignMultiple;
 	use MustAssignMultiple;
 {{ #protectedMethods }}
 
+
 	/**
 	 * @param mixed $data
 	 * @return void

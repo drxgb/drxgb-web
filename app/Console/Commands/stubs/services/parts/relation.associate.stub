@@ -6,6 +6,7 @@ use App\Services\MustAssociate;
 	use MustAssociate;
 {{ #protectedMethods }}
 
+
 	/**
 	 * @param mixed $data
 	 * @return void

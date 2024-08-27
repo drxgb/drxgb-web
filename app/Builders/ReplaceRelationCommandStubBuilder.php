@@ -2,6 +2,7 @@
 
 namespace App\Builders;
 
+use App\Console\Commands\ServiceMakeCommand;
 
 /**
  * Responsável por construir as subsituições de arquivo aplicando
@@ -18,10 +19,24 @@ class ReplaceRelationCommandStubBuilder extends CommandStubBuilder
 	 */
 	protected function buildParts() : array
 	{
+		/** @var ServiceMakeCommand */
 		$command = $this->command;
-		$type = $command->option('relation');
-		$stub = $this->getPartStub("relation.{$type}");
+		$types = explode(',', $command->option('relation'));
+		$replaces = [];
 
-		return $this->makeReplacementParts($stub);
+		foreach ($types as $type)
+		{
+			$type = trim($type);
+
+			if (! $command->isValidOption('relation', $type))
+			{
+				$command->fail("'{$type}' is not a valid relation type.");
+			}
+
+			$stub = $this->getPartStub("relation.{$type}");
+			$replaces = array_merge($replaces, $this->makeReplacementParts($stub));
+		}
+
+		return $replaces;
 	}
 }

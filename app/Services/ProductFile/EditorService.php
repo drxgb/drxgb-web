@@ -5,11 +5,14 @@ namespace App\Services\ProductFile;
 use App\Contracts\Associatable;
 use App\Contracts\Disassociatable;
 use App\Contracts\Saveable;
+use App\Contracts\Syncable;
 use App\Exceptions\DisassociationException;
 use App\Models\ProductFile;
 use App\Services\MustAssociate;
 use App\Services\MustDeleteSingleFile;
 use App\Services\MustSave;
+use App\Services\MustSync;
+use App\Services\MustValidate;
 use App\Services\Service;
 use App\Services\SingleFile;
 
@@ -20,12 +23,15 @@ use App\Services\SingleFile;
  * @author Dr.XGB <https://drxgb.com>
  * @version 1.0.0
  */
-class EditorService extends Service implements Saveable, Associatable, Disassociatable
+class EditorService extends Service implements Saveable, Associatable, Disassociatable, Syncable
 {
 	use MustSave;
 	use SingleFile;
 	use MustDeleteSingleFile;
 	use MustAssociate;
+	use MustSync;
+	use MustValidate;
+	use ValidateProductFileTrait;
 
 
 	/**
@@ -59,6 +65,23 @@ class EditorService extends Service implements Saveable, Associatable, Disassoci
 
 
 	/**
+	 * @param array $errors
+	 * @return void
+	 */
+	protected function onValidate(array &$errors) : void
+	{
+		if ($this->hasUpload())
+		{
+			$productFile = $this->productFile;
+			$platforms = $this->syncData['platforms']
+				?? $productFile->platforms->toArray();
+
+			$this->validateFileExtension($platforms, $errors);
+		}
+	}
+
+
+	/**
 	 * @return mixed
 	 */
 	protected function onSave() : mixed
@@ -79,6 +102,7 @@ class EditorService extends Service implements Saveable, Associatable, Disassoci
 			}
 
 			$this->applyAssociation();
+			$this->applySync();
 			$productFile->save();
 
 			if (! $this->cleanUnusedFile($productFile, $previous))
@@ -107,5 +131,25 @@ class EditorService extends Service implements Saveable, Associatable, Disassoci
 	protected function onDisassociate() : void
 	{
 		throw new DisassociationException;
+	}
+
+
+	/**
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected function onSync(mixed $data) : void
+	{
+		$platforms = $this->filter($data['platforms']);
+		$this->productFile->platforms()->sync($platforms);
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	protected function defaultSyncKey() : mixed
+	{
+		return 'platforms';
 	}
 }

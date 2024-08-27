@@ -60,8 +60,9 @@ abstract class CommandStubBuilder extends Builder
 	{
 		$parts = $this->buildParts();
 
-		foreach ($parts as $point => $replace)
+		foreach ($parts as $part)
 		{
+			[ $point, $replace ] = $part;
 			$this->writeFromPoint($point, $replace, $content);
 		}
 
@@ -125,10 +126,17 @@ abstract class CommandStubBuilder extends Builder
 	protected function makeReplacementParts(string $stub) : array
 	{
 		$pattern = '/\{\{ \#[A-Za-z0-9-_]+ \}\}\r?\n/im';
-		$parts = preg_split($pattern, $stub, flags: PREG_SPLIT_NO_EMPTY);
+		$chunks = preg_split($pattern, $stub, flags: PREG_SPLIT_NO_EMPTY);
+		$parts = [];
+
 		preg_match_all($pattern, $stub, $points);
 
-		return array_combine($points[0], $parts);
+		foreach ($points[0] as $i => $point)
+		{
+			$parts[] = [ $point, $chunks[$i] ];
+		}
+
+		return $parts;
 	}
 
 

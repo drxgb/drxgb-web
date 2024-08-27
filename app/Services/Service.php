@@ -32,4 +32,17 @@ abstract class Service
 	{
 		// ...
 	}
+
+
+	/**
+	 * Filtra os dados deixando somente a chave que interessa.
+	 *
+	 * @param array $data
+	 * @param string $key
+	 * @return array
+	 */
+	protected function filter(array $data, string $key = 'id') : array
+	{
+		return array_map(fn (array $item) : int => $item[$key], $data);
+	}
 }

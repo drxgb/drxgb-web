@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class FileExtensionFactory extends Factory
     public function definition() : array
     {
         return [
-			'name'			=> fake()->text(8),
-            'extension'		=> substr(fake()->unique()->fileExtension(), 0, 3),
+			'name'			=> Str::random(),
+            'extension'		=> fake()->unique()->fileExtension(),
         ];
     }
 }

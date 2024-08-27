@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Exceptions\DisassociationException;
+use App\Models\Platform;
 use App\Models\ProductFile;
 use App\Models\Version;
 use App\Services\ProductFile\CreatorService;
@@ -11,6 +12,7 @@ use App\Services\ProductFile\EditorService;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Tests\FakeFileSystem;
 use Tests\TestCase;
@@ -25,6 +27,14 @@ class ProductFileTest extends TestCase
 
 
 	/**
+	 * Extensões de arquivo disponíveis.
+	 *
+	 * @var array
+	 */
+	private $availableFileExtensions = [];
+
+
+	/**
 	 * Testa se o produto pode ser criado.
 	 *
 	 * @return void
@@ -35,11 +45,17 @@ class ProductFileTest extends TestCase
 
 		$attributes = ProductFile::factory()->raw();
 		$version = Version::factory()->create();
+		$platforms = $this->makePlatforms();
+
+		$this->updateAvailableFileExtensions($platforms);
+
 		$file = $this->generateFile();
 
 		/** @var ProductFile */
-		$productFile = $this->getCreatorService()->fill($attributes)
+		$productFile = $this->creatorService()
+			->fill($attributes)
 			->associate($version)
+			->attach($platforms)
 			->setUploadedFile($file)
 			->save();
 
@@ -63,12 +79,44 @@ class ProductFileTest extends TestCase
 				$attributes = ProductFile::factory()->raw();
 				$file = $this->generateFile();
 
-				$creator = $this->getCreatorService();
+				$creator = $this->creatorService();
 				$creator->fill($attributes)
 					->setUploadedFile($file)
 					->save();
 			},
 			QueryException::class
+		);
+	}
+
+
+	/**
+	 * Testa se o arquivo não pode ser criado com uma extensão inválida.
+	 *
+	 * @return void
+	 */
+	public function test_product_file_cannot_be_created_with_an_invalid_extension() : void
+	{
+		$this->assertThrows(
+			function () : void
+			{
+				$this->setupFileSystem();
+
+			$attributes = ProductFile::factory()->raw();
+			$version = Version::factory()->create();
+			$platforms = $this->makePlatforms();
+
+			$this->updateAvailableFileExtensions($platforms);
+
+			$file = $this->generateFile(extension: 'kekeke');
+
+			$this->creatorService()
+				->fill($attributes)
+				->associate($version)
+				->attach($platforms)
+				->setUploadedFile($file)
+				->save();
+			},
+			\LogicException::class
 		);
 	}
 
@@ -86,7 +134,7 @@ class ProductFileTest extends TestCase
 		$version = Version::factory()->create();
 		$file = $this->generateFile();
 
-		$creator = $this->getCreatorService();
+		$creator = $this->creatorService();
 
 		/** @var ProductFile */
 		$productFile = $creator->fill($attributes)
@@ -95,7 +143,7 @@ class ProductFileTest extends TestCase
 			->save();
 
 		$name = fake()->name();
-		$editor = $this->getEditorService($productFile);
+		$editor = $this->editorService($productFile);
 		$productFile = $editor->fill(compact('name'))->save();
 
 		assertEquals($name, $productFile->name);
@@ -114,24 +162,125 @@ class ProductFileTest extends TestCase
 
 		$attributes = ProductFile::factory()->raw();
 		$version = Version::factory()->create();
-		$oldFile = $this->generateFile();
-		$newFile = $this->generateFile();
+		$platforms = $this->makePlatforms();
 
-		$creator = $this->getCreatorService();
+		$this->updateAvailableFileExtensions($platforms);
+
+		$oldFile = $this->generateFile();
 
 		/** @var ProductFile */
-		$productFile = $creator->fill($attributes)
+		$productFile = $this->creatorService()
+			->fill($attributes)
 			->associate($version)
+			->attach($platforms)
 			->setUploadedFile($oldFile)
 			->save();
 		$oldPath = $productFile->getFullFileName();
+		$platforms = $this->makePlatforms();
 
-		$editor = $this->getEditorService($productFile);
-		$productFile = $editor->setUploadedFile($newFile)->save();
+		$this->clearAvailableFileExtensions();
+		$this->updateAvailableFileExtensions($platforms);
+
+		$newFile = $this->generateFile();
+
+		$productFile = $this->editorService($productFile)
+			->sync($platforms)
+			->setUploadedFile($newFile)
+			->save();
 		$newPath = $productFile->getFullFileName();
 
 		$fs->assertMissing($oldPath);
 		$fs->assertExists($newPath);
+	}
+
+
+	/**
+	 * Testa se o arquivo do produto não pode ser atualizado
+	 * com uma extensão de arquivo inválida.
+	 *
+	 * @return void
+	 */
+	public function test_product_file_cannot_update_with_an_invalid_extension() : void
+	{
+		$this->assertThrows(
+			function () : void
+			{
+				$this->setupFileSystem();
+
+				$attributes = ProductFile::factory()->raw();
+				$version = Version::factory()->create();
+				$platforms = $this->makePlatforms();
+
+				$this->updateAvailableFileExtensions($platforms);
+
+				$oldFile = $this->generateFile();
+				$newFile = $this->generateFile(extension: 'kekekek');
+
+				/** @var ProductFile */
+				$productFile = $this->creatorService()
+					->fill($attributes)
+					->associate($version)
+					->attach($platforms)
+					->setUploadedFile($oldFile)
+					->save();
+				$platforms = $this->makePlatforms();
+
+				$this->clearAvailableFileExtensions();
+				$this->updateAvailableFileExtensions($platforms);
+
+				$this->editorService($productFile)
+					->sync($platforms)
+					->setUploadedFile($newFile)
+					->save();
+			},
+			\LogicException::class
+		);
+	}
+
+
+	/**
+	 * Testa se o arquivo do produto pode ter suas plataformas
+	 * alteradas.
+	 *
+	 * @return void
+	 */
+	public function test_product_file_can_change_platforms() : void
+	{
+		$this->setupFileSystem();
+
+		$attributes = ProductFile::factory()->raw();
+		$version = Version::factory()->create();
+		$platforms = $this->makePlatforms();
+
+		$this->updateAvailableFileExtensions($platforms);
+
+		$file = $this->generateFile();
+
+		$unexpectedIds = array_map(fn (array $platform) : int => $platform['id'], $platforms);
+
+		/** @var ProductFile */
+		$productFile = $this->creatorService()
+			->fill($attributes)
+			->associate($version)
+			->attach($platforms)
+			->setUploadedFile($file)
+			->save();
+
+		$platforms = $this->makePlatforms();
+		$productFile = $this->editorService($productFile)
+			->sync($platforms)
+			->save();
+
+		$expectedIds = array_map(fn (array $platform) : int => $platform['id'], $platforms);
+		$actualIds = $productFile->platform_ids;
+
+		$this->assertNotEmpty($actualIds);
+
+		foreach ($actualIds as $id)
+		{
+			$this->assertContains($id, $expectedIds);
+			$this->assertNotContains($id, $unexpectedIds);
+		}
 	}
 
 
@@ -151,7 +300,7 @@ class ProductFileTest extends TestCase
 				$version = Version::factory()->create();
 				$file = $this->generateFile();
 
-				$creator = $this->getCreatorService();
+				$creator = $this->creatorService();
 
 				/** @var ProductFile */
 				$productFile = $creator->fill($attributes)
@@ -159,7 +308,7 @@ class ProductFileTest extends TestCase
 					->setUploadedFile($file)
 					->save();
 
-				$editor = $this->getEditorService($productFile);
+				$editor = $this->editorService($productFile);
 				$productFile = $editor->disassociate()->save();
 			},
 			DisassociationException::class
@@ -180,7 +329,7 @@ class ProductFileTest extends TestCase
 		$version = Version::factory()->create();
 		$file = $this->generateFile();
 
-		$creator = $this->getCreatorService();
+		$creator = $this->creatorService();
 
 		/** @var ProductFile */
 		$productFile = $creator->fill($attributes)
@@ -188,7 +337,7 @@ class ProductFileTest extends TestCase
 			->setUploadedFile($file)
 			->save();
 
-		$deleter = $this->getDeleterService($productFile);
+		$deleter = $this->deleterService($productFile);
 		$deleter->delete();
 
 		$this->assertModelMissing($productFile);
@@ -197,19 +346,95 @@ class ProductFileTest extends TestCase
 
 
 	/**
+	 * @return void
+	 */
+	#[\Override]
+	protected function setUp() : void
+	{
+		parent::setUp();
+		$this->clearAvailableFileExtensions();
+	}
+
+
+	/**
+	 * @return void
+	 */
+	#[\Override]
+	protected function tearDown() : void
+	{
+		$this->clearAvailableFileExtensions();
+		parent::tearDown();
+	}
+
+
+	/**
 	 * Gera um arquivo.
 	 *
 	 * @param ?string $name
+	 * @param ?string $extension
 	 * @return UploadedFile
 	 */
-	private function generateFile(?string $name = null) : UploadedFile
+	private function generateFile(?string $name = null, ?string $extension = null) : UploadedFile
 	{
+		$extension ??= empty($this->availableFileExtensions)
+			? fake()->fileExtension()
+			: Arr::random($this->availableFileExtensions);
+
 		$name ??= Str::random();
-		$extension = substr(fake()->fileExtension(), 0, 8);
-		$size = fake()->randomNumber(3);
+		$size = fake()->numberBetween(0, 255);
 		$file = UploadedFile::fake()->create("{$name}.{$extension}", $size);
 
 		return $file;
+	}
+
+
+	/**
+	 * Cria um conjunto de plataformas.
+	 *
+	 * @param integer|null $count
+	 * @return array
+	 */
+	private function makePlatforms(?int $count = null) : array
+	{
+		$count ??= fake()->numberBetween(1, 5);
+
+		return Platform::factory()
+			->withFileExtensions()
+			->count($count)
+			->create()
+			->toArray();
+	}
+
+
+	/**
+	 * Atualiza a lista de extensões de arquivo suportadas.
+	 *
+	 * @param array $platforms
+	 * @return void
+	 */
+	private function updateAvailableFileExtensions(array $platforms) : void
+	{
+		foreach ($platforms as $platform)
+		{
+			$this->availableFileExtensions = array_replace(
+				$this->availableFileExtensions,
+				array_map(
+					fn (array $ext) : string => $ext['extension'],
+					$platform['supported_file_extensions']
+				)
+			);
+		}
+	}
+
+
+	/**
+	 * Limpa a lista de extensões de arquivo suportadas.
+	 *
+	 * @return void
+	 */
+	private function clearAvailableFileExtensions() : void
+	{
+		$this->availableFileExtensions = [];
 	}
 
 
@@ -218,7 +443,7 @@ class ProductFileTest extends TestCase
 	 *
 	 * @return CreatorService
 	 */
-	private function getCreatorService() : CreatorService
+	private function creatorService() : CreatorService
 	{
 		return app(CreatorService::class);
 	}
@@ -230,7 +455,7 @@ class ProductFileTest extends TestCase
 	 * @param ProductFile $productFile
 	 * @return EditorService
 	 */
-	private function getEditorService(ProductFile &$productFile) : EditorService
+	private function editorService(ProductFile &$productFile) : EditorService
 	{
 		return app(EditorService::class, compact('productFile'));
 	}
@@ -242,7 +467,7 @@ class ProductFileTest extends TestCase
 	 * @param ProductFile $productFile
 	 * @return DeleterService
 	 */
-	private function getDeleterService(ProductFile &$productFile) : DeleterService
+	private function deleterService(ProductFile &$productFile) : DeleterService
 	{
 		return app(DeleterService::class, compact('productFile'));
 	}

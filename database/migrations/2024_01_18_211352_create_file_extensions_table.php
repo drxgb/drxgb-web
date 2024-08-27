@@ -15,7 +15,7 @@ return new class extends Migration
 		{
             $table->id();
 			$table->string('name');
-			$table->string('extension', 8)->unique();
+			$table->string('extension')->unique();
 			$table->string('icon_path')->nullable();
             $table->timestamps();
         });

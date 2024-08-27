@@ -14,9 +14,9 @@ class CreatorServiceProvider extends ServiceProvider
      */
     public function register() : void
     {
-		foreach ($this->provides() as $providerClass)
+		foreach ($this->actions() as $service => $method)
 		{
-			$this->app->singleton($providerClass, fn () : Service => new $providerClass);
+			$this->app->$method($service, fn () : Service => new $service);
 		}
     }
 
@@ -28,11 +28,22 @@ class CreatorServiceProvider extends ServiceProvider
      */
     public function provides() : array
 	{
+		return array_keys($this->actions());
+	}
+
+
+	/**
+	 * Recebe as ações que devem ser realizadas para cada serviço.
+	 *
+	 * @return array
+	 */
+	private function actions() : array
+	{
 		return [
-			\App\Services\FileExtension\CreatorService::class,
-			\App\Services\Platform\CreatorService::class,
-			\App\Services\Product\CreatorService::class,
-			\App\Services\ProductFile\CreatorService::class,
+			\App\Services\FileExtension\CreatorService::class	=> 'singleton',
+			\App\Services\Platform\CreatorService::class		=> 'singleton',
+			\App\Services\Product\CreatorService::class			=> 'singleton',
+			\App\Services\ProductFile\CreatorService::class		=> 'bind',
 		];
 	}
 }

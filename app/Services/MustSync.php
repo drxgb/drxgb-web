@@ -34,6 +34,8 @@ trait MustSync
 			return $this;
 		}
 
+		$key ??= $this->defaultSyncKey();
+
 		if (is_null($key))
 		{
 			$this->syncData[] = $data;
@@ -58,5 +60,16 @@ trait MustSync
 		{
 			$this->onSync($this->syncData);
 		}
+	}
+
+
+	/**
+	 * Recebe a chave padrão da sincronização.
+	 *
+	 * @return mixed
+	 */
+	protected function defaultSyncKey() : mixed
+	{
+		return null;
 	}
 }

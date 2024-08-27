@@ -5,6 +5,7 @@ use App\Services\MustAssignSingle;
 	use MustAssignSingle;
 {{ #protectedMethods }}
 
+
 	/**
 	 * @param mixed $data
 	 * @return void

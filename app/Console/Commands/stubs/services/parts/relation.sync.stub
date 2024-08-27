@@ -5,6 +5,7 @@ use App\Services\MustSync;
 	use MustSync;
 {{ #protectedMethods }}
 
+
 	/**
 	 * @param mixed $data
 	 * @return void

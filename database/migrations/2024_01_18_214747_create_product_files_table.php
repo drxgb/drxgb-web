@@ -15,7 +15,7 @@ return new class extends Migration
 		{
             $table->id();
 			$table->string('name');
-			$table->string('extension', 8)->nullable();
+			$table->string('extension')->nullable();
 			$table->decimal('size')->nullable();
 			$table->string('file_path')->nullable();
 			$table->foreignId('version_id')->constrained()->cascadeOnDelete();

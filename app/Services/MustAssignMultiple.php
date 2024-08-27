@@ -26,15 +26,24 @@ trait MustAssignMultiple
 	 * @param mixed $data
 	 * @return static
 	 */
-	public function assign(mixed $data) : static
+	public function assign(mixed $data, ?string $key = null) : static
 	{
-		if (is_array($data))
+		$key ??= $this->defaultAssignKey();
+
+		if (is_array($data) && ! is_null($key))
 		{
 			$this->assignedData = $data;
 		}
 		else
 		{
-			$this->assignedData[] = $data;
+			if (! is_null($key))
+			{
+				$this->assignedData[$key] = $data;
+			}
+			else
+			{
+				$this->assignedData[] = $data;
+			}
 		}
 
 		return $this;
@@ -46,11 +55,22 @@ trait MustAssignMultiple
 	 *
 	 * @return void
 	 */
-	public function applyAssignment() : void
+	protected function applyAssignment() : void
 	{
 		if (! empty($this->assignedData))
 		{
 			$this->onAssign($this->assignedData);
 		}
+	}
+
+
+	/**
+	 * Recebe a chave padrão da atribuição.
+	 *
+	 * @return string|null
+	 */
+	protected function defaultAssignKey() : ?string
+	{
+		return null;
 	}
 }

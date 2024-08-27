@@ -23,21 +23,42 @@ trait MustAttach
 	/**
 	 * Ação de anexo de dados.
 	 *
-	 * @param mixed $attachment
+	 * @param mixed $data
 	 * @return void
 	 */
-	protected abstract function onAttach(mixed $attachment) : void;
+	protected abstract function onAttach(mixed $data) : void;
+
+
+	/**
+	 * Ação de anexo de dados.
+	 *
+	 * @param mixed $data
+	 * @return void
+	 */
+	protected abstract function onDetach(mixed $data) : void;
 
 
 	/**
 	 * @param mixed $data
+	 * @param ?string $key
 	 * @return static
 	 */
-	public function attach(mixed $data) : static
+	public function attach(mixed $data, ?string $key = null) : static
 	{
-		if (! is_null($data))
+		if (is_null($data))
+		{
+			return $this;
+		}
+
+		$key ??= $this->defaultAttachKey();
+
+		if (is_null($key))
 		{
 			$this->attachments[] = $data;
+		}
+		else
+		{
+			$this->attachments[$key] = $data;
 		}
 
 		return $this;
@@ -46,13 +67,25 @@ trait MustAttach
 
 	/**
 	 * @param mixed $data
+	 * @param ?string $key
 	 * @return static
 	 */
-	public function detach(mixed $data) : static
+	public function detach(mixed $data, ?string $key = null) : static
 	{
-		if (! is_null($data))
+		if (is_null($data))
+		{
+			return $this;
+		}
+
+		$key ??= $this->defaultAttachKey();
+
+		if (is_null($key))
 		{
 			$this->detachments[] = $data;
+		}
+		else
+		{
+			$this->detachments[$key] = $data;
 		}
 
 		return $this;
@@ -77,5 +110,16 @@ trait MustAttach
 			$detachment = array_shift($this->detachments);
 			$this->onDetach($detachment);
 		}
+	}
+
+
+	/**
+	 * Recebe a chave padrão para os anexos.
+	 *
+	 * @return string|null
+	 */
+	protected function defaultAttachKey() : ?string
+	{
+		return null;
 	}
 }
