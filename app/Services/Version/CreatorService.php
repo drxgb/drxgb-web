@@ -2,17 +2,19 @@
 
 namespace App\Services\Version;
 
+use App\Models\Version;
+use App\Models\Platform;
+use App\Services\Service;
+use App\Services\MustSave;
+use App\Contracts\Saveable;
 use App\Contracts\Assignable;
 use App\Contracts\Associatable;
-use App\Contracts\Disassociatable;
-use App\Contracts\Saveable;
-use App\Exceptions\DisassociationException;
-use App\Models\Version;
-use App\Services\MustAssignMultiple;
 use App\Services\MustAssociate;
-use App\Services\MustSave;
-use App\Services\Service;
-
+use Illuminate\Http\UploadedFile;
+use App\Contracts\Disassociatable;
+use App\Services\MustAssignMultiple;
+use Illuminate\Database\Eloquent\Builder;
+use App\Exceptions\DisassociationException;
 
 /**
  * Responsável por criar versões.
@@ -25,6 +27,7 @@ class CreatorService extends Service implements Saveable, Assignable, Associatab
 	use MustSave;
 	use MustAssignMultiple;
 	use MustAssociate;
+	use VersionCommonActionsTrait;
 
 
 	/**
@@ -84,11 +87,15 @@ class CreatorService extends Service implements Saveable, Assignable, Associatab
 
 		foreach ($data as $file)
 		{
-			$attributes = [ 'name'	=> $file['name'] ];
+			/** @var UploadedFile */
 			$upload = $file['product_file'];
-			$creator = app(\App\Services\ProductFile\CreatorService::class);
+			$name = $file['name'] ?? null;
+			$platforms = $this->getPlatforms($file['platform_ids']);
+			$attributes = $this->hydratateAttributes($name, $upload);
 
-			$productFiles[] = $creator->fill($attributes)
+			$productFiles[] = app(\App\Services\ProductFile\CreatorService::class)
+				->fill($attributes)
+				->attach($platforms)
 				->setUploadedFile($upload)
 				->associate($version)
 				->save();

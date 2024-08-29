@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\FileExtension;
-use App\Models\Platform;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Platform>

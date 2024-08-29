@@ -57,9 +57,16 @@ class Platform extends Model implements Iconable, Storeable
 	 */
 	public function supportedFileExtensions() : Attribute
 	{
-		return Attribute::get(fn () : Collection =>
-			$this->fileExtensions()->get()
-		);
+		return Attribute::get(function () : array
+		{
+			foreach ($this->fileExtensions()->get() as $fileExtension)
+			{
+				/** @var FileExtension $fileExtension */
+				$supportedExtensions[$fileExtension->id] = $fileExtension;
+			}
+
+			return $supportedExtensions ?? [];
+		});
 	}
 
 
@@ -73,7 +80,7 @@ class Platform extends Model implements Iconable, Storeable
 		foreach ($this->fileExtensions()->get() as $fileExtension)
 		{
 			/** @var FileExtension $fileExtension */
-			$supportedExtensions[] = $fileExtension->extension;
+			$supportedExtensions[$fileExtension->id] = $fileExtension->extension;
 		}
 		return $supportedExtensions ?? [];
 	}

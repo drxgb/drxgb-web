@@ -40,8 +40,9 @@ class DeleterServiceProvider extends ServiceProvider implements DeferrableProvid
 	{
 		return [
 			\App\Services\FileExtension\DeleterService::class	=> 'singleton',
-			\App\Services\Platform\DeleterService::class			=> 'singleton',
-			//\App\Services\Product\DeleterService::class			=> 'singleton',
+			\App\Services\Platform\DeleterService::class		=> 'singleton',
+			//\App\Services\Product\DeleterService::class		=> 'singleton',
+			\App\Services\Version\DeleterService::class			=> 'singleton',
 			\App\Services\ProductFile\DeleterService::class		=> 'bind',
 		];
 	}

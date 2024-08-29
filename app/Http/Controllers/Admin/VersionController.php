@@ -11,9 +11,9 @@ class VersionController extends AdminController
 	{
 		$version = [
 			'number'		=> $request->number,
-			'fixes'			=> $request->fixes,
 			'release_notes'	=> $request->release_notes,
 			'release_date'	=> $request->release_date,
+			'fixes'			=> $request->fixes,
 			'files'			=> array_map(
 				function (array $file) : array
 				{

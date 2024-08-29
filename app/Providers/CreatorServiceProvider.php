@@ -43,6 +43,7 @@ class CreatorServiceProvider extends ServiceProvider
 			\App\Services\FileExtension\CreatorService::class	=> 'singleton',
 			\App\Services\Platform\CreatorService::class		=> 'singleton',
 			\App\Services\Product\CreatorService::class			=> 'singleton',
+			\App\Services\Version\CreatorService::class			=> 'singleton',
 			\App\Services\ProductFile\CreatorService::class		=> 'bind',
 		];
 	}

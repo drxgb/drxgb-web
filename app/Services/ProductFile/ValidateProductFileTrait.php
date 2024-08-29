@@ -2,6 +2,7 @@
 
 namespace App\Services\ProductFile;
 
+use App\Models\FileExtension;
 
 trait ValidateProductFileTrait
 {
@@ -23,7 +24,7 @@ trait ValidateProductFileTrait
 			$fileExtensions = array_replace(
 				$fileExtensions,
 				array_map(
-					fn (array $ext) : string => $ext['extension'],
+					fn (FileExtension $ext) : string => $ext->extension,
 					$platform['supported_file_extensions']
 				)
 			);
@@ -32,7 +33,8 @@ trait ValidateProductFileTrait
 		if (! in_array($extension, $fileExtensions))
 		{
 			$errors[] = __('validation.supported_file_extensions', [
-				'values'	=> implode(',', $fileExtensions)
+				'values'	=> implode(', ', $fileExtensions),
+				'other'		=> $extension,
 			]);
 		}
 	}

@@ -62,7 +62,7 @@ class ProductFile extends Model
 	 */
 	public function path() : Attribute
 	{
-		return Attribute::get(fn () : string => Storage::url($this->getFullPath()));
+		return Attribute::get(fn () : string => Storage::url($this->getFullFileName()));
 	}
 
 

@@ -42,6 +42,7 @@ class EditorServiceProvider extends ServiceProvider
 			\App\Services\FileExtension\EditorService::class	=> 'singleton',
 			\App\Services\Platform\EditorService::class			=> 'singleton',
 			//\App\Services\Product\EditorService::class			=> 'singleton',
+			\App\Services\Version\EditorService::class			=> 'singleton',
 			\App\Services\ProductFile\EditorService::class		=> 'bind',
 		];
 	}
