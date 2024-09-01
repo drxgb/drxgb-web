@@ -31,9 +31,18 @@ interface Storeable
 	/**
 	 * Recebe o nome do arquivo que representa o conteúdo.
 	 *
-	 * @return ?string
+	 * @return mixed
 	 */
-	function getFileName() : ?string;
+	function getFileName() : mixed;
+
+
+	/**
+	 * Recebe o nome todo do arquivo que representa o conteúdo,
+	 * normalmente com raiz e nome.
+	 *
+	 * @return mixed
+	 */
+	function getFullFileName() : mixed;
 
 
 	/**
@@ -50,15 +59,6 @@ interface Storeable
 	 * @return string
 	 */
 	function getDefaultFileName() : string;
-
-
-	/**
-	 * Recebe o nome todo do arquivo que representa o conteúdo,
-	 * normalmente com raiz e nome.
-	 *
-	 * @return ?string
-	 */
-	function getFullFileName() : ?string;
 
 
 	/**
@@ -82,25 +82,28 @@ interface Storeable
 	 *
 	 * @param UploadedFile $file
 	 * @param string $filename
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	function saveFile(UploadedFile $file, string $filename) : void;
+	function saveFile(UploadedFile $file, string $filename, ?string $subPath = null) : void;
 
 
 	/**
 	 * Renomeia o arquivo.
 	 *
 	 * @param string|null $newName
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	function renameFile(?string $newName = null) : void;
+	function renameFile(?string $newName = null, ?string $subPath = null) : void;
 
 
 	/**
 	 * Remove o arquivo.
 	 *
 	 * @param ?string $filename
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	function deleteFile(?string $filename = null) : void;
+	function deleteFile(?string $filename = null, ?string $subPath = null) : void;
 }

@@ -44,17 +44,17 @@ trait MustDeleteSingleFile
 	/**
 	 * Retira o arquivo que não possui mais vínculo com o modelo.
 	 *
-	 * @param Storeable $storable
+	 * @param Storeable $storeable
 	 * @param ?string $filename
 	 * @return boolean
 	 */
-	protected function cleanUnusedFile(Storeable $storable, ?string $filename) : bool
+	protected function cleanUnusedFile(Storeable $storeable, ?string $filename) : bool
 	{
-		$disk = Storage::disk($storable->getFileDisk());
+		$disk = Storage::disk($storeable->getFileDisk());
 
 		if ($filename && ($disk->exists($filename) || $this->deleteFile))
 		{
-			$this->deleteFile($storable, $filename);
+			$this->deleteFile($storeable, $filename);
 			return true;
 		}
 

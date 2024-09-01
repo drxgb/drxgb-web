@@ -7,8 +7,6 @@ use App\Models\FileExtension;
 
 class PlatformRepository
 {
-	use HasIcon;
-
 	/**
 	 * Recebe a lista das extensões em ordem alfabética.
 	 *

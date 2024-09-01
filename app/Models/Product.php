@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Casts\Price;
-use App\Utils\Upload;
+use App\Contracts\Storeable;
+use App\HasImages;
+use App\HasMultipleUpload;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +14,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
-class Product extends Model
+
+class Product extends Model implements Storeable
 {
     use HasFactory;
+	use HasImages;
+	use HasMultipleUpload;
+
 
 	protected $fillable = [
 		'title',
@@ -46,7 +52,7 @@ class Product extends Model
 	{
 		return Attribute::get(fn () : string =>
 			$this->cover_index
-				? Storage::Url($this->getImages()[$this->cover_index])
+				? Storage::Url($this->getFiles()[$this->cover_index])
 				: ''
 		);
 	}
@@ -55,17 +61,11 @@ class Product extends Model
 	/**
 	 * Recebe as imagens do produto.
 	 *
-	 * @return Attribute<array<string>>
+	 * @return Attribute
 	 */
 	public function images() : Attribute
 	{
-		return Attribute::get(function () : array
-		{
-			return array_map(
-				fn (string $file) : string => Storage::url($file),
-				$this->getImages()
-			);
-		});
+		return Attribute::get(fn () : array => $this->getFiles());
 	}
 
 
@@ -116,6 +116,7 @@ class Product extends Model
 	 */
 	public function finalPrice() : Attribute
 	{
+		// TODO: Aplicar descontos, se necessário.
 		return Attribute::get(
 			fn () : string => number_format(floatval($this->price), 2)
 		);
@@ -156,14 +157,20 @@ class Product extends Model
 
 
 	/**
-	 * Retorna um conjunto com as imagens do produto.
-	 *
-	 * @return array
+	 * @return string|null
 	 */
-	public function getImages() : array
+	public function getRootFolder() : ?string
 	{
-		$path = Upload::makePathById('product-images', $this->id);
-		return Storage::disk('public')->files($path);
+		return 'product-images';
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getFileFieldName() : string
+	{
+		return 'extension';
 	}
 
 

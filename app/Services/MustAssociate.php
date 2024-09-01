@@ -44,6 +44,11 @@ trait MustAssociate
 	 */
 	public function associate(mixed $data) : static
 	{
+		if (is_null($data))
+		{
+			return $this->disassociate();
+		}
+
 		$this->associatedData = $data;
 		$this->mustDisassociate = false;
 

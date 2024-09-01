@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Contracts\Storeable;
+use App\Utils\Upload;
 use Illuminate\Http\UploadedFile;
 
 
 trait MultipleFiles
 {
-
 	/**
 	 * Os arquivos de upload.
 	 *
@@ -31,12 +31,16 @@ trait MultipleFiles
 	/**
 	 * Define o arquivo de upload.
 	 *
-	 * @param UploadedFile[] $uploadedFiles
+	 * @param UploadedFile[]|null $uploadedFiles
 	 * @return static
 	 */
-	public function setUploadedFiles(array $uploadedFiles) : static
+	public function setUploadedFiles(?array $uploadedFiles) : static
 	{
-		$this->uploadedFiles = $uploadedFiles;
+		if (is_array($uploadedFiles))
+		{
+			$this->uploadedFiles = $uploadedFiles;
+		}
+
 		return $this;
 	}
 
@@ -56,16 +60,22 @@ trait MultipleFiles
 	 * Salva os arquivos de upload.
 	 *
 	 * @param Storeable $storeable
-	 * @param string $filename
+	 * @param string|null $prefix
 	 * @return void
 	 */
-	protected function saveFiles(Storeable $storeable, string $filename) : void
+	protected function saveFiles(Storeable $storeable, ?string $prefix = null) : void
 	{
 		if ($this->hasUpload())
 		{
+			$i = 0;
+			$pathField = $storeable->getPathFieldName();
+			$subPath = Upload::makePathById('', $storeable->$pathField);
+
 			foreach ($this->uploadedFiles as $upload)
 			{
-				$storeable->saveFile($upload, $filename);
+				$filename = is_null($prefix) ? $i : "{$prefix}{$i}";
+				$storeable->saveFile($upload, $filename, $subPath);
+				++$i;
 			}
 		}
 	}

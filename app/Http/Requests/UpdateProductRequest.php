@@ -13,15 +13,15 @@ class UpdateProductRequest extends AdminRequest
     public function rules() : array
     {
         return [
-            'title'			=> 'required|string|max:60',
-			'slug'			=> 'required|string|max:60',
+            'title'			=> 'required|string',
+			'slug'			=> 'required|string',
 			'page'			=> 'nullable|string',
 			'description'	=> 'nullable|string',
 			'price'			=> 'required|numeric|min:0',
 			'active'		=> 'boolean',
 			'cover_index'	=> 'nullable|numeric',
 
-			'category_id'	=> 'nullable',
+			'category_id'	=> 'nullable|numeric',
 			'versions'		=> 'required|array',
 			'images'		=> 'nullable|array',
 

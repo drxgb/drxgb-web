@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utils\Upload;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,20 +15,16 @@ trait HasSingleUpload
 	/**
 	 * @param UploadedFile $file
 	 * @param string $filename
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	public function saveFile(UploadedFile $file, string $filename) : void
+	public function saveFile(UploadedFile $file, string $filename, ?string $subPath = null) : void
 	{
 		$key = $this->getPathFieldName();
 
-		tap($this->$key, function (?string $previous) use ($file, $filename, $key) : void
+		tap($this->$key, function (?string $previous) use ($file, $filename, $subPath, $key) : void
 		{
-			$basePath = $this->getRootFolder();
-			$disk = $this->getFileDisk();
-			$ext = $this->getFileExtension();
-			$filename .= ".{$ext}";
-
-			$this->store($file, $basePath, $filename, $disk);
+			Upload::saveFile($this, $file, $filename, $subPath);
 			$this->forceFill([ $key	=> $filename ])->saveQuietly();
 
 			if (!empty($previous) && $this->$key !== $previous)
@@ -40,74 +37,41 @@ trait HasSingleUpload
 
 	/**
 	 * @param string|null $newName
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	public function renameFile(?string $newName = null) : void
+	public function renameFile(?string $newName = null, ?string $subPath = null) : void
 	{
+		$pathKey = $this->getPathFieldName();
 		$fileKey = $this->getFileFieldName();
 		$filename = $this->$fileKey;
-		$extension = $this->getFileExtension();
-		$filename .= ".{$extension}";
 
-		if (is_null($newName))
-		{
-			$root = $this->getRootFolder();
-			$newName = "{$root}/{$filename}";
-		}
-
-		$pathKey = $this->getPathFieldName();
-		$oldName = $this->getFullFileName();
-
-		$fs = Storage::disk($this->getFileDisk());
-
-		if (! is_null($this->$pathKey) && $fs->exists($oldName) && $oldName !== $newName)
-		{
-			$fs->move($oldName, $newName);
-		}
-
+		Upload::renameFile($this, $newName, $subPath);
 		$this->forceFill([ $pathKey => $filename ])->saveQuietly();
 	}
 
 
 	/**
 	 * @param ?string $filename
+	 * @param ?string $subPath
 	 * @return void
 	 */
-	public function deleteFile(?string $filename = null) : void
+	public function deleteFile(?string $filename = null, ?string $subPath = null) : void
 	{
-		$key = $this->getPathFieldName();
-
-		if (is_null($filename))
-		{
-			$filename = $this->$key;
-		}
-		if (is_null($filename))
-		{
-			return;
-		}
-
-		$disk = $this->getFileDisk();
-		$path = "{$this->getRootFolder()}/{$filename}";
-
-		if (! pathinfo($path, PATHINFO_EXTENSION))
-		{
-			$ext = $this->getFileExtension();
-			$path .= ".{$ext}";
-		}
-
-		Storage::disk($disk)->delete($path);
+		Upload::deleteFile($this, $filename, $subPath);
 
 		if ($this->exists)
 		{
+			$key = $this->getPathFieldName();
 			$this->forceFill([ $key => null ])->saveQuietly();
 		}
 	}
 
 
 	/**
-	 * @return ?string
+	 * @return mixed
 	 */
-	public function getFileName() : ?string
+	public function getFileName() : mixed
 	{
 		$key = $this->getPathFieldName();
 		return $this->$key;
@@ -115,9 +79,9 @@ trait HasSingleUpload
 
 
 	/**
-	 * @return ?string
+	 * @return mixed
 	 */
-	public function getFullFileName() : ?string
+	public function getFullFileName() : mixed
 	{
 		$filename = $this->getFileName();
 

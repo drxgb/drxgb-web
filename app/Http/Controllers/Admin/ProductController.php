@@ -7,13 +7,13 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Platform;
 use App\Models\Product;
 use App\Repositories\CategoryRepository;
-use App\Repositories\ProductRepository;
 use App\Services\Product\CreatorService;
+use App\Services\Product\DeleterService;
+use App\Services\Product\EditorService;
 
 class ProductController extends AdminController
 {
 	public function __construct(
-		private ProductRepository $products,
 		private CategoryRepository $categories
 	)
 	{
@@ -30,6 +30,7 @@ class ProductController extends AdminController
 		return $this->view('Index', compact('products'));
     }
 
+
     /**
      * Mostra o formulário de criação do novo recurso.
      */
@@ -37,8 +38,10 @@ class ProductController extends AdminController
     {
 		$categories = $this->categories->listWithHierarchy();
 		$platforms = fn () => Platform::all();
+
         return $this->view('Form', compact('categories', 'platforms'));
     }
+
 
     /**
      * Armazena uma nova instância do recurso.
@@ -46,15 +49,16 @@ class ProductController extends AdminController
     public function store(StoreProductRequest $request)
     {
 		$attributes = $request->safe()->only([
-			'title', 'slug', 'page', 'description', 'price', 'active',
+			'title', 'slug', 'page', 'description', 'price', 'active', 'cover_index'
 		]);
+		$categoryId = $request->category_id;
 		$versions = $request->versions;
 		$images = $request->images;
 
-		/** @var CreatorService */
-		$creator = app(CreatorService::class);
-		$product = $creator->fill($attributes)
+		$product = app(CreatorService::class)
+			->fill($attributes)
 			->assign($versions)
+			->associate($categoryId)
 			->setUploadedFiles($images)
 			->shouldRefresh()
 			->save();
@@ -62,6 +66,7 @@ class ProductController extends AdminController
         return to_route('admin.products.index')
 			->with('message', __('messages.created', [ 'name' => $product->title ]));
     }
+
 
     /**
      * Mostra o formulário de edição do recurso específico.
@@ -73,22 +78,39 @@ class ProductController extends AdminController
         return $this->view('Form', compact('product', 'categories', 'platforms'));
     }
 
+
     /**
      * Atualiza o recurso específico no armazenamento.
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $this->products->update($request, $product);
+		$attributes = $request->safe()->only([
+			'title', 'slug', 'page', 'description', 'price', 'active', 'cover_index'
+		]);
+		$categoryId = $request->category_id;
+		$versions = $request->versions;
+		$images = $request->images;
+
+		app(EditorService::class, compact('product'))
+			->fill($attributes)
+			->assign($versions)
+			->associate($categoryId)
+			->setUploadedFiles($images)
+			->shouldRefresh()
+			->save();
+
 		return to_route('admin.products.index')
 			->with('message', __('messages.updated', [ 'name' => $product->title ]));
     }
+
 
     /**
      * Remove o recurso específico no armazenamento.
      */
     public function destroy(Product $product)
     {
-        $this->products->delete($product);
+		app(DeleterService::class, compact('product'))->delete();
+
 		return redirect()->back()
 			->with('message', __('messages.deleted', [ 'name' => $product->title ]));
     }

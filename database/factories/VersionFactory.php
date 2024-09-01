@@ -17,7 +17,7 @@ class VersionFactory extends Factory
     public function definition() : array
     {
         return [
-            'number'		=> $this->randomVersionNumber(),
+            'number'		=> fake()->unique()->numerify($this->randomVersionNumber()),
 			'release_date'	=> fake()->date(),
 			'release_notes'	=> fake()->text(),
 			'fixes'			=> fake()->text(),

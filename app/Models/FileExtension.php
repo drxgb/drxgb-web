@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\HasIcon;
+use App\HasSingleUpload;
 use App\Contracts\Iconable;
 use App\Contracts\Storeable;
-use App\HasSingleUpload;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class FileExtension extends Model implements Iconable, Storeable
 {
