@@ -2,22 +2,23 @@
 
 namespace Tests\Feature;
 
-use App\Exceptions\DisassociationException;
-use App\Models\Platform;
-use App\Models\ProductFile;
+use Tests\TestCase;
 use App\Models\Version;
-use App\Services\ProductFile\CreatorService;
-use App\Services\ProductFile\DeleterService;
-use App\Services\ProductFile\EditorService;
-use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
+use App\Models\Platform;
+use Tests\FakeFileSystem;
+use App\Models\ProductFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Tests\FakeFileSystem;
-use Tests\TestCase;
+use App\Models\FileExtension;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Database\QueryException;
+use App\Exceptions\DisassociationException;
+use App\Services\ProductFile\EditorService;
+use App\Services\ProductFile\CreatorService;
+use App\Services\ProductFile\DeleterService;
 
 use function PHPUnit\Framework\assertEquals;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
 class ProductFileTest extends TestCase
@@ -44,7 +45,7 @@ class ProductFileTest extends TestCase
 		$this->setupFileSystem();
 
 		$attributes = ProductFile::factory()->raw();
-		$version = Version::factory()->create();
+		$version = Version::factory()->withProduct()->create();
 		$platforms = $this->makePlatforms();
 
 		$this->updateAvailableFileExtensions($platforms);
@@ -102,7 +103,7 @@ class ProductFileTest extends TestCase
 				$this->setupFileSystem();
 
 			$attributes = ProductFile::factory()->raw();
-			$version = Version::factory()->create();
+			$version = Version::factory()->withProduct()->create();
 			$platforms = $this->makePlatforms();
 
 			$this->updateAvailableFileExtensions($platforms);
@@ -131,7 +132,7 @@ class ProductFileTest extends TestCase
 		$this->setupFileSystem();
 
 		$attributes = ProductFile::factory()->raw();
-		$version = Version::factory()->create();
+		$version = Version::factory()->withProduct()->create();
 		$file = $this->generateFile();
 
 		$creator = $this->creatorService();
@@ -161,7 +162,7 @@ class ProductFileTest extends TestCase
 		$fs = $this->fs;
 
 		$attributes = ProductFile::factory()->raw();
-		$version = Version::factory()->create();
+		$version = Version::factory()->withProduct()->create();
 		$platforms = $this->makePlatforms();
 
 		$this->updateAvailableFileExtensions($platforms);
@@ -208,7 +209,7 @@ class ProductFileTest extends TestCase
 				$this->setupFileSystem();
 
 				$attributes = ProductFile::factory()->raw();
-				$version = Version::factory()->create();
+				$version = Version::factory()->withProduct()->create();
 				$platforms = $this->makePlatforms();
 
 				$this->updateAvailableFileExtensions($platforms);
@@ -249,7 +250,7 @@ class ProductFileTest extends TestCase
 		$this->setupFileSystem();
 
 		$attributes = ProductFile::factory()->raw();
-		$version = Version::factory()->create();
+		$version = Version::factory()->withProduct()->create();
 		$platforms = $this->makePlatforms();
 
 		$this->updateAvailableFileExtensions($platforms);
@@ -297,7 +298,7 @@ class ProductFileTest extends TestCase
 				$this->setupFileSystem();
 
 				$attributes = ProductFile::factory()->raw();
-				$version = Version::factory()->create();
+				$version = Version::factory()->withProduct()->create();
 				$file = $this->generateFile();
 
 				$creator = $this->creatorService();
@@ -326,7 +327,7 @@ class ProductFileTest extends TestCase
 		$this->setupFileSystem();
 
 		$attributes = ProductFile::factory()->raw();
-		$version = Version::factory()->create();
+		$version = Version::factory()->withProduct()->create();
 		$file = $this->generateFile();
 
 		$creator = $this->creatorService();
@@ -419,7 +420,7 @@ class ProductFileTest extends TestCase
 			$this->availableFileExtensions = array_replace(
 				$this->availableFileExtensions,
 				array_map(
-					fn (array $ext) : string => $ext['extension'],
+					fn (FileExtension $ext) : string => $ext->extension,
 					$platform['supported_file_extensions']
 				)
 			);

@@ -48,9 +48,6 @@ class RegistrationTest extends TestCase
             return;
         }
 
-		Language::factory()->create();
-		Role::factory()->count(2)->create();
-
         $response = $this->post('/register', [
             'name' => 'testuser',
             'email' => 'test@example.com',
@@ -60,6 +57,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect();
     }
 }

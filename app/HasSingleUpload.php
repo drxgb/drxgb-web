@@ -24,8 +24,10 @@ trait HasSingleUpload
 
 		tap($this->$key, function (?string $previous) use ($file, $filename, $subPath, $key) : void
 		{
+			$ext = $this->getFileExtension();
+
 			Upload::saveFile($this, $file, $filename, $subPath);
-			$this->forceFill([ $key	=> $filename ])->saveQuietly();
+			$this->forceFill([ $key	=> "{$filename}.{$ext}" ])->saveQuietly();
 
 			if (!empty($previous) && $this->$key !== $previous)
 			{
@@ -44,10 +46,11 @@ trait HasSingleUpload
 	{
 		$pathKey = $this->getPathFieldName();
 		$fileKey = $this->getFileFieldName();
+		$ext = $this->getFileExtension();
 		$filename = $this->$fileKey;
 
 		Upload::renameFile($this, $newName, $subPath);
-		$this->forceFill([ $pathKey => $filename ])->saveQuietly();
+		$this->forceFill([ $pathKey => "{$filename}.{$ext}" ])->saveQuietly();
 	}
 
 

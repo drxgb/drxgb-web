@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,17 @@ class VersionFactory extends Factory
 			'fixes'			=> fake()->text(),
         ];
     }
+
+
+	/**
+	 * Cria uma versão vinculada a um produto.
+	 *
+	 * @return static
+	 */
+	public function withProduct() : static
+	{
+		return $this->for(Product::factory());
+	}
 
 
 	/**

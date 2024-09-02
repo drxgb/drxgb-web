@@ -14,7 +14,7 @@ class StoreFileExtensionRequest extends AdminRequest
     {
         return [
             'name'		=> 'required|max:255',
-			'extension'	=> 'required|max:5|unique:file_extensions',
+			'extension'	=> 'required|unique:file_extensions',
 			'icon'		=> 'nullable|image|dimensions:width=16,height=16',
         ];
     }

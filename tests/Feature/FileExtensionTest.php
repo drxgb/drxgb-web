@@ -150,11 +150,12 @@ class FileExtensionTest extends TestCase
 	{
 		$this->setupFileSystem();
 
+		$fileExtension = FileExtension::factory()->create();
 		$upload = $this->generateFakeIcon();
 
-		$fileExtension = FileExtension::factory()->create();
-		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
-		$editor->setUploadedFile($upload)->save();
+		$this->editorService($fileExtension)
+			->setUploadedFile($upload)
+			->save();
 
 		$this->fs->assertExists($fileExtension->getFullFileName());
 	}
@@ -177,13 +178,13 @@ class FileExtensionTest extends TestCase
 		$oldIcon = $this->generateFakeIcon();
 		$newIcon = $this->generateFakeIcon();
 
-		$creator = $this->app->make(CreatorService::class);
+		$creator = $this->creatorService();
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($oldIcon)->save();
 		$oldPath = $fileExtension->getFullFileName();
 
 		$attributes['extension'] = Str::limit(fake()->fileExtension(), 3, '');
 
-		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
+		$editor = $this->editorService($fileExtension);
 		$editor->fill($attributes)->setUploadedFile($newIcon)->save();
 		$newPath = $fileExtension->getFullFileName();
 
@@ -205,13 +206,13 @@ class FileExtensionTest extends TestCase
 
 		$attributes = FileExtension::factory()->raw();
 		$icon = $this->generateFakeIcon();
-		$creator = $this->app->make(CreatorService::class);
+		$creator = $this->creatorService();
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($icon)->save();
 		$oldPath = $fileExtension->getFullFileName();
 
 		$extension = Str::limit(fake()->fileExtension(), 3, '');
 
-		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
+		$editor = $this->editorService($fileExtension);
 		$editor->fill(compact('extension'))->save();
 
 		$newPath = $fileExtension->getFullFileName();
@@ -236,13 +237,13 @@ class FileExtensionTest extends TestCase
 		$attributes = FileExtension::factory()->raw();
 		$upload = $this->generateFakeIcon();
 
-		$creator = $this->app->make(CreatorService::class);
+		$creator = $this->creatorService();
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($upload)->save();
 		$file = $fileExtension->getFullFileName();
 
 		$attributes['extension'] = Str::limit(fake()->fileExtension(), 3, '');
 
-		$editor = $this->app->make(EditorService::class, compact('fileExtension'));
+		$editor = $this->editorService($fileExtension);
 		$editor->fill($attributes)->mustDelete()->save();
 
 		$fs->assertMissing($file);
@@ -281,11 +282,11 @@ class FileExtensionTest extends TestCase
 		$attributes = FileExtension::factory()->raw();
 		$upload = $this->generateFakeIcon();
 
-		$creator = $this->app->make(CreatorService::class);
+		$creator = $this->creatorService();
 		$fileExtension = $creator->fill($attributes)->setUploadedFile($upload)->save();
 		$file = $fileExtension->getFullFileName();
 
-		$deleter = $this->app->make(DeleterService::class, compact('fileExtension'));
+		$deleter = app(DeleterService::class, compact('fileExtension'));
 		$deleted = $deleter->delete();
 
 		assertTrue($deleted);
@@ -316,10 +317,9 @@ class FileExtensionTest extends TestCase
 	/**
 	 * Recebe um nome aleatório de ícone.
 	 *
-	 * @param integer $length
 	 * @return string
 	 */
-	private function randomIconName(int $length = 16) : string
+	private function randomIconName() : string
 	{
 		return fake()->streetName() . '.png';
 	}
@@ -335,5 +335,28 @@ class FileExtensionTest extends TestCase
 	{
 		$filename ??= $this->randomIconName();
 		return UploadedFile::fake()->image($filename, 16, 16);
+	}
+
+
+	/**
+	 * Gera um serviço de criação de extensão de arquivo.
+	 *
+	 * @return CreatorService
+	 */
+	private function creatorService() : CreatorService
+	{
+		return app(CreatorService::class);
+	}
+
+
+	/**
+	 * Gera um serviço de edição de extensão de arquivo.
+	 *
+	 * @param FileExtension $fileExtension
+	 * @return EditorService
+	 */
+	private function editorService(FileExtension $fileExtension) : EditorService
+	{
+		return app(EditorService::class, compact('fileExtension'));
 	}
 }

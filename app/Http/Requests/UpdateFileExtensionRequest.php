@@ -26,7 +26,6 @@ class UpdateFileExtensionRequest extends FormRequest
             'name'			=> 'required|max:255',
 			'extension'		=> [
 				'required',
-				'max:5',
 				Rule::unique('file_extensions')->ignore($this->id),
 			],
 			'icon'			=> 'nullable|image|dimensions:width=16,height=16',
